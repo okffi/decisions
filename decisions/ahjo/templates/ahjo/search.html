@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{% trans "Search Decisions" %}</h1>
+
+<form method="get">
+  <input type="text" name="q" placeholder="{% trans "E.g. bicycling, beer gardens" %}" {% if q %}value="{{ q }}"{% endif %}>
+  <input type="submit" value="{% trans "Search" %}">
+</form>
+
+{% if results %}
+<ol>
+  {% for result in results %}
+  <li>
+    <a href="{{ result.get_absolute_url }}">
+      <h3>{{ result.subject }}</h3>
+    </a>
+    <p>{{ result.issue.summary }}</p>
+  </li>
+  {% endfor %}
+</ol>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<h1>{{ agendaitem.subject }}</h1>
+
+<div class="agenda_info">
+  <p><strong>{% trans "Preparer" %}:</strong> {{ agendaitem.preparer }}</p>
+  <p><strong>{% trans "Date updated" %}:</strong> {{ agendaitem.last_modified_time }}</p>
+  <p><strong>{% trans "Classification" %}:</strong> {{ agendaitem.original.classification_description }}</p>
+  <p><strong>{% trans "Resolution" %}:</strong> {{ agendaitem.get_resolution_display }}</p>
+</div>
+
+{% for c in agendaitem.original.content %}
+<div class="agenda_content">
+  <small>{{ c.type }}</small>
+  {{ c.text|safe }}
+</div>
+{% endfor %}
+
+<div class="agenda_issue">
+  {% with agendaitem.original.issue as issue %}
+  <h3>{% trans "Issue" %}: {{ issue.subject }}</h3>
+  <p>{{ issue.summary }}</p>
+  {% endwith %}
+</div>
+
+<div class="agenda_meeting">
+  {% with agendaitem.original.meeting as meeting %}
+  <h3>{% trans "Meeting information" %}</h3>
+  <p><strong>{% trans "Council" %}:</strong> {{ meeting.policymaker_name }}</p>
+  <p><strong>{% trans "Date" %}:</strong> {{ meeting.date }}</p>
+  {% endwith %}
+</div>
+
+{% for a in agendaitem.original.attachments %}
+<div class="agenda_attachment">
+  <a href="{{ a.file_uri }}">{{ a.name }} [{{ a.file_type }}]</a>
+</div>
+{% endfor %}
+
+{% endblock %}
