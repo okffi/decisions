@@ -1,5 +1,30 @@
 <!doctype html>
 
-{% block content %}{% endblock %}
+{% load i18n %}
+{% load staticfiles %}
 
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>{% trans "Decisions" %}</title>
+
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h1>{% trans "Decisions" %}</h1>
+
+      <h2>{% trans "Search" %}</h2>
+
+      <form method="get" action="{% url "ahjo-search" %}">
+	<input type="text" name="q" placeholder="{% trans "E.g. bicycling, beer gardens" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} class="form-control">
+      </form>
+    </div>
+  </div>
+  {% block content %}{% endblock %}
+</div>
+
+<script src="{% static "js/jquery-2.2.1.js" %}"></script>
 {% block script %}{% endblock %}

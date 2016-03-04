@@ -3,51 +3,59 @@
 {% load staticfiles %}
 
 {% block content %}
-<h1>{{ agendaitem.subject }}</h1>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>{{ agendaitem.subject }}</h2>
 
-<div class="agenda_info">
-  <p><strong>{% trans "Preparer" %}:</strong> {{ agendaitem.preparer }}</p>
-  <p><strong>{% trans "Date updated" %}:</strong> {{ agendaitem.last_modified_time }}</p>
-  <p><strong>{% trans "Classification" %}:</strong> {{ agendaitem.original.classification_description }}</p>
-  <p><strong>{% trans "Resolution" %}:</strong> {{ agendaitem.get_resolution_display }}</p>
-</div>
+    <div class="agenda_info">
+      <p><strong>{% trans "Preparer" %}:</strong> {{ agendaitem.preparer }}</p>
+      <p><strong>{% trans "Date updated" %}:</strong> {{ agendaitem.last_modified_time }}</p>
+      <p><strong>{% trans "Classification" %}:</strong> {{ agendaitem.original.classification_description }}</p>
+      <p><strong>{% trans "Resolution" %}:</strong> {{ agendaitem.get_resolution_display }}</p>
+    </div>
 
-<div id="content_block">
-  {% for c in agendaitem.original.content %}
-  <div class="agenda_content">
-    <small>{{ c.type }}</small>
-    {{ c.text|safe }}
+    <div id="content_block">
+      {% for c in agendaitem.original.content %}
+      <div class="agenda_content">
+	<small>{{ c.type }}</small>
+	{{ c.text|safe }}
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="agenda_issue">
+      {% with agendaitem.original.issue as issue %}
+      <h3>{% trans "Issue" %}: {{ issue.subject }}</h3>
+      <p>{{ issue.summary }}</p>
+      {% endwith %}
+    </div>
+
+    <div class="agenda_meeting">
+      {% with agendaitem.original.meeting as meeting %}
+      <h3>{% trans "Meeting information" %}</h3>
+      <p><strong>{% trans "Council" %}:</strong> {{ meeting.policymaker_name }}</p>
+      <p><strong>{% trans "Date" %}:</strong> {{ meeting.date }}</p>
+      {% endwith %}
+    </div>
+
+    <div class="agenda_attachments">
+      <h3>{% trans "Attachments" %}</h3>
+
+      <ol>
+      {% for a in agendaitem.original.attachments %}
+      <li class="agenda-attachment">
+	<a href="{{ a.file_uri }}">{{ a.name }} [{{ a.file_type }}]</a>
+      </li>
+      {% endfor %}
+      </ol>
+    </div>
+
   </div>
-  {% endfor %}
 </div>
-
-<div class="agenda_issue">
-  {% with agendaitem.original.issue as issue %}
-  <h3>{% trans "Issue" %}: {{ issue.subject }}</h3>
-  <p>{{ issue.summary }}</p>
-  {% endwith %}
-</div>
-
-<div class="agenda_meeting">
-  {% with agendaitem.original.meeting as meeting %}
-  <h3>{% trans "Meeting information" %}</h3>
-  <p><strong>{% trans "Council" %}:</strong> {{ meeting.policymaker_name }}</p>
-  <p><strong>{% trans "Date" %}:</strong> {{ meeting.date }}</p>
-  {% endwith %}
-</div>
-
-{% for a in agendaitem.original.attachments %}
-<div class="agenda_attachment">
-  <a href="{{ a.file_uri }}">{{ a.name }} [{{ a.file_type }}]</a>
-</div>
-
-<div id="comment-bubbles"></div>
-{% endfor %}
 
 {% endblock %}
 
 {% block script %}
-<script src="{% static "js/jquery-2.2.1.js" %}"></script>
 <script src="{% static "js/optimal-select.js" %}"></script>
 <script src="{% static "js/comments.js" %}"></script>
 
@@ -62,9 +70,9 @@
     <form method="post" action="{% url 'ahjo-comment' id_b36 %}">
       {% csrf_token %}
       {{ comment_form.as_p }}
-      <button type="submit">{% trans "Comment" %}</button>
+      <button type="submit" class="btn btn-primary">{% trans "Comment" %}</button>
     </form>
-    <button type="button" class="dismiss-button">{% trans "Close" %}</button>
+    <button type="button" class="btn btn-default dismiss-button">{% trans "Close" %}</button>
   </div>
 </div>
 {% endblock %}

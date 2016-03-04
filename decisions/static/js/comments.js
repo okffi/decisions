@@ -1,6 +1,5 @@
 (function($) {
   var cloneCount = 1;
-  //OptimalSelect.options.excludes[undefined] = ".*"
   var all_comments = {};
 
   var render_comments = function(selector) {
@@ -31,6 +30,7 @@
     $comments = render_comments(selector);
     $comments.prependTo($form);
 
+    // disable content clicks while commenting form is open
     $("#content_block p").off("click");
 
     // fix up labels/field IDs to be unique and matching
@@ -45,18 +45,18 @@
     $form.find("#" + cloneCount.toString() + "_" + "id_selector").val(selector);
     cloneCount++;
 
-    $form.hide()
-    $form.insertAfter($(target));
 
     // close commenting
     $form.find(".dismiss-button").on("click", function() {
       $form.hide(400, function() {
 	var offset = $(target).offset();
-	$(document).scrollTop(offset["top"]);
+	if ($(document).scrollTop() > offset["top"] + $(target).outerHeight()) {
+	  $(document).scrollTop(offset["top"]);
+	}
 	$form.remove();
+	update();
 	$("#content_block p").on("click", make_comment_form);
       });
-      update();
     });
 
     // ajax submit comment
@@ -76,12 +76,29 @@
 	});
     });
 
+    // slide in the entire thing
+    $form.hide()
+    $form.insertAfter($(target));
     $form.show(400);
   };
 
+  // get new comments and return a deferred
   var update = function() {
     return $.get(comments_url).done(function(data) {
       all_comments = data["content"];
+      $.each(all_comments, function(selector, comments) {
+	var $comment_counter = $(selector).find(".comment-counter");
+	if ($comment_counter.length == 0) {
+	  $comment_counter = $("<small>");
+	  $comment_counter.addClass("comment-counter badge");
+	  $comment_counter.appendTo($(selector));
+	}
+	if (comments.length == 1) {
+	  $comment_counter.text("1 comment");
+	} else {
+	  $comment_counter.text(comments.length.toString() + " comments");
+	}
+      })
     });
   };
 
