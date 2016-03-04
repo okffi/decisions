@@ -1,0 +1,167 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-04 17:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: decisions/ahjo/apps.py:9
+msgid "Ahjo"
+msgstr "Ahjo"
+
+#: decisions/ahjo/models.py:65
+msgid "Passed as drafted"
+msgstr "Hyväksytty"
+
+#: decisions/ahjo/models.py:66
+msgid "Passed after a vote"
+msgstr "Hyväksytty äänestyksen jälkeen"
+
+#: decisions/ahjo/models.py:67
+msgid "Passed revised by presenter"
+msgstr "Hyväksytty esittelijän muutoksen jälkeen"
+
+#: decisions/ahjo/models.py:68
+msgid "Passed modified"
+msgstr "Hyväksytty muutettuna"
+
+#: decisions/ahjo/models.py:69
+msgid "Rejected"
+msgstr "Hylätty"
+
+#: decisions/ahjo/models.py:70
+msgid "Noted as informational"
+msgstr "Tiedoksi"
+
+#: decisions/ahjo/models.py:71
+msgid "Returned to preparation"
+msgstr "Palautettu valmisteluun"
+
+#: decisions/ahjo/models.py:72
+msgid "Removed from agenda"
+msgstr "Poistettu päiväjärjestyksestä"
+
+#: decisions/ahjo/models.py:73
+msgid "Tabled"
+msgstr "Jätetty pöydälle"
+
+#: decisions/ahjo/models.py:74
+msgid "Election"
+msgstr "Äänestys"
+
+#: decisions/ahjo/models.py:75
+msgid "Unknown"
+msgstr "Ei päätöstä vielä"
+
+#: decisions/ahjo/models.py:84
+msgid "Subject"
+msgstr "Aihe"
+
+#: decisions/ahjo/models.py:88 decisions/ahjo/templates/ahjo/view.html.py:11
+msgid "Preparer"
+msgstr "Esittelijä"
+
+#: decisions/ahjo/models.py:94 decisions/ahjo/templates/ahjo/view.html.py:14
+msgid "Resolution"
+msgstr "Ratkaisu"
+
+#: decisions/ahjo/models.py:98
+msgid "Classification code"
+msgstr "Lajittelukoodi"
+
+#: decisions/ahjo/models.py:102
+msgid "Last modified time"
+msgstr "Viimeisin muokkausaika"
+
+#: decisions/ahjo/models.py:105
+msgid "Original"
+msgstr "Alkuperäinen"
+
+#: decisions/ahjo/models.py:110
+msgid "agenda item"
+msgstr "esitys"
+
+#: decisions/ahjo/models.py:111
+msgid "agenda items"
+msgstr "esityksiä"
+
+#: decisions/ahjo/models.py:128
+msgid "This is the element where the comment attaches on a decision"
+msgstr "Kommentti liittyy tähän elementtiin"
+
+#: decisions/ahjo/models.py:132
+msgid "Quote"
+msgstr "Sitaatti"
+
+#: decisions/ahjo/models.py:133
+msgid "Quotes are required."
+msgstr "Sitaatti vaaditaan"
+
+#: decisions/ahjo/models.py:136 decisions/ahjo/templates/ahjo/view.html.py:73
+msgid "Comment"
+msgstr "Kommentti"
+
+#: decisions/ahjo/models.py:141
+msgid "comment"
+msgstr "kommentti"
+
+#: decisions/ahjo/models.py:142
+msgid "comments"
+msgstr "kommentteja"
+
+#: decisions/ahjo/templates/ahjo/view.html:12
+msgid "Date updated"
+msgstr "Päivitetty"
+
+#: decisions/ahjo/templates/ahjo/view.html:13
+msgid "Classification"
+msgstr "Luokittelu"
+
+#: decisions/ahjo/templates/ahjo/view.html:28
+msgid "Issue"
+msgstr "Aihe"
+
+#: decisions/ahjo/templates/ahjo/view.html:35
+msgid "Meeting information"
+msgstr "Kokoustietoja"
+
+#: decisions/ahjo/templates/ahjo/view.html:36
+msgid "Council"
+msgstr "Lautakunta"
+
+#: decisions/ahjo/templates/ahjo/view.html:37
+msgid "Date"
+msgstr "Päiväys"
+
+#: decisions/ahjo/templates/ahjo/view.html:42
+msgid "Attachments"
+msgstr "Liitetiedostot"
+
+#: decisions/ahjo/templates/ahjo/view.html:75
+msgid "Close"
+msgstr "Sulje"
+
+#: decisions/templates/base.html:10 decisions/templates/base.html.py:17
+msgid "Decisions"
+msgstr "Päätökset"
+
+#: decisions/templates/base.html:19
+msgid "Search"
+msgstr "Hae"
+
+#: decisions/templates/base.html:22
+msgid "E.g. bicycling, beer gardens"
+msgstr "Esim. polkupyöräily, terassit"

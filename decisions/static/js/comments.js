@@ -93,11 +93,13 @@
 	  $comment_counter.addClass("comment-counter badge");
 	  $comment_counter.appendTo($(selector));
 	}
-	if (comments.length == 1) {
-	  $comment_counter.text("1 comment");
-	} else {
-	  $comment_counter.text(comments.length.toString() + " comments");
-	}
+
+	var text = ngettext(
+	  "%s comment",
+	  "%s comments",
+	  comments.length
+	);
+	$comment_counter.text(interpolate(text, [comments.length]));
       })
     });
   };
