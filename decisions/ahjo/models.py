@@ -6,7 +6,7 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.postgres import fields as pgfields
 from django.utils.translation import ugettext_lazy as _
-from django.utils.timezone import get_default_timezone
+from django.utils.timezone import get_default_timezone, now
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
@@ -102,7 +102,7 @@ class AgendaItem(models.Model):
         verbose_name=_("Last modified time"),
         null=True
     )
-    original = pgfields.JSONField()
+    original = pgfields.JSONField(verbose_name=_("Original"))
 
     objects = AgendaItemQuerySet.as_manager()
 
@@ -110,6 +110,7 @@ class AgendaItem(models.Model):
         verbose_name = _("agenda item")
         verbose_name_plural = _("agenda items")
         get_latest_by = "last_modified_time"
+        ordering = ("-last_modified_time",)
 
     def get_absolute_url(self):
         return reverse('ahjo-view',
@@ -117,3 +118,33 @@ class AgendaItem(models.Model):
                            "ahjo_id_b36": b36encode(self.ahjo_id),
                            "slug": slugify(self.subject)
                        })
+
+class Comment(models.Model):
+    # later: user account support
+    # user = models.ForeignKey(User)
+    agendaitem = models.ForeignKey(AgendaItem)
+    selector = models.CharField(
+        max_length=200,
+        help_text=_("This is the element where the comment "
+                    "attaches on a decision")
+    )
+    quote = models.TextField(
+        verbose_name=_("Quote"),
+        help_text=_("Quotes are required.")
+    )
+    text = models.TextField(
+        verbose_name=_("Comment")
+    )
+    created = models.DateTimeField(default=now, editable=False)
+
+    class Meta:
+        verbose_name = _("comment")
+        verbose_name_plural = _("comments")
+        ordering = ("text",)
+
+    def get_dict(self):
+        return {
+            "selector": self.selector,
+            "text": self.text,
+            "created": self.created.isoformat()
+        }

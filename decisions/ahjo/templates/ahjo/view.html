@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 
 {% block content %}
 <h1>{{ agendaitem.subject }}</h1>
@@ -11,12 +12,14 @@
   <p><strong>{% trans "Resolution" %}:</strong> {{ agendaitem.get_resolution_display }}</p>
 </div>
 
-{% for c in agendaitem.original.content %}
-<div class="agenda_content">
-  <small>{{ c.type }}</small>
-  {{ c.text|safe }}
+<div id="content_block">
+  {% for c in agendaitem.original.content %}
+  <div class="agenda_content">
+    <small>{{ c.type }}</small>
+    {{ c.text|safe }}
+  </div>
+  {% endfor %}
 </div>
-{% endfor %}
 
 <div class="agenda_issue">
   {% with agendaitem.original.issue as issue %}
@@ -37,6 +40,31 @@
 <div class="agenda_attachment">
   <a href="{{ a.file_uri }}">{{ a.name }} [{{ a.file_type }}]</a>
 </div>
+
+<div id="comment-bubbles"></div>
 {% endfor %}
 
+{% endblock %}
+
+{% block script %}
+<script src="{% static "js/jquery-2.2.1.js" %}"></script>
+<script src="{% static "js/optimal-select.js" %}"></script>
+<script src="{% static "js/comments.js" %}"></script>
+
+<script type="text/javascript">
+  comments_url = "{% url "ahjo-get-comments" id_b36 %}";
+  item_id = "{{ id_b36 }}";
+</script>
+
+<div style="display:none;" class="snippets">
+  <!-- HTML snippets for javascript -->
+  <div class="comment-form">
+    <form method="post" action="{% url 'ahjo-comment' id_b36 %}">
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <button type="submit">{% trans "Comment" %}</button>
+    </form>
+    <button type="button" class="dismiss-button">{% trans "Close" %}</button>
+  </div>
+</div>
 {% endblock %}
