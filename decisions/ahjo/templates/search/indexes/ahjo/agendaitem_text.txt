@@ -1,0 +1,8 @@
+{{ object.subject }}
+{{ object.preparer }}
+{{ object.last_modified_time.year }}/{{ object.last_modified_time.month }}
+{{ object.original.classification_description }}
+{{ object.get_resolution_display }}
+{% for c in object.original.content %}
+{{ c.text|safe }}
+{% endfor %}

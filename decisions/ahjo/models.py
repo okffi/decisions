@@ -12,7 +12,7 @@ from django.template.defaultfilters import slugify
 
 from dateutil.parser import parse
 
-from decisions.ahjo.utils import b36encode
+from decisions.ahjo.utils import b36encode, b36decode
 
 
 class AgendaItemQuerySet(models.QuerySet):
@@ -38,15 +38,8 @@ class AgendaItemQuerySet(models.QuerySet):
         )
     create_from_json.queryset_only = False
 
-    def textsearch(self, needle):
-        possibilities = [
-            Q(subject__contains=needle),
-            # these do nothing
-            #Q(original__issue__summary=needle),
-            #Q(original__issue__category_name=needle)
-        ]
-        return self.filter(reduce(operator.or_, possibilities))
-
+    def get_b36(self, id_b36):
+        return self.get(ahjo_id=b36decode(id_b36))
 
 # From: https://github.com/City-of-Helsinki/openahjo/blob/master/ahjodoc/models.py#L196
 # Update as necessary
@@ -106,6 +99,11 @@ class AgendaItem(models.Model):
 
     objects = AgendaItemQuerySet.as_manager()
 
+    def title(self):
+        return self.subject
+
+    __unicode__ = title
+
     class Meta:
         verbose_name = _("agenda item")
         verbose_name_plural = _("agenda items")
@@ -118,6 +116,11 @@ class AgendaItem(models.Model):
                            "ahjo_id_b36": b36encode(self.ahjo_id),
                            "slug": slugify(self.subject)
                        })
+
+    def get_attachments(self):
+        return [v for v in self.original["attachments"]
+                if all([v["name"], v["file_uri"], v["file_type"]])]
+
 
 class Comment(models.Model):
     # later: user account support

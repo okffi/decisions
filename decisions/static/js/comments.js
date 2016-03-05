@@ -54,8 +54,9 @@
 	  $(document).scrollTop(offset["top"]);
 	}
 	$form.remove();
-	update();
-	$("#content_block p").on("click", make_comment_form);
+	update().done(function() {
+	  $("#content_block p").on("click", make_comment_form);
+	});
       });
     });
 
@@ -67,6 +68,7 @@
 	.done(function() {
 	  $actual_form.hide(400, function() {
 	    $actual_form.remove();
+	    $(".dismiss-button").show()
 	  });
 	  update().done(function() {
 	    var $new_comments = render_comments(selector);

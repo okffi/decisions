@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
 
     # third party apps
+    'haystack',
 
     # first party apps
     'decisions.ahjo',
@@ -132,3 +133,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "decisions", "static"),
 ]
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh.idx'),
+    },
+}

@@ -21,6 +21,22 @@
 	{{ c.text|safe }}
       </div>
       {% endfor %}
+
+      <h3>{% trans "Attachments" %}</h3>
+
+      {% if agendaitem.get_attachments %}
+      <ol>
+	{% for a in agendaitem.get_attachments %}
+	<li class="agenda-attachment">
+	  <p>{{ a.name }} [{{ a.file_type }}]</p>
+
+	  <a href="{{ a.file_uri }}">{% trans "Download" %}</a>
+	</li>
+	{% endfor %}
+      </ol>
+      {% else %}
+      <p>{% trans "This decision has no attachments." %}</p>
+      {% endif %}
     </div>
 
     <div class="agenda_issue">
@@ -38,17 +54,6 @@
       {% endwith %}
     </div>
 
-    <div class="agenda_attachments">
-      <h3>{% trans "Attachments" %}</h3>
-
-      <ol>
-      {% for a in agendaitem.original.attachments %}
-      <li class="agenda-attachment">
-	<a href="{{ a.file_uri }}">{{ a.name }} [{{ a.file_type }}]</a>
-      </li>
-      {% endfor %}
-      </ol>
-    </div>
 
   </div>
 </div>
@@ -70,9 +75,10 @@
     <form method="post" action="{% url 'ahjo-comment' id_b36 %}">
       {% csrf_token %}
       {{ comment_form.as_p }}
-      <button type="submit" class="btn btn-primary">{% trans "Comment" %}</button>
+      <button type="submit" class="btn btn-primary">{% trans "Send Comment" %}</button>
+      <button type="button" class="btn btn-default dismiss-button">{% trans "Close" %}</button>
     </form>
-    <button type="button" class="btn btn-default dismiss-button">{% trans "Close" %}</button>
+    <button type="button" class="btn btn-default dismiss-button" style="display: none;">{% trans "Close" %}</button>
   </div>
 </div>
 {% endblock %}

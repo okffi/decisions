@@ -18,7 +18,7 @@
 
       <h2>{% trans "Search" %}</h2>
 
-      <form method="get" action="{% url "ahjo-search" %}">
+      <form method="get" action="{% url "haystack_search" %}">
 	<input type="text" name="q" placeholder="{% trans "E.g. bicycling, beer gardens" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} class="form-control">
       </form>
     </div>

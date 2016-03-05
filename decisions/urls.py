@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.i18n import javascript_catalog
+from django.shortcuts import render
 
 js_info_dict = {
     'packages': ('decisions',),
@@ -23,6 +24,8 @@ js_info_dict = {
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('decisions.ahjo.urls')),
+    url(r'^ahjo/', include('decisions.ahjo.urls')),
     url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
+    url(r'^search/', include('haystack.urls')),
+    url(r'^$', lambda request: render(request, "index.html")),
 ]
