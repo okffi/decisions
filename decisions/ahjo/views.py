@@ -33,6 +33,10 @@ class JsonResponseBadRequest(JsonResponse, HttpResponseBadRequest):
     pass
 
 def comment(request, ahjo_id_b36):
+    if request.user.is_anonymous():
+        return JsonResponseBadRequest(
+            {"errors": {"general": "must be logged in"}}
+        )
     ahjo_id = b36decode(ahjo_id_b36)
     item = get_object_or_404(AgendaItem, ahjo_id=ahjo_id)
     if request.method != "POST":
@@ -44,6 +48,7 @@ def comment(request, ahjo_id_b36):
     if form.is_valid():
         obj = form.save(commit=False)
         obj.agendaitem = item
+        obj.user = request.user
         obj.save()
         return JsonResponse({"content": "success"})
     else:

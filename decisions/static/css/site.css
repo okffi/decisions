@@ -1,3 +1,7 @@
 .inline-block {
     display: inline-block;
 }
+
+.comment-poster :after {
+    content: " ";
+}

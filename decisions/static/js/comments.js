@@ -9,13 +9,29 @@
     $.each(comments, function(i, comment) {
       var $d = $("<li>");
       $d.addClass("comment");
+
       var $p = $("<p>");
       $p.text(comment["text"]);
-      $d.append($p)
-      var $date = $("<p>");
+      $p.appendTo($d);
+
+      var $meta = $("<p>");
+      $meta.addClass("comment-meta");
+
+      var $poster = $("<span>");
+      $poster.addClass("comment-poster");
+      var poster_text = gettext("posted by <strong>%s</strong>")
+      $poster.html(interpolate(poster_text, [comment["poster"]]));
+      $poster.appendTo($meta);
+
+      var $date = $("<abbr>");
+      $date.addClass("comment-date");
       $date.text(comment["created"]);
-      $d.append($date)
-      $comments.append($d);
+      $date.attr("title", comment["created_timestamp"]);
+      $date.appendTo($meta);
+
+      $meta.appendTo($d)
+
+      $d.appendTo($comments);
     });
     return $comments;
   };
@@ -23,6 +39,11 @@
   var make_comment_form = function(e) {
     var target = e.target;
     var selector = OptimalSelect.select(target);
+
+    if (!commenting_enabled && !(selector in all_comments)) {
+      // just do nothing
+      return;
+    }
 
     var $form = $(".snippets .comment-form").clone();
 
@@ -78,10 +99,16 @@
 	});
     });
 
+    if (!commenting_enabled) {
+      $form.find("form").remove();
+    }
+
     // slide in the entire thing
     $form.hide()
     $form.insertAfter($(target));
-    $form.show(400);
+    $form.show(400, function() {
+      if (!commenting_enabled) { $(".dismiss-button").show(); }
+    });
   };
 
   // get new comments and return a deferred

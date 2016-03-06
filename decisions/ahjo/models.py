@@ -5,12 +5,14 @@ import operator
 from django.db import models
 from django.db.models import Q
 from django.contrib.postgres import fields as pgfields
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _, get_language
 from django.utils.timezone import get_default_timezone, now
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 from dateutil.parser import parse
+import arrow
 
 from decisions.ahjo.utils import b36encode, b36decode
 
@@ -123,8 +125,7 @@ class AgendaItem(models.Model):
 
 
 class Comment(models.Model):
-    # later: user account support
-    # user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True)
     agendaitem = models.ForeignKey(AgendaItem)
     selector = models.CharField(
         max_length=200,
@@ -147,7 +148,9 @@ class Comment(models.Model):
 
     def get_dict(self):
         return {
+            "poster": self.user.username if self.user else _("guest"),
             "selector": self.selector,
             "text": self.text,
-            "created": self.created.isoformat()
+            "created_timestamp": self.created.isoformat(),
+            "created": arrow.get(self.created).humanize(locale=get_language())
         }

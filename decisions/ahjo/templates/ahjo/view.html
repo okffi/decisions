@@ -67,6 +67,7 @@
 <script type="text/javascript">
   comments_url = "{% url "ahjo-get-comments" id_b36 %}";
   item_id = "{{ id_b36 }}";
+  commenting_enabled = {{ request.user.is_authenticated|yesno:"true,false" }};
 </script>
 
 <div style="display:none;" class="snippets">
