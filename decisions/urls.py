@@ -17,15 +17,26 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.i18n import javascript_catalog
 from django.shortcuts import render
+from decisions.subscriptions.forms import LoginForm, RegisterForm
 
 js_info_dict = {
     'packages': ('decisions',),
 }
 
+def index(request):
+    return render(request, "index.html", {
+        "login_form": LoginForm(),
+        "register_form": RegisterForm(),
+    })
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^ahjo/', include('decisions.ahjo.urls')),
-    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript-catalog'),
+    url(r'^jsi18n/$',
+        javascript_catalog,
+        js_info_dict,
+        name='javascript-catalog'),
     url(r'^search/', include('haystack.urls')),
-    url(r'^$', lambda request: render(request, "index.html")),
+    url(r'^$', index, name='index'),
+    url(r'^subscriptions/', include('decisions.subscriptions.urls')),
 ]

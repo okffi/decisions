@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="form-group {% if field.errors %}has-feedback has-error{% endif %}">
+  <label for="{{ field.auto_id }}">
+    {{ field.label }}
+    {% if field.field.required %}<br><small>{% trans "Required" %}</small>{% endif %}
+  </label>
+  {{ field.errors }}
+  {{ field }}
+  {{ field.help_text|safe }}
+</div>

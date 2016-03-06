@@ -13,6 +13,10 @@ project](http://dcentproject.eu) and managed by [Open Knowledge Foundation](http
 Install
 -------
 
+Pre-requisites: A Postgresql database. For default config, create a
+database named `helsinkidecisions` that your user Postgresql account has
+permissions for.
+
 A minimal runnable instance can be operated as follows:
 
 1. Install project requirements with `pip install -U -r requirements.txt`

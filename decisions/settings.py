@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django.contrib.sites',
 
     # third party apps
     'haystack',
 
     # first party apps
     'decisions.ahjo',
+    'decisions.subscriptions'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -107,7 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTHENTICATION_BACKENDS = [
+    'decisions.subscriptions.backends.EmailModelBackend'
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -140,3 +144,8 @@ HAYSTACK_CONNECTIONS = {
         'PATH': os.path.join(BASE_DIR, 'whoosh.idx'),
     },
 }
+
+DEFAULT_FROM_EMAIL = "noreply@example.com"
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SITE_URL = "http://localhost:8000"
+SITE_NAME = "Decisions"

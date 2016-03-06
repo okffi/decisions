@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>{% trans "Not confirmed" %}</h2>
+
+    <p>{% blocktrans %}No account could be confirmed. If you came here from your confirmation email, please contact the site operator.{% endblocktrans %}</p>
+  </div>
+</div>
+{% endblock %}

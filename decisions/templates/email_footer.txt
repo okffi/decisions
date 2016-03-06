@@ -1,0 +1,4 @@
+{% load i18n %}----
+{% trans "Regards," %}
+{% blocktrans %}{{ SITE_NAME }} operators{% endblocktrans %}
+{{ SITE_URL }}

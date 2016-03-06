@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-05 13:59+0200\n"
+"POT-Creation-Date: 2016-03-06 12:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,11 +136,11 @@ msgstr "Liitetiedostot"
 
 #: decisions/ahjo/templates/ahjo/view.html:33
 msgid "Download"
-msgstr ""
+msgstr "Lataa"
 
 #: decisions/ahjo/templates/ahjo/view.html:38
 msgid "This decision has no attachments."
-msgstr ""
+msgstr "Tällä päätöksellä ei ole liitetiedostoja."
 
 #: decisions/ahjo/templates/ahjo/view.html:44
 msgid "Issue"
@@ -163,27 +163,184 @@ msgid "Send Comment"
 msgstr "Kommentoi"
 
 #: decisions/ahjo/templates/ahjo/view.html:79
-#: decisions/ahjo/templates/ahjo/view.html:81
+#: decisions/ahjo/templates/ahjo/view.html:81 decisions/templates/base.html:36
 msgid "Close"
 msgstr "Sulje"
 
-#: decisions/templates/base.html:10 decisions/templates/base.html.py:17
+#: decisions/subscriptions/apps.py:9
+msgid "Subscriptions"
+msgstr "Tilaukset"
+
+#: decisions/subscriptions/forms.py:12 decisions/subscriptions/forms.py:76
+msgid "Email address"
+msgstr "Sähköpostiosoite"
+
+#: decisions/subscriptions/forms.py:15 decisions/subscriptions/forms.py:79
+msgid "user@example.com"
+msgstr "kayttaja@example.fi"
+
+#: decisions/subscriptions/forms.py:21
+msgid "Display name"
+msgstr "Nimimerkki"
+
+#: decisions/subscriptions/forms.py:31 decisions/subscriptions/forms.py:86
+msgid "Password"
+msgstr "Salasana"
+
+#: decisions/subscriptions/forms.py:35
+msgid "Password again"
+msgstr "Salasana uudelleen"
+
+#: decisions/subscriptions/forms.py:37
+msgid "Your password must meet these requirements:"
+msgstr "Salasanasi pitäisi täyttää nämä vaatimukset:"
+
+#: decisions/subscriptions/forms.py:44 decisions/subscriptions/forms.py:46
+msgid "Passwords don't match"
+msgstr "Salasanat eivät täsmää"
+
+#: decisions/subscriptions/forms.py:54
+msgid "Please choose another display name"
+msgstr "Ole hyvä ja valitse joku muu nimimerkki"
+
+#: decisions/subscriptions/forms.py:60
+msgid "Please choose another email address"
+msgstr "Ole hyvä ja valitse joku muu sähköpostiosoite"
+
+#: decisions/subscriptions/forms.py:92
+msgid "Email or password did not match. Please try again."
+msgstr "Sähköposti tai salasana ei täsmää. Ole hyvä ja yritä uudestaan"
+
+#: decisions/subscriptions/models.py:32
+msgid "Search term"
+msgstr "Hakuteksti"
+
+#: decisions/subscriptions/models.py:36
+msgid "Active"
+msgstr "Toiminnassa"
+
+#: decisions/subscriptions/models.py:41
+msgid "Sends email"
+msgstr "Lähettää sähköpostia"
+
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:8
+#: decisions/templates/base.html:51
+msgid "Dashboard"
+msgstr "Mittarikenttä"
+
+#: decisions/subscriptions/templates/subscriptions/emails/confirm_email.txt:1
+#, python-format
+msgid "An account for %(SITE_NAME)s has been created for this email address."
+msgstr "Käyttäjätili sivustolle %(SITE_NAME)s on luotu tähän sähköpostiosoitteeseen."
+
+#: decisions/subscriptions/templates/subscriptions/emails/confirm_email.txt:3
+msgid "If this was done by you, you can confirm your account here:"
+msgstr "Jos teit tämän, voit vahvistaa käyttäjätilisi tästä:"
+
+#: decisions/subscriptions/templates/subscriptions/emails/confirm_email.txt:6
+msgid ""
+"If you did not register an account with us, you can ignore this mail. Our "
+"apologies for the inconvenience."
+msgstr "Jos et rekisteröitynyt sivullemme, voit jättää tämän viestin huomiotta. Pahoittelumme häiriöstä."
+
+#: decisions/subscriptions/views.py:33
+msgid "Logged in successfully"
+msgstr "Kirjauduttu sisään"
+
+#: decisions/subscriptions/views.py:38
+msgid "Your account is disabled. Please contact webmaster."
+msgstr "Käyttäjätilisi on estetty. Ota yhteyttä ylläpitoon"
+
+#: decisions/subscriptions/views.py:42 decisions/templates/index.html.py:39
+msgid "Log in"
+msgstr "Kirjaudu"
+
+#: decisions/subscriptions/views.py:62
+#, python-format
+msgid "Confirm your %(site)s registration"
+msgstr "Vahvista rekisteröitymisesi sivustolle %(site)s"
+
+#: decisions/subscriptions/views.py:74
+msgid ""
+"Your account has been registered. Check your mail to confirm your email "
+"address."
+msgstr "Käyttäjätilisi on nyt rekisteröity. Tarkista sähköpostilaatikkosi vahvistaaksesi sähköpostiosoitteesi"
+
+#: decisions/subscriptions/views.py:80 decisions/templates/index.html.py:16
+#: decisions/templates/index.html:25
+msgid "Register"
+msgstr "Rekisteröidy"
+
+#: decisions/subscriptions/views.py:97
+msgid "Your email address has been confirmed."
+msgstr "Sähköpostiosoitteesi on vahvistettu."
+
+#: decisions/subscriptions/views.py:106
+msgid "You have logged out."
+msgstr "Olet kirjautunut ulos."
+
+#: decisions/templates/base.html:10 decisions/templates/base.html.py:18
 msgid "Decisions"
 msgstr "Päätökset"
 
-#: decisions/templates/base.html:19
+#: decisions/templates/base.html:20
 msgid "Search"
 msgstr "Hae"
 
-#: decisions/templates/base.html:22
+#: decisions/templates/base.html:23
 msgid "E.g. bicycling, beer gardens"
 msgstr "Esim. polkupyöräily, terassit"
 
-#: decisions/templates/index.html:8
+#: decisions/templates/base.html:46
+#, python-format
+msgid "Logged in as <strong>%(username)s</strong>"
+msgstr "Kirjautuneena käyttäjällä <strong>%(username)s</strong>"
+
+#: decisions/templates/base.html:49
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+#: decisions/templates/base.html:65
+#, python-format
 msgid ""
-"Get involved with your community. Find where decisions are made and get "
-"notified when things you care about come up"
-msgstr "Osallistu kuntasi toimintaan. Hae missä päätöksiä tehdään ja saa ilmoituksia kun kiinnostavia asioita tapahtuu"
+"This website is free open source software. Source code is available <a href="
+"\"%(project_url)s\">on Github</a>."
+msgstr "Tämä nettisivu on ilmaista avoimen lähdekoodin ohjelmistoa. Lähdekoodin voi ladata <a href=\"%(project_url)s\">Githubista</a>."
+
+#: decisions/templates/email_footer.txt:2
+msgid "Regards,"
+msgstr "Terveisin,"
+
+#: decisions/templates/email_footer.txt:3
+#, python-format
+msgid "%(SITE_NAME)s operators"
+msgstr "%(SITE_NAME)s ylläpito"
+
+#: decisions/templates/form.html:8
+msgid "Form"
+msgstr "Lomake"
+
+#: decisions/templates/form.html:16
+msgid "Submit"
+msgstr "Lähetä"
+
+#: decisions/templates/index.html:10
+msgid ""
+"Get involved with your community. Find where decisions are made, comment on "
+"them and get notified when things you care about come up"
+msgstr ""
+"Osallistu kuntasi toimintaan. Hae missä päätöksiä tehdään ja saa ilmoituksia "
+"kun kiinnostavia asioita tapahtuu"
+
+#: decisions/templates/index.html:11
+msgid ""
+"Log in or register to save your searches and receive notifications about new "
+"developments. You can also comment on decisions"
+msgstr "Kirjaudu tai rekisteröidy tallentaaksesi hakuja ja saadaksesi ilmoituksia kun hakuihin tulee uusia tuloksia. Voit myös kommentoida päätöksiä"
+
+#: decisions/templates/index.html:30
+msgid "Login"
+msgstr "Kirjaudu"
 
 #: decisions/templates/search/search.html:9
 msgid "Results"
@@ -204,3 +361,7 @@ msgstr "Seuraavat"
 #: decisions/templates/search/search.html:32
 msgid "Search for decisions"
 msgstr "Hae päätöksiä"
+
+#: decisions/templates/snippets/form_group.html:5
+msgid "Required"
+msgstr "Tärkeä kenttä"

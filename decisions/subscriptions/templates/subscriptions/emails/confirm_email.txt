@@ -1,0 +1,8 @@
+{% load i18n %}{% blocktrans %}An account for {{ SITE_NAME }} has been created for this email address.{% endblocktrans %}
+
+{% blocktrans %}If this was done by you, you can confirm your account here:{% endblocktrans %}
+{{ SITE_URL }}{% url 'confirm-email' confirm_code %}
+
+{% trans "If you did not register an account with us, you can ignore this mail. Our apologies for the inconvenience." %}
+
+{% include "email_footer.txt" %}
