@@ -26,3 +26,9 @@ A minimal runnable instance can be operated as follows:
 
 Repeat these steps every time you update for smooth sailing. For
 production deployment, also run `python manage.py collectstatic`.
+
+Usage
+-----
+
+You can import some recent decisions from the City of Helsinki with
+`python manage.py ahjo_fetch`.
