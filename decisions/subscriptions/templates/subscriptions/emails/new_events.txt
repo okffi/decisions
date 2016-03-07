@@ -1,0 +1,12 @@
+{% load i18n %}{% blocktrans %}Hello {{ user }},{% endblocktrans %}
+
+{% blocktrans %}We have found some new things you may be interested in:{% endblocktrans %}
+{% for notify in notifications %}
+{{ notify.subject }}
+{% trans "Direct link:" %} {{ SITE_URL }}{{ notify.link }}
+{% endfor %}{% if more_notifications %}
+{% blocktrans %}You also have {{ more_notifications }} additional notifications.{% endblocktrans %}
+{% trans "You can view them at:" %}
+{{ SITE_URL }}{% url "dashboard" %}
+{% else %}{% trans "You can view your feed and manage your subscriptions in our dashboard:" %}
+{{ SITE_URL }}{% url "dashboard" %}{% endif %}{% include "email_footer.txt" %}

@@ -1,4 +1,7 @@
 {% load i18n %}
+{% if field.is_hidden %}
+{{ field }}
+{% else %}
 <div class="form-group {% if field.errors %}has-feedback has-error{% endif %}">
   <label for="{{ field.auto_id }}">
     {{ field.label }}
@@ -8,3 +11,4 @@
   {{ field }}
   {{ field.help_text|safe }}
 </div>
+{% endif %}

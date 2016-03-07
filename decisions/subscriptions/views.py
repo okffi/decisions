@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import (
@@ -14,17 +14,79 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.core.mail import send_mail
 from django.utils.timezone import now
+from django.utils.http import is_safe_url
 
-from decisions.subscriptions.models import UserProfile
-from decisions.subscriptions.forms import RegisterForm, LoginForm
+from decisions.subscriptions.models import (
+    UserProfile,
+    Subscription,
+    SubscriptionHit
+)
+from decisions.subscriptions.forms import (
+    RegisterForm,
+    LoginForm,
+    SubscriptionForm
+)
 
 
 @login_required
 def dashboard(request):
-    return render(request, "subscriptions/dashboard.html")
+    subscriptions = Subscription.objects.filter(user=request.user)
+    hits = (SubscriptionHit.objects
+            .filter(subscription__user=request.user)
+            .order_by('-created'))[:30]
+
+    return render(
+        request,
+        "subscriptions/dashboard.html",
+        {
+            "subscriptions": subscriptions,
+            "feed": hits,
+        })
+
+@login_required
+def add_subscription(request):
+    if request.method == "POST":
+        form = SubscriptionForm(request.POST)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            messages.success(
+                request,
+                _("You have subscribed to the search term <tt>%(search_term)s</tt>") % form.cleaned_data)
+            return redirect("dashboard")
+    else:
+        form = SubscriptionForm(initial={"search_term": request.GET.get("q")})
+
+    return render(request, "form.html", {"form": form, "verb": _("Subscribe")})
+
+@login_required
+def edit_subscription(request, subscription_id):
+    subscription = get_object_or_404(
+        Subscription,
+        pk=subscription_id,
+        user=request.user
+    )
+
+    if request.method == "POST":
+        form = SubscriptionForm(request.POST, instance=subscription)
+        if form.is_valid():
+            obj = form.save()
+            messages.success(
+                request,
+                _("You have edited the search term <tt>%(search_term)s</tt>") % form.cleaned_data)
+            return redirect("dashboard")
+    else:
+        form = SubscriptionForm(instance=subscription)
+
+    return render(request, "form.html", {"form": form, "verb": _("Edit subscription")})
+
+
 
 def login(request):
-    # TODO: add safe ?next= handling
+    redirect_to = request.POST.get("next",
+                                   request.GET.get("next", ''))
+
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -34,15 +96,22 @@ def login(request):
                     messages.add_message(
                         request, messages.SUCCESS,
                         _("Logged in successfully"))
-                    return redirect('dashboard')
+                    if not is_safe_url(url=redirect_to,
+                                       host=request.get_host()):
+                        return redirect("dashboard")
+
+                    return redirect(redirect_to)
                 else:
                     messages.add_message(
                         request, messages.ERROR,
                         _("Your account is disabled. Please contact webmaster."))
     else:
-        form = LoginForm(request.POST)
+        form = LoginForm(initial={"next": redirect_to})
 
-    return render(request, "form.html", {"form": form, "verb": _("Log in")})
+    return render(request, "form.html", {
+        "form": form,
+        "verb": _("Log in"),
+    })
 
 def register(request):
     if request.method == "POST":

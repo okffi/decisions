@@ -32,3 +32,8 @@ Usage
 
 You can import some recent decisions from the City of Helsinki with
 `python manage.py ahjo_fetch`.
+
+When first importing data to an empty database, create the text search
+engine index with `python manage.py rebuild_index`. After importing
+new data, reindex the text search engine with `python manage.py
+update_index`.

@@ -7,7 +7,50 @@
   <div class="col-md-8 col-md-offset-2">
     <h2>{% trans "Dashboard" %}</h2>
 
-    <p>Coming soon!</p>
+    <div class="row">
+      <div class="col-md-6">
+	<h3>{% trans "Subscriptions" %}</h3>
+
+	<table class="table">
+	  <tr>
+	    <th>{% trans "Search term" %}</th>
+	    <th>{% trans "Active" %}</th>
+	    <th>{% trans "Sends email" %}</th>
+	    <th>{% trans "Actions" %}</th>
+	  </tr>
+	  {% for s in subscriptions %}
+	  <tr>
+	    <td>{{ s.search_term }}</td>
+	    <td>{% if s.active %}<i class="glyphicon glyphicon-ok"></i>{% else %}<i class="glyphicon glyphicon-remove"></i>{% endif %}</td>
+	    <td>{% if s.send_mail %}<i class="glyphicon glyphicon-ok"></i>{% else %}<i class="glyphicon glyphicon-remove"></i>{% endif %}</td>
+	    <td><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></td>
+	  </tr>
+	  {% empty %}
+	  <tr>
+	    <td colspan=4><div class="well text-center">{% blocktrans %}You can create subscriptions by saving searches you have made{% endblocktrans %}</div></td>
+	  </tr>
+	  {% endfor %}
+	</table>
+      </div>
+      <div class="col-md-6">
+	<h3>{% trans "Feed" %}</h3>
+
+	{% if feed %}
+	<ol>
+	  {% for item in feed %}
+	  <li>
+	    <p><a href="{{ item.link }}">{{ item.subject }}</a></p>
+	    <p>{% blocktrans with item.subscription.search_term as term and item.created as timestamp and item.created|timesince as since %}from <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% endblocktrans %}</p>
+	  </li>
+	  {% endfor %}
+	</ol>
+	{% else %}
+	<div class="well text-center">
+	  {% blocktrans %}Every time your subscriptions find new decisions, they are listed here.{% endblocktrans %}
+	</div>
+	{% endif %}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

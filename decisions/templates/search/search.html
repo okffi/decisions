@@ -8,11 +8,20 @@
   <div class="col-md-8 col-md-offset-2">
     <h2>{% trans "Results" %}</h2>
 
+    {% if user.is_authenticated %}
+    <p>{% trans "You can save this search and get notified when new results come up" %}</p>
+    <p>
+      <a href="{% url "add-subscription" %}?q={{ request.GET.q }}">
+	<button type="button" class="btn btn-default">{% trans "Subscribe to this search" %}</button>
+      </a>
+    </p>
+    {% endif %}
+
     {% if page.object_list %}
     <ol class="search-results">
       {% for result in page.object_list %}
       <li>
-	<a href="{{ result.object.get_absolute_url }}"><h3>{{ result.object.title }}</h3></a>
+	<a href="{{ result.object.get_absolute_url }}?q={{ request.GET.q }}"><h3>{{ result.object.title }}</h3></a>
 	<p>{{ result.object.original.issue.summary }}</p>
       </li>
       {% endfor %}

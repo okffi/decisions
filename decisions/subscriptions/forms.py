@@ -6,6 +6,8 @@ from django.contrib.auth.password_validation import (
 )
 from django.contrib.auth.models import User
 
+from decisions.subscriptions.models import Subscription
+
 
 class RegisterForm(forms.Form):
     email = forms.EmailField(
@@ -85,9 +87,21 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
         label=_("Password")
     )
+    next = forms.CharField(widget=forms.HiddenInput)
 
     def clean(self):
         self.user = authenticate(**self.cleaned_data)
         if not self.user:
             raise forms.ValidationError(_("Email or password did not match. Please try again."))
         return self.cleaned_data
+
+class SubscriptionForm(forms.ModelForm):
+    class Meta:
+        model = Subscription
+        fields = ["search_term", "send_mail"]
+        widgets = {
+            "search_term": forms.TextInput(
+                attrs={
+                    "class": "form-control"
+                })
+        }

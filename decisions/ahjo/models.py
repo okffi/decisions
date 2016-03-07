@@ -97,6 +97,7 @@ class AgendaItem(models.Model):
         verbose_name=_("Last modified time"),
         null=True
     )
+    fetched = models.DateTimeField(default=now)
     original = pgfields.JSONField(verbose_name=_("Original"))
 
     objects = AgendaItemQuerySet.as_manager()
