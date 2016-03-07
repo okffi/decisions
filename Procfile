@@ -1,1 +1,1 @@
-web: gunicorn decisions/wsgi.py --log-file -
+web: gunicorn decisions.wsgi --log-file -
