@@ -27,13 +27,12 @@ A minimal runnable instance can be operated as follows:
 Repeat these steps every time you update for smooth sailing. For
 production deployment, also run `python manage.py collectstatic`.
 
+When first importing data to an empty database, create the text search
+engine index with `python manage.py rebuild_index`. You can rebuild
+the index any time.
+
 Usage
 -----
 
-You can import some recent decisions from the City of Helsinki with
-`python manage.py ahjo_fetch`.
-
-When first importing data to an empty database, create the text search
-engine index with `python manage.py rebuild_index`. After importing
-new data, reindex the text search engine with `python manage.py
-update_index`.
+Fetch, index and process new decisions from external sources with
+`python manage.py process_all`.

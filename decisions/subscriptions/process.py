@@ -34,7 +34,7 @@ def process_subscriptions():
         hits = [
             s.subscriptionhit_set.create(
                 subject=r.subject,
-                link=r.object.get_absolute_url(),
+                link=r.object.get_absolute_url(), # TODO short link
                 hit=r.object
             )
             for r in results
@@ -45,10 +45,16 @@ def process_subscriptions():
             notify_users.add(s.user)
 
     for u in notify_users:
-        notifications = SubscriptionHit.objects.filter(
-            created__gte=time_started,
-            subscription__user=u,
-            subscription__send_mail=True,
+        # only notify each new unique link once
+        notifications = (
+            SubscriptionHit.objects
+            .filter(
+                created__gte=time_started,
+                subscription__user=u,
+                subscription__send_mail=True,
+            )
+            .order_by('-created')
+            .distinct("link")
         )
         notify_count = notifications.count()
         notifications = notifications[:10]

@@ -31,9 +31,13 @@ from decisions.subscriptions.forms import (
 @login_required
 def dashboard(request):
     subscriptions = Subscription.objects.filter(user=request.user)
-    hits = (SubscriptionHit.objects
-            .filter(subscription__user=request.user)
-            .order_by('-created'))[:30]
+    hits = (
+        SubscriptionHit.objects
+        .filter(subscription__user=request.user)
+        .order_by('-created')
+        .distinct("link")
+        [:30]
+    )
 
     return render(
         request,
