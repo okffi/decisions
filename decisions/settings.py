@@ -91,12 +91,6 @@ DATABASES = {
     }
 }
 
-if "DATABASE_URL" in os.environ:
-    # Heroku integration
-    import dj_database_url
-    db_from_env = dj_database_url.config(conn_max_age=60)
-    DATABASES['default'].update(db_from_env)
-
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -155,3 +149,19 @@ DEFAULT_FROM_EMAIL = "noreply@example.com"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_URL = "http://localhost:8000"
 SITE_NAME = "Decisions"
+
+if "DATABASE_URL" in os.environ:
+    # Heroku database integration
+    import dj_database_url
+    db_from_env = dj_database_url.config(conn_max_age=60)
+    DATABASES['default'].update(db_from_env)
+    SITE_URL = "http://cryptic-earth-25359.herokuapp.com"
+
+if "MAILGUN_SMTP_SERVER" in os.environ:
+    # Heroku Mailgun integration
+    DEFAULT_FROM_EMAIL = "noreply@cryptic-earth-25359.herokuapp.com"
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.environ["MAILGUN_SMTP_SERVER"]
+    EMAIL_PORT = os.environ["MAILGUN_SMTP_PORT"]
+    EMAIL_USER = os.environ["MAILGUN_SMTP_USER"]
+    EMAIL_PASSWORD = os.environ["MAILGUN_SMTP_PASSWORD"]
