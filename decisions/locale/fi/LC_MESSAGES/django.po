@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-07 13:58+0200\n"
+"POT-Creation-Date: 2016-03-14 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,38 +216,38 @@ msgstr "Ole hyvä ja valitse joku muu sähköpostiosoite"
 msgid "Email or password did not match. Please try again."
 msgstr "Sähköposti tai salasana ei täsmää. Ole hyvä ja yritä uudestaan"
 
-#: decisions/subscriptions/models.py:33
+#: decisions/subscriptions/models.py:39
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:16
 msgid "Search term"
 msgstr "Hakuteksti"
 
-#: decisions/subscriptions/models.py:37
+#: decisions/subscriptions/models.py:44
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:17
 msgid "Active"
 msgstr "Toiminnassa"
 
-#: decisions/subscriptions/models.py:42
+#: decisions/subscriptions/models.py:49
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:18
 msgid "Sends email"
 msgstr "Lähettää sähköpostia"
 
-#: decisions/subscriptions/models.py:49
+#: decisions/subscriptions/models.py:56
 msgid "subscription"
 msgstr "tilaus"
 
-#: decisions/subscriptions/models.py:50
+#: decisions/subscriptions/models.py:57
 msgid "subscriptions"
 msgstr "tilauksia"
 
-#: decisions/subscriptions/models.py:67
+#: decisions/subscriptions/models.py:74
 msgid "subscription hit"
 msgstr "tilauksen osuma"
 
-#: decisions/subscriptions/models.py:68
+#: decisions/subscriptions/models.py:75
 msgid "subscription hits"
 msgstr "tilauksen osumia"
 
-#: decisions/subscriptions/process.py:59
+#: decisions/subscriptions/process.py:70
 #, python-format
 msgid "[%(SITE_NAME)s] %(event_count)s new event"
 msgid_plural "[%(SITE_NAME)s] %(event_count)s new events"
@@ -276,11 +276,17 @@ msgid "Feed"
 msgstr "Syöte"
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:43
-#, python-format
 msgid ""
-"from <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> ago"
-msgstr ""
+"from search <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
+"ago"
+msgid_plural ""
+"from searches <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</"
+"abbr> ago"
+msgstr[0] ""
 "hausta <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
+"sitten"
+msgstr[1] ""
+"hauista <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
 "sitten"
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:49
@@ -344,42 +350,42 @@ msgstr ""
 "Aktivoitavaa käyttäjätunnusta ei löytynyt. Jos tulit tänne "
 "vahvistussähköpostin kautta, ole hyvä ja ota yhteyttä sivuston ylläpitoon. "
 
-#: decisions/subscriptions/views.py:56
+#: decisions/subscriptions/views.py:72
 #, python-format
 msgid "You have subscribed to the search term <tt>%(search_term)s</tt>"
 msgstr "Olet tilannut hakuehdon <tt>%(search_term)s</tt>"
 
-#: decisions/subscriptions/views.py:61
+#: decisions/subscriptions/views.py:77
 msgid "Subscribe"
 msgstr "Tilaa"
 
-#: decisions/subscriptions/views.py:77
+#: decisions/subscriptions/views.py:97
 #, python-format
 msgid "You have edited the search term <tt>%(search_term)s</tt>"
 msgstr "Olet muokannut tilausta <tt>%(search_term)s</tt>"
 
-#: decisions/subscriptions/views.py:82
+#: decisions/subscriptions/views.py:102
 msgid "Edit subscription"
 msgstr "Muokkaa tilausta"
 
-#: decisions/subscriptions/views.py:98
+#: decisions/subscriptions/views.py:118
 msgid "Logged in successfully"
 msgstr "Kirjauduttu sisään"
 
-#: decisions/subscriptions/views.py:107
+#: decisions/subscriptions/views.py:127
 msgid "Your account is disabled. Please contact webmaster."
 msgstr "Käyttäjätilisi on estetty. Ota yhteyttä ylläpitoon"
 
-#: decisions/subscriptions/views.py:113 decisions/templates/index.html.py:39
+#: decisions/subscriptions/views.py:133 decisions/templates/index.html.py:39
 msgid "Log in"
 msgstr "Kirjaudu"
 
-#: decisions/subscriptions/views.py:138
+#: decisions/subscriptions/views.py:158
 #, python-format
 msgid "Confirm your %(site)s registration"
 msgstr "Vahvista rekisteröitymisesi sivustolle %(site)s"
 
-#: decisions/subscriptions/views.py:151
+#: decisions/subscriptions/views.py:171
 msgid ""
 "Your account has been registered. Check your mail to confirm your email "
 "address."
@@ -387,16 +393,16 @@ msgstr ""
 "Käyttäjätilisi on nyt rekisteröity. Tarkista sähköpostilaatikkosi "
 "vahvistaaksesi sähköpostiosoitteesi"
 
-#: decisions/subscriptions/views.py:157 decisions/templates/index.html.py:16
+#: decisions/subscriptions/views.py:177 decisions/templates/index.html.py:16
 #: decisions/templates/index.html:25
 msgid "Register"
 msgstr "Rekisteröidy"
 
-#: decisions/subscriptions/views.py:174
+#: decisions/subscriptions/views.py:194
 msgid "Your email address has been confirmed."
 msgstr "Sähköpostiosoitteesi on vahvistettu."
 
-#: decisions/subscriptions/views.py:184
+#: decisions/subscriptions/views.py:204
 msgid "You have logged out."
 msgstr "Olet kirjautunut ulos."
 

@@ -13,7 +13,7 @@ def process_subscriptions():
     """Loop over all active subscriptions and create new hits based on
     search results"""
 
-    active_subs = Subscription.objects.filter(active=True).order_by('user')
+    active_subs = Subscription.objects.filter(active=True)
     notify_users = set()
     time_started = now()
     hit_count = 0
@@ -32,29 +32,34 @@ def process_subscriptions():
         )
 
         hits = [
-            s.subscriptionhit_set.create(
+            SubscriptionHit.objects.get_or_create(
                 subject=r.subject,
-                link=r.object.get_absolute_url(), # TODO short link
-                hit=r.object
+                link=r.object.get_absolute_url(),
+                defaults={"hit": r.object}
             )
             for r in results
         ]
+        for hit,created in hits:
+            hit.subscriptions.add(s)
+
         hit_count += len(hits)
 
-        if s.send_mail and hits and s.user.profile.email_confirmed:
-            notify_users.add(s.user)
+        if s.send_mail and hits:
+            notify_users.update(
+                s.subscribers.filter(
+                    profile__email_confirmed__isnull=False
+                )
+            )
 
     for u in notify_users:
-        # only notify each new unique link once
         notifications = (
             SubscriptionHit.objects
             .filter(
                 created__gte=time_started,
-                subscription__user=u,
+                subscription__subscribers=u,
                 subscription__send_mail=True,
             )
             .order_by('-created')
-            .distinct("link")
         )
         notify_count = notifications.count()
         notifications = notifications[:10]

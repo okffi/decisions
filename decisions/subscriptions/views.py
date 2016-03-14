@@ -30,14 +30,26 @@ from decisions.subscriptions.forms import (
 
 @login_required
 def dashboard(request):
-    subscriptions = Subscription.objects.filter(user=request.user)
+    subscriptions = Subscription.objects.filter(subscribers=request.user)
     hits = (
         SubscriptionHit.objects
-        .filter(subscription__user=request.user)
+        .filter(subscriptions__subscribers=request.user)
         .order_by('-created')
-        .distinct("link")
         [:30]
     )
+
+    for hit in hits:
+        # intersect user's subscriptions and the hit's subscriptions
+        hit_terms = [
+            subscription.search_term
+            for subscription in hit.subscriptions.all()
+        ]
+        user_terms = [
+            subscription.search_term
+            for subscription in request.user.subscription_set.all()
+        ]
+        terms = set(hit_terms).intersection(user_terms)
+        hit.user_search_terms = terms
 
     return render(
         request,
@@ -52,8 +64,8 @@ def add_subscription(request):
     if request.method == "POST":
         form = SubscriptionForm(request.POST)
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.user = request.user
+            obj = form.save()
+            obj.subscribers.add(request.user)
             obj.save()
             messages.success(
                 request,
@@ -68,14 +80,18 @@ def add_subscription(request):
 def edit_subscription(request, subscription_id):
     subscription = get_object_or_404(
         Subscription,
-        pk=subscription_id,
-        user=request.user
+        pk=subscription_id
     )
 
     if request.method == "POST":
-        form = SubscriptionForm(request.POST, instance=subscription)
+        form = SubscriptionForm(request.POST)
         if form.is_valid():
-            obj = form.save()
+            new_obj = form.save()
+            subscription.subscribers.remove(request.user)
+            new_obj.subscribers.add(request.user)
+            new_obj.previous_version = subscription
+            new_obj.save()
+
             messages.success(
                 request,
                 _("You have edited the search term <tt>%(search_term)s</tt>") % form.cleaned_data)

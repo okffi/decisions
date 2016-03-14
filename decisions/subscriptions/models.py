@@ -27,11 +27,18 @@ class UserProfile(models.Model):
             return self.user.email
 
 class Subscription(models.Model):
-    user = models.ForeignKey('auth.User')
+    subscribers = models.ManyToManyField('auth.User')
+    previous_version = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        related_name="next_versions"
+    )
     search_term = models.CharField(
         max_length=300,
         verbose_name=_('Search term')
     )
+    # TODO put active and send_mail to through table to subscribers
     active = models.BooleanField(
         default=True,
         verbose_name=_('Active')
@@ -43,7 +50,7 @@ class Subscription(models.Model):
     )
 
     def __unicode__(self):
-        return "%s: %s" % (self.user, self.search_term)
+        return self.search_term
 
     class Meta:
         verbose_name = _("subscription")
@@ -51,7 +58,7 @@ class Subscription(models.Model):
 
 
 class SubscriptionHit(models.Model):
-    subscription = models.ForeignKey(Subscription)
+    subscriptions = models.ManyToManyField(Subscription)
     created = models.DateTimeField(default=now)
     subject = models.CharField(max_length=300)
     link = models.CharField(max_length=300)

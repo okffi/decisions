@@ -40,7 +40,7 @@
 	  {% for item in feed %}
 	  <li>
 	    <p><a href="{{ item.link }}">{{ item.subject }}</a></p>
-	    <p>{% blocktrans with item.subscription.search_term as term and item.created as timestamp and item.created|timesince as since %}from <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% endblocktrans %}</p>
+	    <p>{% blocktrans with term=item.user_search_terms|join:"; " timestamp=item.created since=item.created|timesince count counter=item.user_search_terms|length %}from search <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% plural %}from searches <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% endblocktrans %}</p>
 	  </li>
 	  {% endfor %}
 	</ol>
