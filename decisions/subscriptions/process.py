@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from haystack.query import SearchQuerySet
 
 from decisions.subscriptions.models import Subscription, SubscriptionHit
+from decisions.subscriptions.voikko import VoikkoSearchQuerySet
 
 
 def process_subscriptions():
@@ -25,7 +26,7 @@ def process_subscriptions():
             last_hit_date = s.created
 
         results = (
-            SearchQuerySet()
+            VoikkoSearchQuerySet()
             .auto_query(s.search_term)
             .filter(pub_date__gt=last_hit_date)
             .load_all()

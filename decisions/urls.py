@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.i18n import javascript_catalog
 from django.shortcuts import render
+
 from decisions.subscriptions.forms import LoginForm, RegisterForm
 
 js_info_dict = {
@@ -36,7 +37,8 @@ urlpatterns = [
         javascript_catalog,
         js_info_dict,
         name='javascript-catalog'),
-    url(r'^search/', include('haystack.urls')),
+    url(r'^search/', include('decisions.subscriptions.search_urls')),
+    #url(r'^search/', include('haystack.urls')),
     url(r'^$', index, name='index'),
     url(r'^subscriptions/', include('decisions.subscriptions.urls')),
 ]

@@ -17,9 +17,9 @@
     </p>
     {% endif %}
 
-    {% if page.object_list %}
+    {% if object_list %}
     <ol class="search-results">
-      {% for result in page.object_list %}
+      {% for result in object_list %}
       <li>
 	<a href="{{ result.object.get_absolute_url }}?q={{ request.GET.q }}"><h3>{{ result.object.title }}</h3></a>
 	<p>{{ result.object.original.issue.summary }}</p>
