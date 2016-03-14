@@ -31,6 +31,12 @@ When first importing data to an empty database, create the text search
 engine index with `python manage.py rebuild_index`. You can rebuild
 the index any time.
 
+Optional things
+---------------
+
+Install libvoikko (e.g. 4.0.2) to your system to enable a little
+smarter spelling in searching. We include the Python bindings.
+
 Usage
 -----
 
