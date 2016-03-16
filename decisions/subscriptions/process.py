@@ -14,7 +14,9 @@ def process_subscriptions():
     """Loop over all active subscriptions and create new hits based on
     search results"""
 
-    active_subs = Subscription.objects.filter(active=True)
+    # TODO: don't process subscriptions that don't have any active
+    # user subscriptions
+    active_subs = Subscription.objects.all()
     notify_users = set()
     time_started = now()
     hit_count = 0
@@ -45,12 +47,17 @@ def process_subscriptions():
 
         hit_count += len(hits)
 
-        if s.send_mail and hits:
-            notify_users.update(
-                s.subscribers.filter(
-                    profile__email_confirmed__isnull=False
-                )
+        if hits:
+            users = s.subscribed_users.filter(
+                subscriptionuser__active=True,
+                subscriptionuser__send_mail=True,
+                profile__email_confirmed__isnull=False
             )
+
+            for hit in hits:
+                hit.notified_users.add(users)
+
+            notify_users.update(users)
 
     for u in notify_users:
         notifications = (

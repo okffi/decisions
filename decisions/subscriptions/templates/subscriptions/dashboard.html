@@ -21,9 +21,10 @@
 	    </span>
 	    {% endif %}
 
-	    {% if s.is_fresh %}
+	    {% if s.fresh_for_user %}
 	    <span class="badge">
 	      <i class="glyphicon glyphicon-leaf"></i>
+	      {% if s.fresh_for_user > 1 %}{{ s.fresh_for_user }}{% endif %}
 	    </span>
 	    {% endif %}
 
@@ -50,7 +51,7 @@
 	    <span class="badge">
 	      <i class="glyphicon glyphicon-leaf"></i>
 	    </span>
-	    {% trans "Fresh. Has triggered notifications recently" %}
+	    {% trans "Fresh. Has triggered notifications for you recently" %}
 	  </p>
 	</div>
 	{% if inactive_subscriptions %}
@@ -83,7 +84,8 @@
 	</ol>
 	{% else %}
 	<div class="well text-center">
-	  {% blocktrans %}Every time your subscriptions find new decisions, they are listed here.{% endblocktrans %}
+	  <p>{% blocktrans %}Every time your subscriptions find new decisions, they are listed here.{% endblocktrans %}</p>
+	  <p>{% blocktrans %}This is just the new stuff, old results from new subscriptions are never added to the feed.{% endblocktrans %}</p>
 	</div>
 	{% endif %}
       </div>

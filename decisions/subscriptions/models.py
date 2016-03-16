@@ -40,9 +40,10 @@ class SubscriptionUser(models.Model):
     def __unicode__(self):
         return u"%s: %s" % (self.user, self.subscription)
 
-    def is_fresh(self):
+    def is_fresh(self, for_user):
         return self.subscription.subscriptionhit_set.filter(
-            created__gt=now()-timedelta(days=3)
+            created__gt=now()-timedelta(days=3),
+            notified_users=for_user
         ).count()
 
     class Meta:
@@ -76,6 +77,7 @@ class Subscription(models.Model):
 
 class SubscriptionHit(models.Model):
     subscriptions = models.ManyToManyField(Subscription)
+    notified_users = models.ManyToManyField('auth.User')
     created = models.DateTimeField(default=now)
     subject = models.CharField(max_length=300)
     link = models.CharField(max_length=300)

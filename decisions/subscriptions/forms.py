@@ -104,7 +104,7 @@ class SubscriptionForm(forms.Form):
             })
     )
     send_mail = forms.BooleanField(
-        label=_('Send email'),
+        label=_('Sends email'),
         help_text=_('If checked, notifications about new search results are also sent by email. Otherwise they will just show up in your feed.'),
         required=False
     )

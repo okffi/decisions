@@ -38,9 +38,7 @@ def dashboard(request):
     inactive_subscriptions = all_subscriptions.filter(active=False)
     hits = (
         SubscriptionHit.objects
-        .filter(
-            subscriptions__subscribed_users=request.user,
-        )
+        .filter(notified_users=request.user)
         .order_by('-created')
         [:30]
     )
@@ -57,6 +55,9 @@ def dashboard(request):
         ]
         terms = set(hit_terms).intersection(user_terms)
         hit.user_search_terms = terms
+
+    for subscription in subscriptions:
+        subscription.fresh_for_user = subscription.is_fresh(request.user)
 
     return render(
         request,
