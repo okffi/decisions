@@ -42,3 +42,15 @@ Usage
 
 Fetch, index and process new decisions from external sources with
 `python manage.py process_all`.
+
+Acknowledgements
+----------------
+
+This project bundles the following third party assets and software
+either modified or as is:
+
+* [autocomplete.js (MIT)](https://github.com/autocompletejs/autocomplete.js)
+* [optimal-select.js (MIT)](https://github.com/Autarc/optimal-select)
+* [libvoikko Python bindings (MPL)](https://github.com/voikko/corevoikko)
+* [jQuery (MIT)](https://github.com/jquery/jquery)
+* [Bootstrap (MIT)](https://github.com/twbs/bootstrap)

@@ -244,3 +244,19 @@ def logout(request):
         _("You have logged out.")
     )
     return redirect("index")
+
+def suggest(request):
+    """returns a list of suggest results in json
+
+    currently it only finds and suggests fresh subscriptions
+    """
+
+    fresh_subscriptions = (
+        Subscription.objects
+        .get_fresh()
+        .filter(search_term__startswith=request.GET.get("q"))
+    )[:5]
+
+    ret = [sub.search_term for sub in fresh_subscriptions]
+
+    return JsonResponse(ret)

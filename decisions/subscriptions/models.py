@@ -50,6 +50,17 @@ class SubscriptionUser(models.Model):
         verbose_name = _("subscribed user")
         verbose_name_plural = _("subscribed users")
 
+class SubscriptionQuerySet(models.QuerySet):
+    def get_fresh(self):
+        return (
+            self
+            .filter(
+                subscriptionhit__created__gt=now()-timedelta(days=3)
+            )
+            .annotate(hit_count=models.Count('subscriptionhit'))
+            .filter(hit_count__gt=0)
+        )
+
 class Subscription(models.Model):
     subscribed_users = models.ManyToManyField(
         'auth.User',
@@ -66,6 +77,8 @@ class Subscription(models.Model):
         verbose_name=_('Search term')
     )
     created = models.DateTimeField(default=now)
+
+    objects = SubscriptionQuerySet.as_manager()
 
     def __unicode__(self):
         return self.search_term
