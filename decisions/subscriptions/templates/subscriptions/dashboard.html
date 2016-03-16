@@ -9,36 +9,73 @@
 
     <div class="row">
       <div class="col-md-6">
-	<h3>{% trans "Subscriptions" %}</h3>
+	<h3>{% trans "Active subscriptions" %}</h3>
 
-	<table class="table">
-	  <tr>
-	    <th>{% trans "Search term" %}</th>
-	    <th>{% trans "Active" %}</th>
-	    <th>{% trans "Sends email" %}</th>
-	    <th>{% trans "Actions" %}</th>
-	  </tr>
+	<ul class="list-group">
 	  {% for s in subscriptions %}
-	  <tr>
-	    <td>{{ s.search_term }}</td>
-	    <td>{% if s.active %}<i class="glyphicon glyphicon-ok"></i>{% else %}<i class="glyphicon glyphicon-remove"></i>{% endif %}</td>
-	    <td>{% if s.send_mail %}<i class="glyphicon glyphicon-ok"></i>{% else %}<i class="glyphicon glyphicon-remove"></i>{% endif %}</td>
-	    <td><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></td>
-	  </tr>
+	  <li class="list-group-item">
+
+	    {% if s.send_mail %}
+	    <span class="badge">
+	      <i class="glyphicon glyphicon-envelope"></i>
+	    </span>
+	    {% endif %}
+
+	    {% if s.is_fresh %}
+	    <span class="badge">
+	      <i class="glyphicon glyphicon-leaf"></i>
+	    </span>
+	    {% endif %}
+
+	    <p><a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term }}">{{ s.subscription.search_term }}</a></p>
+
+	    <p><small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small></p>
+	  </li>
 	  {% empty %}
-	  <tr>
-	    <td colspan=4><div class="well text-center">{% blocktrans %}You can create subscriptions by saving searches you have made{% endblocktrans %}</div></td>
-	  </tr>
+	  <li class="list-group-item list-group-item-info text-center">
+	    {% blocktrans %}You can create subscriptions by saving searches you have made{% endblocktrans %}
+	  </li>
 	  {% endfor %}
-	</table>
+	</ul>
+
+	<div class="legend">
+	  <h4>{% trans "Legend" %}</h4>
+	  <p>
+	    <span class="badge">
+	      <i class="glyphicon glyphicon-envelope"></i>
+	    </span>
+	    {% trans "New notifications are sent to you by email as well" %}
+	  </p>
+	  <p>
+	    <span class="badge">
+	      <i class="glyphicon glyphicon-leaf"></i>
+	    </span>
+	    {% trans "Fresh. Has triggered notifications recently" %}
+	  </p>
+	</div>
+	{% if inactive_subscriptions %}
+	<h3>{% trans "Dormant subscriptions" %}</h3>
+
+	<p>{% blocktrans %}These subscriptions will not add notifications to your feed or send email. You can enable subscriptions from here by editing them.{% endblocktrans %}</p>
+
+	<ul class="list-group">
+	  {% for s in inactive_subscriptions %}
+	  <li class="list-group-item">
+	    <p>{{ s.subscription.search_term }}</p>
+
+	    <small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small>
+	  </li>
+	  {% endfor %}
+	</ul>
+	{% endif %}
       </div>
       <div class="col-md-6">
 	<h3>{% trans "Feed" %}</h3>
 
 	{% if feed %}
-	<ol>
+	<ol class="list-group">
 	  {% for item in feed %}
-	  <li>
+	  <li class="list-group-item">
 	    <p><a href="{{ item.link }}">{{ item.subject }}</a></p>
 	    <p>{% blocktrans with term=item.user_search_terms|join:"; " timestamp=item.created since=item.created|timesince count counter=item.user_search_terms|length %}from search <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% plural %}from searches <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% endblocktrans %}</p>
 	  </li>

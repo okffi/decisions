@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import os
 import base64
+from datetime import timedelta
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -26,8 +27,33 @@ class UserProfile(models.Model):
         if self.email_confirmed:
             return self.user.email
 
+class SubscriptionUser(models.Model):
+    user = models.ForeignKey('auth.User')
+    subscription = models.ForeignKey('Subscription')
+    active = models.BooleanField(default=True, verbose_name=_('Active'))
+    send_mail = models.BooleanField(
+        default=False,
+        verbose_name=_('Sends email')
+    )
+    subscribed_at = models.DateTimeField(default=now)
+
+    def __unicode__(self):
+        return u"%s: %s" % (self.user, self.subscription)
+
+    def is_fresh(self):
+        return self.subscription.subscriptionhit_set.filter(
+            created__gt=now()-timedelta(days=3)
+        ).count()
+
+    class Meta:
+        verbose_name = _("subscribed user")
+        verbose_name_plural = _("subscribed users")
+
 class Subscription(models.Model):
-    subscribers = models.ManyToManyField('auth.User')
+    subscribed_users = models.ManyToManyField(
+        'auth.User',
+        through=SubscriptionUser
+    )
     previous_version = models.ForeignKey(
         'self',
         null=True,
@@ -38,16 +64,7 @@ class Subscription(models.Model):
         max_length=300,
         verbose_name=_('Search term')
     )
-    # TODO put active and send_mail to through table to subscribers
-    active = models.BooleanField(
-        default=True,
-        verbose_name=_('Active')
-    )
     created = models.DateTimeField(default=now)
-    send_mail = models.BooleanField(
-        default=False,
-        verbose_name=_('Sends email')
-    )
 
     def __unicode__(self):
         return self.search_term

@@ -95,13 +95,23 @@ class LoginForm(forms.Form):
             raise forms.ValidationError(_("Email or password did not match. Please try again."))
         return self.cleaned_data
 
-class SubscriptionForm(forms.ModelForm):
-    class Meta:
-        model = Subscription
-        fields = ["search_term", "send_mail"]
-        widgets = {
-            "search_term": forms.TextInput(
-                attrs={
-                    "class": "form-control"
-                })
-        }
+class SubscriptionForm(forms.Form):
+    search_term = forms.CharField(
+        label=_('Search term'),
+        widget=forms.TextInput(
+            attrs={
+            "class": "form-control"
+            })
+    )
+    send_mail = forms.BooleanField(
+        label=_('Send email'),
+        help_text=_('If checked, notifications about new search results are also sent by email. Otherwise they will just show up in your feed.'),
+        required=False
+    )
+
+class SubscriptionEditForm(SubscriptionForm):
+    active = forms.BooleanField(
+        label=_('Active'),
+        help_text=_('If you do not wish to receive any more notifications from this subscriptions, you can disable it. Old notifications will not disappear from your feed.'),
+        required=False
+    )

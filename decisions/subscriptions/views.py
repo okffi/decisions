@@ -15,25 +15,32 @@ from django.utils.translation import ugettext as _
 from django.core.mail import send_mail
 from django.utils.timezone import now
 from django.utils.http import is_safe_url
+from django.db.transaction import atomic
 
 from decisions.subscriptions.models import (
     UserProfile,
     Subscription,
+    SubscriptionUser,
     SubscriptionHit
 )
 from decisions.subscriptions.forms import (
     RegisterForm,
     LoginForm,
-    SubscriptionForm
+    SubscriptionForm,
+    SubscriptionEditForm
 )
 
 
 @login_required
 def dashboard(request):
-    subscriptions = Subscription.objects.filter(subscribers=request.user)
+    all_subscriptions = SubscriptionUser.objects.filter(user=request.user)
+    subscriptions = all_subscriptions.filter(active=True)
+    inactive_subscriptions = all_subscriptions.filter(active=False)
     hits = (
         SubscriptionHit.objects
-        .filter(subscriptions__subscribers=request.user)
+        .filter(
+            subscriptions__subscribed_users=request.user,
+        )
         .order_by('-created')
         [:30]
     )
@@ -56,6 +63,7 @@ def dashboard(request):
         "subscriptions/dashboard.html",
         {
             "subscriptions": subscriptions,
+            "inactive_subscriptions": inactive_subscriptions,
             "feed": hits,
         })
 
@@ -64,9 +72,20 @@ def add_subscription(request):
     if request.method == "POST":
         form = SubscriptionForm(request.POST)
         if form.is_valid():
-            obj = form.save()
-            obj.subscribers.add(request.user)
-            obj.save()
+            with atomic():
+                subscription, created = (
+                    Subscription.objects.get_or_create(
+                        search_term=form.cleaned_data['search_term']
+                    )
+                )
+                SubscriptionUser.objects.get_or_create(
+                    subscription=subscription,
+                    user=request.user,
+                    defaults={
+                        "send_mail": form.cleaned_data['send_mail']
+                    }
+                )
+
             messages.success(
                 request,
                 _("You have subscribed to the search term <tt>%(search_term)s</tt>") % form.cleaned_data)
@@ -78,28 +97,48 @@ def add_subscription(request):
 
 @login_required
 def edit_subscription(request, subscription_id):
-    subscription = get_object_or_404(
-        Subscription,
-        pk=subscription_id
+    usersub = get_object_or_404(
+        SubscriptionUser,
+        pk=subscription_id,
+        user=request.user
     )
 
     if request.method == "POST":
-        form = SubscriptionForm(request.POST)
+        form = SubscriptionEditForm(request.POST)
         if form.is_valid():
-            new_obj = form.save()
-            subscription.subscribers.remove(request.user)
-            new_obj.subscribers.add(request.user)
-            new_obj.previous_version = subscription
-            new_obj.save()
+            with atomic():
+                # handle changed terms
+                if form.cleaned_data["search_term"] != usersub.subscription.search_term:
+                    subscription, created = (
+                        Subscription.objects.get_or_create(
+                            search_term=form.cleaned_data['search_term'],
+                            defaults={
+                                "previous_version": usersub.subscription
+                            }
+                        )
+                    )
+                    usersub.subscription = subscription
+
+                usersub.send_mail = form.cleaned_data['send_mail']
+                usersub.active = form.cleaned_data['active']
+                usersub.save()
 
             messages.success(
                 request,
-                _("You have edited the search term <tt>%(search_term)s</tt>") % form.cleaned_data)
+                _("You have edited your subscription to <tt>%(search_term)s</tt>") % form.cleaned_data)
+
             return redirect("dashboard")
     else:
-        form = SubscriptionForm(instance=subscription)
+        form = SubscriptionEditForm(initial={
+            "search_term": usersub.subscription.search_term,
+            "send_mail": usersub.send_mail,
+            "active": usersub.active
+        })
 
-    return render(request, "form.html", {"form": form, "verb": _("Edit subscription")})
+    return render(request, "form.html", {
+        "form": form,
+        "verb": _("Edit subscription")
+    })
 
 
 
