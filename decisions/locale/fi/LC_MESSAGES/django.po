@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-16 13:41+0200\n"
+"POT-Creation-Date: 2016-03-16 15:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,152 +22,157 @@ msgstr ""
 msgid "Ahjo"
 msgstr "Ahjo"
 
-#: decisions/ahjo/models.py:60
+#: decisions/ahjo/models.py:66
 msgid "Passed as drafted"
 msgstr "Hyväksytty"
 
-#: decisions/ahjo/models.py:61
+#: decisions/ahjo/models.py:67
 msgid "Passed after a vote"
 msgstr "Hyväksytty äänestyksen jälkeen"
 
-#: decisions/ahjo/models.py:62
+#: decisions/ahjo/models.py:68
 msgid "Passed revised by presenter"
 msgstr "Hyväksytty esittelijän muutoksen jälkeen"
 
-#: decisions/ahjo/models.py:63
+#: decisions/ahjo/models.py:69
 msgid "Passed modified"
 msgstr "Hyväksytty muutettuna"
 
-#: decisions/ahjo/models.py:64
+#: decisions/ahjo/models.py:70
 msgid "Rejected"
 msgstr "Hylätty"
 
-#: decisions/ahjo/models.py:65
+#: decisions/ahjo/models.py:71
 msgid "Noted as informational"
 msgstr "Tiedoksi"
 
-#: decisions/ahjo/models.py:66
+#: decisions/ahjo/models.py:72
 msgid "Returned to preparation"
 msgstr "Palautettu valmisteluun"
 
-#: decisions/ahjo/models.py:67
+#: decisions/ahjo/models.py:73
 msgid "Removed from agenda"
 msgstr "Poistettu päiväjärjestyksestä"
 
-#: decisions/ahjo/models.py:68
+#: decisions/ahjo/models.py:74
 msgid "Tabled"
 msgstr "Jätetty pöydälle"
 
-#: decisions/ahjo/models.py:69
+#: decisions/ahjo/models.py:75
 msgid "Election"
 msgstr "Äänestys"
 
-#: decisions/ahjo/models.py:70
+#: decisions/ahjo/models.py:76
 msgid "Unknown"
 msgstr "Ei päätöstä vielä"
 
-#: decisions/ahjo/models.py:79
+#: decisions/ahjo/models.py:85
 msgid "Subject"
 msgstr "Aihe"
 
-#: decisions/ahjo/models.py:83 decisions/ahjo/templates/ahjo/view.html.py:11
+#: decisions/ahjo/models.py:89 decisions/ahjo/templates/ahjo/view.html.py:23
 msgid "Preparer"
 msgstr "Esittelijä"
 
-#: decisions/ahjo/models.py:89 decisions/ahjo/templates/ahjo/view.html.py:14
+#: decisions/ahjo/models.py:95 decisions/ahjo/templates/ahjo/view.html.py:26
 msgid "Resolution"
 msgstr "Ratkaisu"
 
-#: decisions/ahjo/models.py:93
+#: decisions/ahjo/models.py:99
 msgid "Classification code"
 msgstr "Lajittelukoodi"
 
-#: decisions/ahjo/models.py:97
+#: decisions/ahjo/models.py:103
 msgid "Last modified time"
 msgstr "Viimeisin muokkausaika"
 
-#: decisions/ahjo/models.py:101
+#: decisions/ahjo/models.py:107
 msgid "Original"
 msgstr "Alkuperäinen"
 
-#: decisions/ahjo/models.py:111
+#: decisions/ahjo/models.py:118
 msgid "agenda item"
 msgstr "esitys"
 
-#: decisions/ahjo/models.py:112
+#: decisions/ahjo/models.py:119
 msgid "agenda items"
 msgstr "esityksiä"
 
-#: decisions/ahjo/models.py:133
+#: decisions/ahjo/models.py:148
 msgid "This is the element where the comment attaches on a decision"
 msgstr "Kommentti liittyy tähän elementtiin"
 
-#: decisions/ahjo/models.py:137
+#: decisions/ahjo/models.py:152
 msgid "Quote"
 msgstr "Sitaatti"
 
-#: decisions/ahjo/models.py:138
+#: decisions/ahjo/models.py:153
 msgid "Quotes are required."
 msgstr "Sitaatti vaaditaan"
 
-#: decisions/ahjo/models.py:141
+#: decisions/ahjo/models.py:156
 msgid "Comment"
 msgstr "Kommentti"
 
-#: decisions/ahjo/models.py:146
+#: decisions/ahjo/models.py:161
 msgid "comment"
 msgstr "kommentti"
 
-#: decisions/ahjo/models.py:147
+#: decisions/ahjo/models.py:162
 msgid "comments"
 msgstr "kommentteja"
 
-#: decisions/ahjo/models.py:152
+#: decisions/ahjo/models.py:167
 msgid "guest"
 msgstr "vieras"
 
-#: decisions/ahjo/templates/ahjo/view.html:12
+#: decisions/ahjo/templates/ahjo/view.html:15
+#, python-format
+msgid "%(since)s ago"
+msgstr "%(since)s sitten"
+
+#: decisions/ahjo/templates/ahjo/view.html:24
 msgid "Date updated"
 msgstr "Päivitetty"
 
-#: decisions/ahjo/templates/ahjo/view.html:13
+#: decisions/ahjo/templates/ahjo/view.html:25
 msgid "Classification"
 msgstr "Luokittelu"
 
-#: decisions/ahjo/templates/ahjo/view.html:25
+#: decisions/ahjo/templates/ahjo/view.html:37
 msgid "Attachments"
 msgstr "Liitetiedostot"
 
-#: decisions/ahjo/templates/ahjo/view.html:33
+#: decisions/ahjo/templates/ahjo/view.html:45
 msgid "Download"
 msgstr "Lataa"
 
-#: decisions/ahjo/templates/ahjo/view.html:38
+#: decisions/ahjo/templates/ahjo/view.html:50
 msgid "This decision has no attachments."
 msgstr "Tällä päätöksellä ei ole liitetiedostoja."
 
-#: decisions/ahjo/templates/ahjo/view.html:44
+#: decisions/ahjo/templates/ahjo/view.html:56
 msgid "Issue"
 msgstr "Aihe"
 
-#: decisions/ahjo/templates/ahjo/view.html:51
+#: decisions/ahjo/templates/ahjo/view.html:63
 msgid "Meeting information"
 msgstr "Kokoustietoja"
 
-#: decisions/ahjo/templates/ahjo/view.html:52
+#: decisions/ahjo/templates/ahjo/view.html:64
 msgid "Council"
 msgstr "Lautakunta"
 
-#: decisions/ahjo/templates/ahjo/view.html:53
+#: decisions/ahjo/templates/ahjo/view.html:65
 msgid "Date"
 msgstr "Päiväys"
 
-#: decisions/ahjo/templates/ahjo/view.html:79
+#: decisions/ahjo/templates/ahjo/view.html:91
 msgid "Send Comment"
 msgstr "Kommentoi"
 
-#: decisions/ahjo/templates/ahjo/view.html:80
-#: decisions/ahjo/templates/ahjo/view.html:82 decisions/templates/base.html:49
+#: decisions/ahjo/templates/ahjo/view.html:92
+#: decisions/ahjo/templates/ahjo/view.html:94 decisions/templates/base.html:49
 msgid "Close"
 msgstr "Sulje"
 
@@ -284,32 +289,32 @@ msgstr "Mittarikenttä"
 msgid "Active subscriptions"
 msgstr "Aktiivisia tilauksia"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:32
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:66
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:33
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:67
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:36
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:37
 msgid "You can create subscriptions by saving searches you have made"
 msgstr "Voit luoda tilauksia tallentamalla hakuja joita olet tehnyt"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:42
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:43
 msgid "Legend"
 msgstr "Selite"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:47
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:48
 msgid "New notifications are sent to you by email as well"
 msgstr "Uudet ilmoitukset lähetetään myös sähköpostiisi"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:53
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:54
 msgid "Fresh. Has triggered notifications for you recently"
 msgstr "Tuore. On tuottanut ilmoituksia hiljattain"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:57
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:58
 msgid "Dormant subscriptions"
 msgstr "Nukkuvia tilauksia"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:59
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:60
 msgid ""
 "These subscriptions will not add notifications to your feed or send email. "
 "You can enable subscriptions from here by editing them."
@@ -317,11 +322,11 @@ msgstr ""
 "Nämä tilaukset eivät lisää ilmoituksia syötteeseesi tai lähetä sähköpostia. "
 "Voit herättää tilauksia muokkaamalla niitä."
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:73
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:74
 msgid "Feed"
 msgstr "Syöte"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:80
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:81
 #, python-format
 msgid ""
 "from search <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
@@ -336,15 +341,17 @@ msgstr[1] ""
 "hauista <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
 "sitten"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:86
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:87
 msgid "Every time your subscriptions find new decisions, they are listed here."
 msgstr "Aina kun tilauksesi löytävät uusia päätöksiä, ne listataan tähän."
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:87
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:88
 msgid ""
 "This is just the new stuff, old results from new subscriptions are never "
 "added to the feed."
-msgstr "Tähän tulee vain uudet jutut, vanhat hakutulokset uusista tilauksista eivät ikinä ilmaannu syötteeseesi."
+msgstr ""
+"Tähän tulee vain uudet jutut, vanhat hakutulokset uusista tilauksista eivät "
+"ikinä ilmaannu syötteeseesi."
 
 #: decisions/subscriptions/templates/subscriptions/emails/confirm_email.txt:1
 #, python-format
@@ -413,6 +420,7 @@ msgid "Subscribe"
 msgstr "Tilaa"
 
 #: decisions/subscriptions/views.py:129
+#, python-format
 msgid "You have edited your subscription to <tt>%(search_term)s</tt>"
 msgstr "Olet muokannut tilaustasi <tt>%(search_term)s</tt>"
 

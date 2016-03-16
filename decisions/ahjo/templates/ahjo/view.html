@@ -7,6 +7,18 @@
   <div class="col-md-8 col-md-offset-2">
     <h2>{{ agendaitem.subject }}</h2>
 
+    {% if more_items %}
+    <ul class="nav nav-tabs">
+      {% for item in items %}
+      <li role="presentation" {% if item.pk == agendaitem.pk %}class="active"{% endif %}>
+	<a href="{{ item.get_absolute_url }}">
+	  {% blocktrans with since=item.last_modified_time|timesince %}{{ since }} ago{% endblocktrans %}
+	</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
     <div class="agenda_info">
       <p><strong>{% trans "Preparer" %}:</strong> {{ agendaitem.preparer }}</p>
       <p><strong>{% trans "Date updated" %}:</strong> {{ agendaitem.last_modified_time }}</p>
@@ -65,7 +77,7 @@
 <script src="{% static "js/comments.js" %}"></script>
 
 <script type="text/javascript">
-  comments_url = "{% url "ahjo-get-comments" id_b36 %}";
+  comments_url = "{% url "ahjo-get-comments" id_b36 agendaitem.pk %}";
   item_id = "{{ id_b36 }}";
   commenting_enabled = {{ request.user.is_authenticated|yesno:"true,false" }};
 </script>
@@ -73,7 +85,7 @@
 <div style="display:none;" class="snippets">
   <!-- HTML snippets for javascript -->
   <div class="comment-form">
-    <form method="post" action="{% url 'ahjo-comment' id_b36 %}">
+    <form method="post" action="{% url 'ahjo-comment' id_b36 agendaitem.pk %}">
       {% csrf_token %}
       {{ comment_form.as_p }}
       <button type="submit" class="btn btn-primary">{% trans "Send Comment" %}</button>

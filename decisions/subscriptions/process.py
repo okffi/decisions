@@ -3,13 +3,14 @@ from django.utils.timezone import now
 from django.utils.translation import ungettext
 from django.template import loader
 from django.core.mail import send_mail
+from django.db.transaction import atomic
 
 from haystack.query import SearchQuerySet
 
 from decisions.subscriptions.models import Subscription, SubscriptionHit
 from decisions.subscriptions.voikko import VoikkoSearchQuerySet
 
-
+@atomic
 def process_subscriptions():
     """Loop over all active subscriptions and create new hits based on
     search results"""
@@ -42,7 +43,7 @@ def process_subscriptions():
             )
             for r in results
         ]
-        for hit,created in hits:
+        for hit, created in hits:
             hit.subscriptions.add(s)
 
         hit_count += len(hits)
@@ -54,8 +55,8 @@ def process_subscriptions():
                 profile__email_confirmed__isnull=False
             )
 
-            for hit in hits:
-                hit.notified_users.add(users)
+            for hit, created in hits:
+                hit.notified_users.add(*users)
 
             notify_users.update(users)
 
@@ -64,8 +65,7 @@ def process_subscriptions():
             SubscriptionHit.objects
             .filter(
                 created__gte=time_started,
-                subscription__subscribers=u,
-                subscription__send_mail=True,
+                notified_users=u
             )
             .order_by('-created')
         )

@@ -29,6 +29,11 @@ class AgendaItemQuerySet(models.QuerySet):
         else:
             last_modified_time = None
 
+        if self.filter(ahjo_id=json["id"]).count():
+            has_revisions = True
+        else:
+            has_revisions = False
+
         return self.create(
             ahjo_id=json["id"],
             subject=json["subject"],
@@ -36,7 +41,8 @@ class AgendaItemQuerySet(models.QuerySet):
             resolution=json["resolution"] or UNKNOWN,
             classification_code=json.get("classification_code"),
             last_modified_time=last_modified_time,
-            original=json
+            original=json,
+            has_revisions=has_revisions
         )
     create_from_json.queryset_only = False
 
@@ -72,7 +78,7 @@ RESOLUTION_CHOICES = (
 
 
 class AgendaItem(models.Model):
-    ahjo_id = models.IntegerField(db_index=True, unique=True)
+    ahjo_id = models.IntegerField(db_index=True)
     subject = models.CharField(
         # one line, yeah right
         max_length=500,
@@ -99,6 +105,7 @@ class AgendaItem(models.Model):
     )
     fetched = models.DateTimeField(default=now)
     original = pgfields.JSONField(verbose_name=_("Original"))
+    has_revisions = models.BooleanField(default=False)
 
     objects = AgendaItemQuerySet.as_manager()
 
@@ -114,11 +121,19 @@ class AgendaItem(models.Model):
         ordering = ("-last_modified_time",)
 
     def get_absolute_url(self):
-        return reverse('ahjo-view',
-                       kwargs={
-                           "ahjo_id_b36": b36encode(self.ahjo_id),
-                           "slug": slugify(self.subject)
-                       })
+        if self.has_revisions:
+            return reverse('ahjo-view',
+                           kwargs={
+                               "ahjo_id_b36": b36encode(self.ahjo_id),
+                               "slug": slugify(self.subject),
+                               "disambiguation_id": self.pk
+                           })
+        else:
+            return reverse('ahjo-view',
+                           kwargs={
+                               "ahjo_id_b36": b36encode(self.ahjo_id),
+                               "slug": slugify(self.subject)
+                           })
 
     def get_attachments(self):
         return [v for v in self.original["attachments"]
