@@ -90,7 +90,7 @@ def add_subscription(request):
             messages.success(
                 request,
                 _("You have subscribed to the search term <tt>%(search_term)s</tt>") % form.cleaned_data)
-            return redirect("dashboard")
+            return redirect("index")
     else:
         form = SubscriptionForm(initial={"search_term": request.GET.get("q")})
 
@@ -128,7 +128,7 @@ def edit_subscription(request, subscription_id):
                 request,
                 _("You have edited your subscription to <tt>%(search_term)s</tt>") % form.cleaned_data)
 
-            return redirect("dashboard")
+            return redirect("index")
     else:
         form = SubscriptionEditForm(initial={
             "search_term": usersub.subscription.search_term,
@@ -158,7 +158,7 @@ def login(request):
                         _("Logged in successfully"))
                     if not is_safe_url(url=redirect_to,
                                        host=request.get_host()):
-                        return redirect("dashboard")
+                        return redirect("index")
 
                     return redirect(redirect_to)
                 else:
@@ -167,6 +167,8 @@ def login(request):
                         _("Your account is disabled. Please contact webmaster."))
     else:
         form = LoginForm(initial={"next": redirect_to})
+
+    print form.errors
 
     return render(request, "form.html", {
         "form": form,
@@ -210,7 +212,7 @@ def register(request):
                 request, messages.SUCCESS,
                 _("Your account has been registered. Check your mail to confirm your email address.")
             )
-            return redirect('dashboard')
+            return redirect('index')
     else:
         form = RegisterForm()
 
@@ -234,8 +236,7 @@ def confirm_email(request, confirm_code):
         _("Your email address has been confirmed.")
     )
 
-    # XXX user might not be logged in
-    return redirect("dashboard")
+    return redirect("index")
 
 def logout(request):
     auth_logout(request)

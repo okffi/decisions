@@ -20,5 +20,4 @@ urlpatterns = [
     url(r'^add/$', add_subscription, name="add-subscription"),
     url(r'^edit/(?P<subscription_id>\d+)/$', edit_subscription, name="edit-subscription"),
     url(r'^suggest/$', suggest, name='suggest'),
-    url(r'^$', dashboard, name="dashboard"),
 ]

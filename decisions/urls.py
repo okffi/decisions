@@ -19,12 +19,15 @@ from django.views.i18n import javascript_catalog
 from django.shortcuts import render
 
 from decisions.subscriptions.forms import LoginForm, RegisterForm
+from decisions.subscriptions.views import dashboard
 
 js_info_dict = {
     'packages': ('decisions',),
 }
 
 def index(request):
+    if request.user.is_authenticated():
+        return dashboard(request)
     return render(request, "index.html", {
         "login_form": LoginForm(),
         "register_form": RegisterForm(),

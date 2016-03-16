@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-16 15:12+0200\n"
+"POT-Creation-Date: 2016-03-16 16:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -172,7 +172,7 @@ msgid "Send Comment"
 msgstr "Kommentoi"
 
 #: decisions/ahjo/templates/ahjo/view.html:92
-#: decisions/ahjo/templates/ahjo/view.html:94 decisions/templates/base.html:49
+#: decisions/ahjo/templates/ahjo/view.html:94 decisions/templates/base.html:52
 msgid "Close"
 msgstr "Sulje"
 
@@ -220,7 +220,7 @@ msgstr "Ole hyvä ja valitse joku muu sähköpostiosoite"
 msgid "Email or password did not match. Please try again."
 msgstr "Sähköposti tai salasana ei täsmää. Ole hyvä ja yritä uudestaan"
 
-#: decisions/subscriptions/forms.py:100 decisions/subscriptions/models.py:66
+#: decisions/subscriptions/forms.py:100 decisions/subscriptions/models.py:77
 msgid "Search term"
 msgstr "Hakuteksti"
 
@@ -257,19 +257,19 @@ msgstr "tilaaja"
 msgid "subscribed users"
 msgstr "tilaajia"
 
-#: decisions/subscriptions/models.py:74
+#: decisions/subscriptions/models.py:87
 msgid "subscription"
 msgstr "tilaus"
 
-#: decisions/subscriptions/models.py:75
+#: decisions/subscriptions/models.py:88
 msgid "subscriptions"
 msgstr "tilauksia"
 
-#: decisions/subscriptions/models.py:93
+#: decisions/subscriptions/models.py:106
 msgid "subscription hit"
 msgstr "tilauksen osuma"
 
-#: decisions/subscriptions/models.py:94
+#: decisions/subscriptions/models.py:107
 msgid "subscription hits"
 msgstr "tilauksen osumia"
 
@@ -281,7 +281,6 @@ msgstr[0] "[%(SITE_NAME)s] %(event_count)s uusi tapahtuma"
 msgstr[1] "[%(SITE_NAME)s] %(event_count)s uutta tapahtumaa"
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:8
-#: decisions/templates/base.html:37
 msgid "Dashboard"
 msgstr "Mittarikenttä"
 
@@ -466,28 +465,28 @@ msgstr "Sähköpostiosoitteesi on vahvistettu."
 msgid "You have logged out."
 msgstr "Olet kirjautunut ulos."
 
-#: decisions/templates/base.html:10 decisions/templates/base.html.py:18
+#: decisions/templates/base.html:10 decisions/templates/base.html.py:19
 msgid "Decisions"
 msgstr "Päätökset"
 
-#: decisions/templates/base.html:20
+#: decisions/templates/base.html:23
+msgid "Search from decisions"
+msgstr "Hae päätöksistä"
+
+#: decisions/templates/base.html:25
 msgid "Search"
 msgstr "Hae"
 
-#: decisions/templates/base.html:23
-msgid "E.g. bicycling, beer gardens"
-msgstr "Esim. polkupyöräily, terassit"
-
-#: decisions/templates/base.html:32
+#: decisions/templates/base.html:36
 #, python-format
 msgid "Logged in as <strong>%(username)s</strong>"
 msgstr "Kirjautuneena käyttäjällä <strong>%(username)s</strong>"
 
-#: decisions/templates/base.html:35
+#: decisions/templates/base.html:39
 msgid "Log out"
 msgstr "Kirjaudu ulos"
 
-#: decisions/templates/base.html:67
+#: decisions/templates/base.html:70
 #, python-format
 msgid ""
 "This website is free open source software. Source code is available <a href="
@@ -565,3 +564,6 @@ msgstr "Hae päätöksiä"
 #: decisions/templates/snippets/form_group.html:8
 msgid "Required"
 msgstr "Tärkeä kenttä"
+
+#~ msgid "E.g. bicycling, beer gardens"
+#~ msgstr "Esim. polkupyöräily, terassit"

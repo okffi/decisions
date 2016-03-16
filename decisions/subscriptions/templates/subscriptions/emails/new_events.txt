@@ -7,6 +7,6 @@
 {% endfor %}{% if more_notifications %}
 {% blocktrans %}You also have {{ more_notifications }} additional notifications.{% endblocktrans %}
 {% trans "You can view them at:" %}
-{{ SITE_URL }}{% url "dashboard" %}
+{{ SITE_URL }}{% url "index" %}
 {% else %}{% trans "You can view your feed and manage your subscriptions in our dashboard:" %}
-{{ SITE_URL }}{% url "dashboard" %}{% endif %}{% include "email_footer.txt" %}
+{{ SITE_URL }}{% url "index" %}{% endif %}{% include "email_footer.txt" %}

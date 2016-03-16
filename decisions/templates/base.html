@@ -18,10 +18,13 @@
     <div class="col-md-8 col-md-offset-2">
       <a href="{% url 'index' %}"><h1>{% trans "Decisions" %}</h1></a>
 
-      <h2>{% trans "Search" %}</h2>
-
       <form method="get" action="{% url "haystack_search" %}">
-	<input type="text" name="q" placeholder="{% trans "E.g. bicycling, beer gardens" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} class="form-control">
+	<div class="input-group">
+	  <input type="text" name="q" placeholder="{% trans "Search from decisions" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} class="form-control">
+	  <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">{% trans "Search" %}</button>
+	  </span>
+	</div>
       </form>
 
     </div>
@@ -35,7 +38,6 @@
 	{% csrf_token %}
 	<button class="btn btn-link">{% trans "Log out" %}</button>
       </form>
-      <a href="{% url "dashboard" %}"><button type="button" class="btn btn-link">{% trans "Dashboard" %}</button></a>
     </div>
   </div>
   {% endif %}

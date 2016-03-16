@@ -87,7 +87,7 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
         label=_("Password")
     )
-    next = forms.CharField(widget=forms.HiddenInput)
+    next = forms.CharField(widget=forms.HiddenInput, required=False)
 
     def clean(self):
         self.user = authenticate(**self.cleaned_data)
