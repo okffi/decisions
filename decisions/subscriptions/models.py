@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.postgres import fields as pgfields
 
 def make_confirm_code():
     return base64.b64encode(os.urandom(15))
@@ -22,6 +23,8 @@ class UserProfile(models.Model):
         default=make_confirm_code
     )
     email_confirm_sent_on = models.DateTimeField(null=True, blank=True)
+
+    extra = pgfields.JSONField(default=dict)
 
     def confirmed_email(self):
         if self.email_confirmed:
@@ -106,3 +109,4 @@ class SubscriptionHit(models.Model):
         verbose_name = _("subscription hit")
         verbose_name_plural = _("subscription hits")
         get_latest_by = "created"
+        ordering = ('-created',)

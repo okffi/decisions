@@ -44,4 +44,7 @@ urlpatterns = [
     #url(r'^search/', include('haystack.urls')),
     url(r'^$', index, name='index'),
     url(r'^subscriptions/', include('decisions.subscriptions.urls')),
+    url(r'^api/v1/', include([
+        url(r'^feed/', include('decisions.subscriptions.api_urls')),
+    ])),
 ]

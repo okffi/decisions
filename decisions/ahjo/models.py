@@ -13,8 +13,13 @@ from django.contrib.auth.models import User
 
 from dateutil.parser import parse
 import arrow
+from pytz import timezone, UTC
 
 from decisions.ahjo.utils import b36encode, b36decode
+
+
+AHJO_TZ = timezone('Europe/Helsinki')
+AHJO_PREFIX = "http://dev.hel.fi"
 
 
 class AgendaItemQuerySet(models.QuerySet):
@@ -24,7 +29,7 @@ class AgendaItemQuerySet(models.QuerySet):
         if json["last_modified_time"]:
             last_modified_time = parse(json["last_modified_time"])
             last_modified_time = last_modified_time.replace(
-                tzinfo=get_default_timezone()
+                tzinfo=AHJO_TZ
             )
         else:
             last_modified_time = None
@@ -138,6 +143,62 @@ class AgendaItem(models.Model):
     def get_attachments(self):
         return [v for v in self.original["attachments"]
                 if all([v["name"], v["file_uri"], v["file_type"]])]
+
+    def resolve_url(self, url):
+        return AHJO_PREFIX + url
+
+    def get_activitystream(self):
+        """Activity stream object for this item
+
+        Some fields are duplicated because mooncake doesn't seem to
+        strictly follow the standard.
+
+        """
+        policy_url = self.resolve_url(self.original['meeting']['policymaker'])
+        object_url = self.resolve_url(self.original['resource_uri'])
+        target_url = self.resolve_url(self.original['issue']['resource_uri'])
+
+        return {
+            "@context": "http://www.w3.org/ns/activitystreams",
+            "@type": "Add",
+            "type": "Add",
+            # output UTC
+            "published": (
+                self.last_modified_time
+                .astimezone(UTC)
+                .replace(microsecond=0)
+                .isoformat()
+            ),
+            "actor": {
+                "@type": "Group",
+                "type": "Group",
+                "@id": policy_url,
+                "id": policy_url,
+                "displayName": self.original["meeting"]["policymaker_name"],
+            },
+            "object": {
+                "@id": object_url,
+                "id": object_url,
+                "@type": "Content",
+                "type": "Content",
+                "url": self.original["permalink"],
+                "displayName": self.subject,
+                "content": self.get_content_intro(),
+            },
+            "target": {
+                "@id": target_url,
+                "id": target_url,
+                "@type": "Content",
+                "type": "Content",
+                "displayName": self.original["issue"]["subject"],
+                "content": self.original["issue"].get("summary")
+            }
+        }
+
+    def get_content_intro(self):
+        if self.original["content"]:
+            return self.original["content"][0]["text"]
+        return u""
 
 
 class Comment(models.Model):
