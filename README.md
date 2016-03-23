@@ -19,10 +19,11 @@ permissions for.
 
 A minimal runnable instance can be operated as follows:
 
-1. Install project requirements with `pip install -U -r requirements.txt`
-2. Migrate database with `python manage.py migrate`
-3. Compile translations with `python manage.py compilemessages`
-4. Finally, run the project with `python manage.py runserver`
+1. Go to the web/ directory
+2. Install project requirements with `pip install -U -r requirements.txt`
+3. Migrate database with `python manage.py migrate`
+4. Compile translations with `python manage.py compilemessages`
+5. Finally, run the project with `python manage.py runserver`
 
 Repeat these steps every time you update for smooth sailing. For
 production deployment, also run `python manage.py collectstatic`.
@@ -30,6 +31,11 @@ production deployment, also run `python manage.py collectstatic`.
 When first importing data to an empty database, create the text search
 engine index with `python manage.py rebuild_index`. You can rebuild
 the index any time.
+
+Docker
+------
+
+Alternatively, you can build and run a composed Docker setup.
 
 Optional things
 ---------------
