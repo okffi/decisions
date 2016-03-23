@@ -147,7 +147,7 @@ HAYSTACK_CONNECTIONS = {
 
 DEFAULT_FROM_EMAIL = "noreply@example.com"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-SITE_URL = "http://localhost:8000"
+SITE_URL = os.environ.get("SITE_URL", "http://localhost:8000")
 SITE_NAME = "Decisions"
 
 if "DATABASE_URL" in os.environ:
@@ -155,7 +155,6 @@ if "DATABASE_URL" in os.environ:
     import dj_database_url
     db_from_env = dj_database_url.config(conn_max_age=60)
     DATABASES['default'].update(db_from_env)
-    SITE_URL = "http://cryptic-earth-25359.herokuapp.com"
 
 if "MAILGUN_SMTP_SERVER" in os.environ:
     # Heroku Mailgun integration
