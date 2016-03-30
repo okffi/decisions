@@ -37,6 +37,22 @@ Docker
 
 Alternatively, you can build and run a composed Docker setup.
 
+To create initial Docker environment:
+
+    $ docker-machine create -d virtualbox dev
+
+To enable Docker environment variables:
+
+    $ eval $(docker-machine env dev)
+
+To build/update existing containers:
+
+    $ docker-compose build
+    $ docker-compose up -d
+    $ docker-compose run web /usr/local/bin/python manage.py migrate
+    $ docker-compose run web /usr/local/bin/python manage.py collectstatic
+    $ docker-machine ip dev
+
 Optional things
 ---------------
 

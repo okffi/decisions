@@ -10,7 +10,6 @@ class VoikkoSearchQuerySet(SearchQuerySet):
         lang = get_language()
         if lang == u"fi":
             query_string = voikko_simplify(query_string, "fi")
-            print query_string
 
         return super(VoikkoSearchQuerySet, self).auto_query(
             query_string,

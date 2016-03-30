@@ -20,3 +20,4 @@ froide/media/
 celeryd.pid
 *~
 whoosh.idx/
+web/staticfiles/

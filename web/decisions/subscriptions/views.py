@@ -168,8 +168,6 @@ def login(request):
     else:
         form = LoginForm(initial={"next": redirect_to})
 
-    print form.errors
-
     return render(request, "form.html", {
         "form": form,
         "verb": _("Log in"),

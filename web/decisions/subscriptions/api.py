@@ -82,7 +82,7 @@ def jwt_required(f):
             })
 
         return f(request, *args, **kwargs)
-
+    return wrapper
 
 ACTIVITIES_PER_PAGE = 50
 

@@ -1,43 +1,45 @@
-web:
-  restart: always
-  build: ./web
-  expose:
-    - "8000"
-  links:
-    - postgres:postgres
-    - redis:redis
-  env_file: .env
-  command: /usr/local/bin/gunicorn decisions.wsgi:application -w 2 -b :8000
+version: '2'
 
-nginx:
-  restart: always
-  build: ./nginx/
-  ports:
-    - "80:80"
-  volumes:
-    - /www/static
-  volumes_from:
-    - web
-  links:
-    - web:web
+services:
+  web:
+    restart: always
+    build: ./web
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+      - redis:redis
+    volumes:
+      - static:/usr/src/app/staticfiles
+      - whoosh:/usr/src/app/whoosh.idx
+    env_file: .env
+    command: /usr/local/bin/gunicorn decisions.wsgi:application -w 2 -b :8000
 
-postgres:
-  restart: always
-  image: postgres:latest
-  volumes_from:
-    - data
-  ports:
-    - "5432:5432"
+  nginx:
+    restart: always
+    build: ./nginx/
+    ports:
+      - "80:80"
+    volumes:
+      - static:/usr/src/app/staticfiles
+    links:
+      - web:web
 
-redis:
-  restart: always
-  image: redis:latest
-  ports:
-    - "6379:6379"
+  postgres:
+    restart: always
+    image: postgres:latest
+    volumes:
+    - database:/var/lib/postgresql
+    ports:
+      - "5432:5432"
 
-data:
-  restart: always
-  image: postgres:latest
-  volumes:
-    - /var/lib/postgresql
-  command: "true"
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+volumes:
+  database: {}
+  static: {}
+  whoosh: {}
