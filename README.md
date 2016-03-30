@@ -72,9 +72,9 @@ create your own private settings:
    strangers to guess session keys, etc. You can generate a new
    acceptable secret key with the following Python snippet:
 
-    from django.utils.crypto import get_random_string
-    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-    print get_random_string(50, chars)
+        from django.utils.crypto import get_random_string
+        chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+        print get_random_string(50, chars)
 
 4. Important: Change `DEBUG` to `False`. Leaving the debug state to true exposes
    a lot of internal information on error pages that probably
