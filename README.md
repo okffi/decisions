@@ -80,10 +80,18 @@ create your own private settings:
    a lot of internal information on error pages that probably
    shouldn't be shown to the general public.
 
-5. Change `ADMINS` with your name and email address. The site will
+5. Important: Change `ALLOWED_HOSTS` to only include fully qualified
+   domain names you intend the site to be accessible on. You can have
+   multiple.
+
+6. Important: Change `SITE_URL` to point at a publicly accessible URL
+   to the site root. This is used to build full URLs for email links
+   and otherwise.
+
+7. Change `ADMINS` with your name and email address. The site will
    send page error messages to you by mail.
 
-6. You can set up a lot of site behavior with various settings. For
+8. You can set up a lot of site behavior with various settings. For
    example, you might want to setup your own email sending settings.
 
 You should keep your own Git branch private. Push it to private

@@ -30,14 +30,15 @@ services:
     image: postgres:latest
     volumes:
     - database:/var/lib/postgresql
-    ports:
-      - "5432:5432"
+    expose:
+      - "5432"
+
 
   redis:
     restart: always
     image: redis:latest
-    ports:
-      - "6379:6379"
+    expose:
+      - "6379"
 
 volumes:
   database: {}
