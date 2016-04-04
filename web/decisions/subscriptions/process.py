@@ -50,15 +50,20 @@ def process_subscriptions():
 
         if hits:
             users = s.subscribed_users.filter(
-                subscriptionuser__active=True,
-                subscriptionuser__send_mail=True,
-                profile__email_confirmed__isnull=False
+                subscriptionuser__active=True
             )
 
             for hit, created in hits:
                 hit.notified_users.add(*users)
 
-            notify_users.update(users)
+
+            email_users = s.subscribed_users.filter(
+                subscriptionuser__active=True,
+                subscriptionuser__send_mail=True,
+                profile__email_confirmed__isnull=False
+            )
+            notify_users.update(email_users)
+
 
     for u in notify_users:
         notifications = (

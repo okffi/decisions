@@ -41,25 +41,30 @@ class RegisterForm(forms.Form):
     )
 
     def clean(self):
-        if self.cleaned_data["password"] != self.cleaned_data["password_again"]:
-            self.add_error("password",
-                           forms.ValidationError(_("Passwords don't match")))
-            self.add_error("password_again",
-                           forms.ValidationError(_("Passwords don't match")))
+        if ("password" in self.cleaned_data
+            and "password_again" in self.cleaned_data):
+            if self.cleaned_data["password"] != self.cleaned_data["password_again"]:
+                self.add_error("password",
+                               forms.ValidationError(_("Passwords don't match")))
+                self.add_error("password_again",
+                               forms.ValidationError(_("Passwords don't match")))
 
-        self.cleaned_data["username"] = self.get_username()
+        if "email" in self.cleaned_data:
+            self.cleaned_data["username"] = self.get_username()
 
-        username_exists = User.objects.filter(
-            username=self.cleaned_data["username"]).count()
-        if username_exists:
-            self.add_error("username", forms.ValidationError(
-                _("Please choose another display name")))
+        if "username" in self.cleaned_data:
+            username_exists = User.objects.filter(
+                username=self.cleaned_data["username"]).count()
+            if username_exists:
+                self.add_error("username", forms.ValidationError(
+                    _("Please choose another display name")))
 
-        email_exists = User.objects.filter(
-            email=self.cleaned_data["email"]).count()
-        if email_exists:
-            self.add_error("email", forms.ValidationError(
-                _("Please choose another email address")))
+        if "email" in self.cleaned_data:
+            email_exists = User.objects.filter(
+                email=self.cleaned_data["email"]).count()
+            if email_exists:
+                self.add_error("email", forms.ValidationError(
+                    _("Please choose another email address")))
 
         if "password" in self.cleaned_data:
             validate_password(self.cleaned_data["password"])
@@ -67,7 +72,7 @@ class RegisterForm(forms.Form):
         return self.cleaned_data
 
     def get_username(self):
-        if self.cleaned_data["username"]:
+        if self.cleaned_data.get("username"):
             return self.cleaned_data["username"]
         return self.cleaned_data["email"].split("@", 1)[0]
 
