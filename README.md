@@ -49,16 +49,16 @@ To build/update existing containers:
 
     $ docker-compose build
     $ docker-compose up -d
-    $ docker-compose run web /usr/local/bin/python manage.py migrate
-    $ docker-compose run web /usr/local/bin/python manage.py collectstatic
+    $ docker-compose run --rm web /usr/local/bin/python manage.py migrate
+    $ docker-compose run --rm web /usr/local/bin/python manage.py collectstatic --noinput
 
 You can find out the IP address to access the newly deployed site with
 `docker-machine`:
 
     $ docker-machine ip dev
 
-Deploying to production with Docker
------------------------------------
+Deploying to production with Docker Compose
+-------------------------------------------
 
 The project will build a demo/development Docker cluster by
 default. However, if you wish to deploy it in public, you should
@@ -103,6 +103,87 @@ merge`. From your branch:
     $ git merge master
 
 You may need to resolve conflicts within your settings file.
+
+Manual Docker deployment
+------------------------
+
+It might not be possible to use docker-compose to deploy, e.g. on a
+shared host. Here are manual Docker commands to deploy on a generic
+Docker host.
+
+**Disclaimer:** These instructions are maintained separately from the
+executable `docker-compose.yml` file, and the resulting setup might be
+different/slightly out of date.
+
+To get images for deployment, build containers with docker-compose as
+usual:
+
+    $ docker-compose build
+    (test with docker-compose up)
+
+Check the **names** of the built images with docker images
+
+    $ docker images
+    REPOSITORY                          TAG                 IMAGE ID            CREATED             SIZE
+    helsinkidecisions_web               latest              8da3a688edd4        26 minutes ago      732.6 MB
+    helsinkidecisions_nginx             latest              1da419479050        26 minutes ago      206.1 MB
+
+Then save the resulting web and nginx images
+
+    $ docker save -o decisions.tar decisions_web
+    $ docker save -o dec-nginx.tar decisions_nginx
+
+Then uploads them to host e.g. with scp
+
+Set up Docker host for the first time, starting with network and volumes:
+
+    # docker network create --driver bridge decisions
+    # docker volume create --name dec-database
+    # docker volume create --name dec-whoosh
+    # docker volume create --name dec-static
+
+Create generic service containers (postgres, redis):
+
+    #  docker create --name dec-postgres \
+        -v dec-database:/var/lib/postgresql \
+        --expose 5432 \
+        --restart always \
+        --net-alias postgres \
+        --net decisions \
+	postgres:latest
+    # docker create --name=dec-redis \
+        --expose 6379 \
+	--restart always \
+        --net-alias redis \
+	--net decisions \
+	redis:latest
+
+Update Docker images on the host:
+
+    # docker load -i decisions.tar
+    # docker load -i dec-nginx.tar
+
+Create or re-create containers out of updated images:
+
+    # docker rm decisions dec-nginx
+
+    # docker create --name=decisions \
+        -v dec-static:/usr/src/app/staticfiles \
+	-v dec-whoosh:/usr/src/app/whoosh.idx \
+	--expose 8000 \
+	--env "DATABASE_URL=postgres://postgres:postgres@postgres:5432/postgres" \
+	--restart always \
+	--net-alias web \
+	--net decisions \
+	decisions_web
+    # docker create --name=dec-nginx \
+        -v dec-static:/usr/src/app/staticfiles \
+	--restart=always \
+	--net-alias=nginx \
+	--net=decisions \
+	--publish=8099:80 \
+	decisions_nginx
+
 
 Optional things
 ---------------

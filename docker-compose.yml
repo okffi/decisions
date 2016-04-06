@@ -6,24 +6,22 @@ services:
     build: ./web
     expose:
       - "8000"
-    links:
-      - postgres:postgres
-      - redis:redis
     volumes:
       - static:/usr/src/app/staticfiles
       - whoosh:/usr/src/app/whoosh.idx
     env_file: .env
-    command: /usr/local/bin/gunicorn decisions.wsgi:application -w 2 -b :8000
+    networks:
+      - decisions
 
   nginx:
     restart: always
-    build: ./nginx/
+    build: ./nginx
     ports:
       - "80:80"
     volumes:
       - static:/usr/src/app/staticfiles
-    links:
-      - web:web
+    networks:
+      - decisions
 
   postgres:
     restart: always
@@ -32,13 +30,20 @@ services:
     - database:/var/lib/postgresql
     expose:
       - "5432"
-
+    networks:
+      - decisions
 
   redis:
     restart: always
     image: redis:latest
     expose:
       - "6379"
+    networks:
+      - decisions
+
+networks:
+  decisions:
+    driver: bridge
 
 volumes:
   database: {}
