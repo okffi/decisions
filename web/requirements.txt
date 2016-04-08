@@ -1,7 +1,7 @@
 arrow==0.7.0
 dj-database-url==0.4.0
 Django==1.9.3
--e git+https://github.com/django-haystack/django-haystack.git@12f54227903acdfcc9f5dc1ae918cec9396b2900#egg=django_haystack
+-e git+https://github.com/toastdriven/django-haystack.git@6e559dedbc8f17a80d361a05e16e8ce08bb09662#egg=django_haystack
 future==0.15.2
 gunicorn==19.4.5
 psycopg2==2.6.1
