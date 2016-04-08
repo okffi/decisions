@@ -224,11 +224,14 @@ class SubscriptionTest(TestCase):
 
 
     def testNewHitCreatesNotification(self):
+        self.assertEqual(Subscription.objects.count(), 0)
+
         resp = self.c.post("/subscriptions/add/", {
             "search_term": "asukasvalinnat",
             "send_mail": False
         }, follow=True)
         self.assertEqual(resp.status_code, 200)
+        self.assertEqual(Subscription.objects.count(), 1)
 
         s = Subscription.objects.get(search_term="asukasvalinnat")
         s.created = datetime(2014, 3, 27, 12, 16, 54, 858182,
@@ -246,12 +249,14 @@ class SubscriptionTest(TestCase):
 
 
     def testNewHitSendsNotificationEmail(self):
+        self.assertEqual(Subscription.objects.count(), 0)
+
         resp = self.c.post("/subscriptions/add/", {
             "search_term": "asukasvalinnat",
             "send_mail": True
         }, follow=True)
         self.assertEqual(resp.status_code, 200)
-
+        self.assertEqual(Subscription.objects.count(), 1)
 
         s = Subscription.objects.get(search_term="asukasvalinnat")
         s.created = datetime(2014, 3, 27, 12, 16, 54, 858182,
