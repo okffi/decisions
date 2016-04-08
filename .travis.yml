@@ -1,6 +1,9 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
+addons:
+  - postgresql: "9.4"
+before_script:
+  - psql -c "select version();" -U postgres
 install: "pip install -r web/requirements.txt"
 script: "cd web && python manage.py test"
