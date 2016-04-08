@@ -33,7 +33,7 @@
 	    <p><small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small></p>
 	  </li>
 	  {% empty %}
-	  <li class="list-group-item list-group-item-info text-center">
+	  <li class="list-group-item list-group-item-info text-center bc-base">
 	    {% blocktrans %}You can create subscriptions by saving searches you have made{% endblocktrans %}
 	  </li>
 	  {% endfor %}
@@ -83,7 +83,7 @@
 	  {% endfor %}
 	</ol>
 	{% else %}
-	<div class="well text-center">
+	<div class="well text-center bc-base">
 	  <p>{% blocktrans %}Every time your subscriptions find new decisions, they are listed here.{% endblocktrans %}</p>
 	  <p>{% blocktrans %}This is just the new stuff, old results from new subscriptions are never added to the feed.{% endblocktrans %}</p>
 	</div>

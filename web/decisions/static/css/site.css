@@ -5,3 +5,12 @@
 .comment-poster :after {
     content: " ";
 }
+
+#search-input {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#search-button {
+    padding: 9px 12px;
+}
