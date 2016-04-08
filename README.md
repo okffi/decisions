@@ -121,19 +121,20 @@ usual:
     $ docker-compose build
     (test with docker-compose up)
 
-Check the **names** of the built images with docker images
+Check the **names** of the built images with docker images (output may
+look different)
 
     $ docker images
     REPOSITORY                          TAG                 IMAGE ID            CREATED             SIZE
-    helsinkidecisions_web               latest              8da3a688edd4        26 minutes ago      732.6 MB
-    helsinkidecisions_nginx             latest              1da419479050        26 minutes ago      206.1 MB
+    decisions_web               latest              8da3a688edd4        26 minutes ago      732.6 MB
+    decisions_nginx             latest              1da419479050        26 minutes ago      206.1 MB
 
 Then save the resulting web and nginx images
 
     $ docker save -o decisions.tar decisions_web
     $ docker save -o dec-nginx.tar decisions_nginx
 
-Then uploads them to host e.g. with scp
+Then upload them to host e.g. with scp or rsync
 
 Set up Docker host for the first time, starting with network and volumes:
 
@@ -165,9 +166,7 @@ Update Docker images on the host:
 
 Create or re-create containers out of updated images:
 
-    # docker rm decisions dec-nginx
-
-    # docker create --name=decisions \
+    # docker create --name=decisions_tmp \
         -v dec-static:/usr/src/app/staticfiles \
 	-v dec-whoosh:/usr/src/app/whoosh.idx \
 	--expose 8000 \
@@ -184,6 +183,15 @@ Create or re-create containers out of updated images:
 	--publish=8099:80 \
 	decisions_nginx
 
+You can now access the running Docker setup e.g. run management
+commands with `docker exec`:
+
+    # docker exec -it decisions python manage.py shell
+    Python 2.7.11 (default, Mar 24 2016, 09:47:20)
+    [GCC 4.9.2] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    (InteractiveConsole)
+    >>>
 
 Optional things
 ---------------

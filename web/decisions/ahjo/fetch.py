@@ -24,6 +24,19 @@ def get_decisions_since(since=None, limit=50):
     response.raise_for_status()
     return response.json()
 
+def get_decisions_before(before, limit=100):
+    response = requests.get(url, {
+        "last_modified_time__lt": before.isoformat(),
+        "order_by": "-last_modified_time",
+        "limit": limit
+    })
+    response.raise_for_status()
+    objects = response.json()["objects"]
+    for object in objects:
+        if AgendaItem.objects.filter(ahjo_id=object["id"]).count(): continue
+        before = AgendaItem.objects.create_from_json(object).last_modified_time
+    return before
+
 def import_latest():
     if AgendaItem.objects.count():
         new = get_decisions_since(AgendaItem.objects.latest().last_modified_time)
