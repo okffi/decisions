@@ -166,7 +166,7 @@ Update Docker images on the host:
 
 Create or re-create containers out of updated images:
 
-    # docker create --name=decisions_tmp \
+    # docker create --name=decisions \
         -v dec-static:/usr/src/app/staticfiles \
 	-v dec-whoosh:/usr/src/app/whoosh.idx \
 	--expose 8000 \
