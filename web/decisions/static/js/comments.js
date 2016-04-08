@@ -180,7 +180,7 @@
 
   $(document).ready(function() {
     update().done(function() {
-      $("#content_block > p").on("click", make_comment_form);
+      $("#content_block p").on("click", make_comment_form);
     });
   });
 })(jQuery);
