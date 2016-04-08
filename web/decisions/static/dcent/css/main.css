@@ -1,0 +1,1942 @@
+/**
+ * CONTENTS
+ *
+ * HELPERS
+ * Global.................Globally-available helper classes.
+ *
+ *
+ * ROOT
+ * Normalize.css..........A level playing field.
+ * Box-sizing.............Better default `box-sizing`.
+ * HTML and Body..........Basic styles for html and body
+ *
+ * BASE
+ * Typography.............H1–H6, ul, p and other typo styles.
+ * Links..................Basic link styles.
+ * Images.................Image and figure styles.
+ * Tables.................H1–H6 styles.
+ * Forms..................Form styles.
+ * Buttons................Button styles.
+ * Tabs...................Tab styles.
+ * Tags...................Tag styles.
+ *
+ * OBJECTS
+ * Color..................Color classes
+ * Media..................Media class (image on the left/right of the content)
+ * Nav....................Nav classes
+ * Box....................Box object (padding on top right bottom left)
+ * Block..................Block object (padding on top bottom)
+ * Bare list..............Removes margin, padding and list style from ul, ol
+ *
+ * LAYOUT
+ * Layout.................Basic layout styles (wrapper, container)
+ * Grid...................Simple grid styles
+ *
+ * MODULES
+ * Header.................The main page header.
+ * Nav Primary............The main anvigation for the site.
+ * Login..................Login module.
+ * Registration...........Registration module.
+ * Messaging..............Messaging styles.
+ * Helper text............Helper text.
+ * Fader text.............Fader text.
+ * Comments...............Comments module.
+ * Discussion.............Discussion organism.
+ * Argumenting............Argumenting organism.
+ * Profile................Profile section.
+ * Article................Basic article styles.
+ *
+ *
+ */
+
+
+
+
+
+
+
+
+
+/*------------------------------------*\
+	$HELPER
+\*------------------------------------*/
+/**
+ * A series of helper classes to use arbitrarily. Only use a helper class if an
+ * element/component doesn’t already have a class to which you could apply this
+ * styling, e.g. if you need to float `.main-nav` left then add `float:left;` to
+ * that ruleset as opposed to adding the `.float--left` class to the markup.
+ *
+ * A lot of these classes carry `!important` as you will always want them to win
+ * out over other selectors.
+ */
+/**
+ *  Clearfix
+ */
+.clearfix:after,.media:after,.nav:after,.l-constrained:after, .grid:after {
+	content:"";
+	display:table;
+	clear:both
+}
+
+/**
+ * Add/remove floats
+ */
+.float--right {
+	float:right!important
+}
+
+.float--left {
+	float:left!important
+}
+
+.float--none {
+	float:none!important
+}
+
+/**
+ * Text alignment
+ */
+.text--left {
+	text-align:left!important
+}
+
+.text--center {
+	text-align:center!important
+}
+
+.text--right {
+	text-align:right!important
+}
+
+.chromeframe {
+	padding:.2em 0;
+	margin:.2em 0;
+	background:#aaa;
+	color:#000
+}
+
+.js-show {
+	display:block!important
+}
+
+/**
+ * Apply capital case to an element (usually a `strong`).
+ */
+.caps {
+	text-transform:uppercase!important
+}
+
+/**
+ * Hide content off-screen without resorting to `display:none;`, also provide
+ * breakpoint specific hidden elements.
+ */
+.accessibility,.visuallyhidden {
+	border:0!important;
+	clip:rect(0 0 0 0)!important;
+	height:1px!important;
+	margin:-1px!important;
+	overflow:hidden!important;
+	padding:0!important;
+	position:absolute!important;
+	width:1px!important
+}
+
+
+
+
+@media screen and (max-width: 768px){
+	.hide-mobile {
+		display: none!important;
+	}
+}
+
+
+/*------------------------------------*\
+		$ROOT
+\*------------------------------------*/
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary {
+	display:block
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 8/9.
+ */
+audio,canvas,video {
+	display:inline-block
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+	display:none;
+	height:0
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9.
+ * Hide the `template` element in IE, Safari, and Firefox < 22.
+ */
+[hidden],template {
+	display:none
+}
+
+/* apply a natural box layout model to all elements */
+*,:before,:after {
+	box-sizing:border-box
+}
+
+html {
+	background-color:white;
+	color:#222;
+	-webkit-overflow-scrolling:touch;
+	-webkit-tap-highlight-color:rgba(0,0,0,0.2);
+	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust:100%
+}
+
+body {
+	margin:0;
+	padding: 20px;
+	background-color:white;
+	font-family:"muliregular","Helvetica",sans-serif;
+	font-weight:400;
+	font-style:normal;
+	line-height:1.5
+}
+
+.sticky .page--with-sticky {
+	padding:3em 0 0;
+}
+
+/* borders */
+
+/* Create a series of empty pseudo-elements... */
+html:before,html:after,body:before,body:after{
+    content:"";
+    background:#EEE;
+    position:fixed;
+    display:block;
+    z-index:5;
+}
+
+/* ...and position them! */
+html:before{
+    height:10px;
+    left:0;
+    right:0;
+    top:0;
+}
+html:after{
+    width:10px;
+    top:0;
+    right:0;
+    bottom:0;
+}
+body:before{
+    height:10px;
+    right:0;
+    bottom:0;
+    left:0;
+}
+body:after{
+    width:10px;
+    top:0;
+    bottom:0;
+    left:0;
+}
+
+
+/*------------------------------------*\
+		$BASE
+\*------------------------------------*/
+
+
+/*------------------------------------*\
+		$TYPOGRAPHY
+\*------------------------------------*/
+h1,h2,h3,h4,h5,h6 {
+	margin:0;
+	font-family:"Comfortaa",sans-serif;
+	font-weight:700;
+	text-rendering:optimizeLegibility
+}
+
+h1,.alpha {
+	margin-bottom:.5em;
+	font-weight:700;
+	font-size:2em;
+	line-height:1.2
+}
+
+h2,.beta {
+	margin-bottom:.75em;
+	font-size:1.75em;
+	line-height:1.2
+}
+
+h3,.gamma {
+	margin-bottom:1em;
+	font-size:1.3125em;
+	line-height:1.3
+}
+
+h4,.delta {
+	margin-bottom:1.5em;
+	font-size:1.125em;
+	line-height:1.25
+}
+
+h5,.epsilon {
+	margin-bottom:1.5em;
+	font-size:1em
+}
+
+h6,.zeta {
+	margin-bottom:1.5em;
+	font-size:.875em;
+	font-weight:400;
+	text-transform:uppercase
+}
+
+p,blockquote {
+	margin:0 0 1.5em
+}
+
+.lead,.lede {
+	margin-bottom:1em;
+	line-height:1.3;
+	font-size:120%
+}
+
+ol,ul {
+	margin:0 0 1.5em
+}
+
+ol.unstyled,ul.unstyled {
+	list-style:none;
+	margin:0;
+	padding:0
+}
+
+li > ul,li > ol {
+	margin-bottom:0
+}
+
+.italic,i,em {
+	font-family:"muliregularitalic","Helvetica",sans-serif;
+	font-weight:400;
+	font-style:normal
+}
+
+.font-headings {
+	font-family:"Comfortaa",sans-serif;
+	font-weight:700
+}
+
+.font-body {
+	font-family:"muliregular","Helvetica",sans-serif
+}
+
+abbr[title] {
+	border-bottom:dotted 1px;
+	cursor:help
+}
+
+b,strong {
+	font-family:'muli_boldbold',"Helvetica",sans-serif;
+	font-weight:400;
+	font-style:normal
+}
+
+dfn {
+	font-style:italic
+}
+
+hr {
+	box-sizing:content-box;
+	height:0
+}
+
+mark {
+	background:#ff0;
+	color:#000
+}
+
+code,kbd,pre,samp {
+	font-family:"Muli","Helvetica",sans-serif;
+	font-size:1em
+}
+
+pre {
+	white-space:pre;
+	white-space:pre-wrap;
+	word-wrap:break-word
+}
+
+q {
+	quotes:"\201C" "\201D" "\2018" "\2019"
+}
+
+small,.small {
+	font-size:80%
+}
+
+sub,sup {
+	position:relative;
+	font-size:75%;
+	line-height:0;
+	vertical-align:baseline
+}
+
+sub {
+	bottom:-.25em
+}
+
+sup {
+	top:-.5em
+}
+
+/*------------------------------------*\
+		$LINKS
+\*------------------------------------*/
+a {
+	color:#007e84;
+	text-decoration:none;
+	outline:0
+}
+
+/* a:visited {
+		color: #9e0084; }*/
+a:focus,a:hover {
+	color:#00D3CA
+}
+
+/*------------------------------------*\
+		$IMAGES
+\*------------------------------------*/
+/**
+ * Fluid images.
+ */
+img {
+	max-width:100%;
+	height:auto;
+	border:0;
+	vertical-align:middle;
+	-ms-interpolation-mode:bicubic
+}
+
+svg:not(:root) {
+	overflow:hidden
+}
+
+/**
+ * Rounded images.
+ */
+.img--round {
+	border-radius:50%
+}
+
+/**
+ * Image placement variations.
+ */
+.img--right {
+	float:right;
+	margin-bottom:1.5em;
+	margin-left:1.5em
+}
+
+.img--left {
+	float:left;
+	margin-right:1.5em;
+	margin-bottom:1.5em
+}
+
+.img--center {
+	display:block;
+	margin-right:auto;
+	margin-bottom:1.5em;
+	margin-left:auto
+}
+
+/**
+ * Figure
+ */
+figure {
+	margin:0 0 1.5em
+}
+
+figure > img {
+	display:block
+}
+
+/*------------------------------------*\
+		$TABLES
+\*------------------------------------*/
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+	border:1px;
+	border-style:solid;
+	border-color:#48BEC4;
+	width:100%
+}
+
+th {
+	text-align:left;
+	border:1px;
+	border-style:solid;
+	border-color:#48BEC4;
+	padding:.2em;
+	color:#007E84
+}
+
+td {
+	border:1px;
+	border-style:solid;
+	border-color:#48BEC4;
+	padding:.2em
+}
+
+/*
+table {
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: $base-line-height + em;
+		background-color: $table-background-color;
+		border-collapse: collapse;
+		border-spacing: 0;
+
+		th,
+		td {
+				padding: em(8);
+				border-top: $table-border-width $table-border-style $table-border-color;
+				text-align: left;
+				vertical-align: top;
+		}
+
+		th {
+				font-weight: bold;
+		}
+
+		thead th {
+				vertical-align: bottom;
+		}
+
+		colgroup {
+				+ thead tr {
+						&:first-child {
+								tr,
+								td {
+										border-top: 0;
+								}
+						}
+				}
+
+				thead {
+						&:first-child tr {
+								&:first-child {
+										th,
+										td {
+												border-top: 0;
+										}
+								}
+						}
+				}
+		}
+
+		tbody + tbody {
+				border-top: $table-border-width * 2 $table-border-style $table-border-color;
+		}
+
+		tbody {
+				tr {
+						&:hover {
+								td,
+								th {
+										background-color: $table-hover-color;
+								}
+						}
+				}
+		}
+
+		&.table--striped {
+				tbody {
+						tr {
+								&:nth-child(odd) {
+										td,
+										th {
+												background-color: $table-stripe;
+										}
+								}
+						}
+				}
+		}
+}
+*/
+/*------------------------------------*\
+		$FORMS
+\*------------------------------------*/
+form {
+	margin:0 0 1.5em
+}
+
+form label {
+	display:block;
+	font-weight:700
+}
+
+form p {
+	margin-bottom:.75em
+}
+
+form ul {
+	padding:0;
+	margin:0 0 1.5em;
+	list-style:none
+}
+
+form br {
+	display:none
+}
+
+fieldset {
+	margin:0 .125em 1.5em;
+	padding:0;
+	border:none
+}
+
+legend {
+	display:block;
+	width:100%;
+	padding:0;
+	border:0
+}
+
+legend small {
+	color:#aaa
+}
+
+button,input,select,textarea {
+	margin:0;
+	font-family:inherit;
+	font-size:100%
+}
+
+button,input {
+	line-height:normal
+}
+
+button,html input[type="button"],input[type="reset"],input[type="submit"] {
+	-webkit-appearance:button;
+	cursor:pointer;
+	padding:8px 24px;
+	width:100%;
+	font-weight:300;
+	background-color:#007e84;
+	color:#fff;
+	-webkit-font-smoothing:antialiased
+}
+
+button[disabled],input[disabled] {
+	cursor:default
+}
+
+input[type="checkbox"],input[type="radio"] {
+	box-sizing:border-box;
+	padding:0
+}
+
+input, textarea {
+	width: 100%;
+}
+
+input[type="search"] {
+	-moz-appearance:textfield;
+	-webkit-appearance:textfield;
+	box-sizing:content-box
+}
+
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration {
+	-webkit-appearance:none
+}
+
+button::-moz-focus-inner,input::-moz-focus-inner {
+	border:0;
+	padding:0
+}
+
+textarea {
+	overflow:auto;
+	resize:vertical;
+	vertical-align:top
+}
+
+label {
+	display:block
+}
+
+.field-container {
+	margin-bottom:1em
+}
+
+.field-container label {
+	margin-bottom:.5em
+}
+
+input,textarea {
+	padding:.5em;
+	border-radius:6px;
+	border:solid 1px #007e84
+}
+
+.form-row {
+	margin-bottom: 1.5em;
+	clear: both;
+}
+
+
+/*------------------------------------*\
+		$BUTTONS
+\*------------------------------------*/
+.btn {
+	display:inline-block;
+	width: auto;
+	background:#B9F6F7;
+	color:#007E84;
+	line-height:1;
+	font-weight:400;
+	padding:.6em;
+	border:1px solid;
+	border-color:#007E84;
+	text-align:center;
+	border-radius:6px;
+	outline: none;
+}
+
+.btn:hover {
+	background:#007E84;
+	color:#fff
+}
+
+.btn:focus {
+	background:#007E84;
+	color:#fff
+}
+
+.btn.disabled {
+	background:#eee;
+	color:#fff;
+	border-color:#eee
+}
+
+.btn-alt {
+	display:inline-block;
+	background:#EEE;
+	color:#222;
+	line-height:1;
+	font-weight:400;
+	padding:.6em;
+	border:1px solid;
+	border-color:#222;
+	text-align:center;
+	border-radius:6px
+}
+
+.btn-alt:hover {
+	background:#222;
+	color:#fff
+}
+
+.btn-alt:focus {
+	background:#222;
+	color:#fff
+}
+
+.btn-alt.disabled {
+	background:#eee;
+	color:#fff;
+	border-color:#eee
+}
+
+.btn-small {
+	padding:.5em
+}
+
+.btn-large {
+	padding:.5em;
+	text-transform:uppercase;
+	background:gray;
+	font-size:1.4rem;
+	font-weight:400
+}
+
+.text-btn {
+	font-style:italic
+}
+
+.btn-group {
+
+}
+
+.btn-group > .btn:first-child {
+	margin-right: -3px;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.btn-group > .btn:last-child {
+	margin-left: -3px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.btn-group>.btn:not(:first-child):not(:last-child), .btn-group>div:not(:first-child):not(:last-child) .btn {
+	margin-left:-2px;
+	margin-right: -2px;
+	border-radius: 0;
+	border-left: none;
+	border-right: none;
+}
+
+/*------------------------------------*\
+	$TABS
+\*------------------------------------*/
+.tabs {
+	padding:0 0 1px;
+	border-bottom:solid 1px #666
+}
+
+.tabs >li {
+	margin: 0 .25em 1px 0;
+}
+
+.tab li:last-child {
+	margin-right:0
+}
+
+.tab {
+	display:inline-block;
+	padding:.4em 1em;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	background-color:#D3FFFD;
+	border:solid 1px #007E84;
+	border-bottom:none;
+	color:#007E84
+}
+
+.tab:hover {
+	color:#666
+}
+
+.tab--active,.tab:focus,.tab:active {
+	background-color:#007E84;
+	border-color:#007E84;
+	color:#fff
+}
+
+.tab--active:hover {
+	color:#007E84
+}
+
+.tab-alt {
+	display:inline-block;
+	padding:.4em 1em;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	background-color:#eee;
+	border:solid 1px #666;
+	border-bottom:none;
+	color:#666
+}
+
+.tab-alt:hover {
+	color:#222
+}
+
+.tab-alt--active,.tab-alt:focus,.tab-alt:active {
+	background-color:#222;
+	border-color:#222;
+	color:#fff
+}
+
+.tab-alt--active:hover {
+	color:#007E84
+}
+
+/*------------------------------------*\
+	$TAGS
+\*------------------------------------*/
+.tags {
+}
+
+.tags > li {
+	margin-right:1em
+}
+
+.tag {
+	display:inline-block;
+	padding:.25em 1em;
+	font-size:12px;
+	background-color:#eee;
+	border-radius:5px;
+	color:#666
+}
+
+.tag:hover {
+	color:#666
+}
+
+.tag--negative {
+	background-color:#FFEAFC;
+	color:#9E2E8D
+}
+
+.tag--negative:hover {
+	color:#9E2E8D
+}
+
+.tag--positive {
+	background-color:#D3FFFD;
+	color:#007E84
+}
+
+.tag--positive:hover {
+	color:#007E84
+}
+
+
+
+
+
+/*------------------------------------*\
+	$OBJECTS
+\*------------------------------------*/
+
+
+
+/*------------------------------------*\
+	$COLOR
+\*------------------------------------*/
+.c-base {
+	color:#007e84
+}
+
+.c-base--dark {
+	color:#00444A
+}
+
+.c-base--light {
+	color:#00D3CA
+}
+
+.c-base--lightest {
+	color:#D3FFFD
+}
+
+.c-comp {
+	color:#9E2E8D
+}
+
+.c-comp--dark {
+	color:#690055
+}
+
+.c-comp--light {
+	color:#FF69E8
+}
+
+.c-comp--lightest {
+	color:#FFEAFC
+}
+
+.c-dark {
+	color:#222
+}
+
+.c-grey {
+	color:#666
+}
+
+.c-grey--light {
+	color:#AAA
+}
+
+.c-grey--lightest {
+	color:#EEE
+}
+
+.c-white {
+	color:#fff
+}
+
+/* Background-colors */
+
+.bc-base {
+	background-color:#007e84
+}
+
+.bc-base--dark {
+	background-color:#00444A
+}
+
+.bc-base--light {
+	background-color:#00D3CA
+}
+
+.bc-base--lightest {
+	background-color:#D3FFFD
+}
+
+
+.bc-comp {
+	background-color:#9E2E8D
+}
+
+.bc-comp--dark {
+	background-color:#690055
+}
+
+.bc-comp--light {
+	background-color:#FF69E8
+}
+
+.bc-comp--lightest {
+	background-color:#FFEAFC
+}
+
+
+.bc-grey {
+	background-color:#666
+}
+
+.bc-dark {
+	background-color:#222
+}
+
+.bc-grey--light {
+	background-color:#AAA
+}
+
+.bc-grey--lightest {
+	background-color:#EEE
+}
+
+/*------------------------------------*\
+		$MEDIA
+\*------------------------------------*/
+/**
+ * Place any image- and text-like content side-by-side, as per:
+ * stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code
+ * E.g.:
+ *
+	 <div class=media>
+			 <img src=http://placekitten.com/200/300 alt="" class=media__img>
+			 <p class=media__body>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+			 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+	 </div>
+ *
+ *
+ */
+.media {
+	display:block
+}
+
+.media__img {
+	float:left;
+	margin-right:1.5em
+}
+
+/**
+ * Reversed image location (right instead of left).
+ */
+.media__img--rev {
+	float:right;
+	margin-left:1.5em
+}
+
+.media__img img,.media__img--rev img {
+	display:block
+}
+
+.media__body {
+	overflow:hidden
+}
+
+.media__body,.media__body > :last-child {
+	margin-bottom:0
+}
+
+/*------------------------------------*\
+		$NAV
+\*------------------------------------*/
+/**
+ * When used on an `ol` or `ul`, this class throws the list into horizontal mode
+ * e.g.:
+ *
+	 <ul class=nav>
+			 <li><a href=#>Home</a></li>
+			 <li><a href=#>About</a></li>
+			 <li><a href=#>Portfolio</a></li>
+			 <li><a href=#>Contact</a></li>
+	 </ul>
+ *
+ *
+ */
+.nav {
+	list-style:none;
+	margin-left:0
+}
+
+.nav > li,.nav > li > a {
+	display:inline-block;
+	*display:inline;
+	zoom:1
+}
+
+/**
+ * `.nav--stacked` extends `.nav` and throws the list into vertical mode, e.g.:
+ *
+	 <ul class="nav  nav--stacked">
+			 <li><a href=#>Home</a></li>
+			 <li><a href=#>About</a></li>
+			 <li><a href=#>Portfolio</a></li>
+			 <li><a href=#>Contact</a></li>
+	 </ul>
+ *
+ */
+.nav--stacked > li {
+	display:list-item
+}
+
+.nav--stacked > li > a {
+	display:block
+}
+
+/**
+ * `.nav--banner` extends `.nav` and centres the list, e.g.:
+ *
+	 <ul class="nav  nav--banner">
+			 <li><a href=#>Home</a></li>
+			 <li><a href=#>About</a></li>
+			 <li><a href=#>Portfolio</a></li>
+			 <li><a href=#>Contact</a></li>
+	 </ul>
+ *
+ */
+.nav--banner {
+	text-align:center
+}
+
+/**
+ * Give nav links a big, blocky hit area. Extends `.nav`, e.g.:
+ *
+	 <ul class="nav  nav--block">
+			 <li><a href=#>Home</a></li>
+			 <li><a href=#>About</a></li>
+			 <li><a href=#>Portfolio</a></li>
+			 <li><a href=#>Contact</a></li>
+	 </ul>
+ *
+ */
+.nav--block {
+	line-height:1;
+/**
+	 * Remove whitespace caused by `inline-block`.
+	 */
+	letter-spacing:-.31em;
+	word-spacing:-.43em;
+	white-space:nowrap
+}
+
+.nav--block > li {
+	letter-spacing:normal;
+	word-spacing:normal
+}
+
+.nav--block > li > a {
+	padding:.5em
+}
+
+/**
+ * Force a nav to occupy 100% of the available width of its parent. Extends
+ * `.nav`, e.g.:
+ *
+	 <ul class="nav  nav--fit">
+			 <li><a href=#>Home</a></li>
+			 <li><a href=#>About</a></li>
+			 <li><a href=#>Portfolio</a></li>
+			 <li><a href=#>Contact</a></li>
+	 </ul>
+ *
+ * Thanks to @pimpl for this idea!
+ */
+.nav--fit {
+	display:table;
+	width:100%
+}
+
+.nav--fit > li {
+	display:table-cell
+}
+
+.nav--fit > li > a {
+	display:block
+}
+
+
+/*------------------------------------*\
+		$BOX
+\*------------------------------------*/
+
+.box {
+	padding: 1em;
+}
+
+.box--large {
+	padding: 1.5em;
+}
+
+.box--small {
+	padding: .625em;
+}
+
+
+/*------------------------------------*\
+		$BLOCK
+\*------------------------------------*/
+
+.block {
+	padding: 1em 0;
+}
+
+.block--large {
+	padding: 1.5em 0;
+}
+
+.block--small {
+	padding: .625em 0;
+}
+
+
+/*------------------------------------*\
+		$BARE-LIST
+\*------------------------------------*/
+
+.bare-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/*------------------------------------*\
+		$LAYOUT
+\*------------------------------------*/
+.wrap {
+	padding:1.5em 0
+}
+
+.sg-main {
+	margin:0 auto;
+	max-width:90em;
+	padding:1em
+}
+
+.l-constrained {
+	margin:0 auto;
+	max-width:1200px;
+/* temporary fix */
+	width:94%
+}
+
+/*------------------------------------*\
+    $GRID
+\*------------------------------------*/
+
+
+ .grid {
+    position: relative;
+}
+
+@media screen and (min-width: 48em){
+
+
+    .g {
+        float: left;
+    }
+
+    .g--third {
+        width: 32%;
+        margin-right: 2%;
+    }
+
+    .g--third:last-child, .g--third:nth-child(3n) {
+        margin-right: 0;
+
+    }
+
+    .g--third:nth-child(4n) {
+        clear: left;
+    }
+
+    .g--two--thirds {
+        width: 66%;
+        margin-right: 2%;
+    }
+
+
+    .g--half {
+        width: 48%;
+        margin-right: 4%;
+    }
+
+    .g--half:last-child, .g--half:nth-child(even) {
+        margin-right: 0;
+
+    }
+
+    .g--half:nth-child(3n) {
+        clear: left;
+    }
+
+    .g--fourth {
+        width: 23.5%;
+        margin-right: 2%;
+    }
+
+    .g--fourth:last-child, .g--fourth:nth-child(4n) {
+        margin-right: 0;
+
+    }
+
+    .g--fourth:nth-child(5n) {
+        clear: left;
+    }
+}
+
+@media screen and (min-width: 60em){
+
+    .g--fifth {
+        float: left;
+        width: 19%;
+        margin-right: 1.25%;
+    }
+
+    .g--fifth:last-child, .g--fifth:nth-child(5n) {
+        margin-right: 0;
+
+    }
+}
+
+
+/*------------------------------------*\
+		$MODULES
+\*------------------------------------*/
+/*------------------------------------*\
+		$HEADER
+\*------------------------------------*/
+.site-logo--front {
+	display:block;
+	padding-top:3em
+}
+
+.site-logo--front > img {
+	max-width:80px
+}
+
+.site-logo__text {
+	display:block;
+	margin-top:.5em
+}
+
+
+.sticky .header--sticky {
+	position:fixed;
+	width:100%;
+	top:0;
+	left:0;
+	z-index:999
+}
+
+.btn--sign-in {
+	margin-right:1em;
+	padding-top:.25em;
+	cursor:pointer
+}
+
+.site-logo {
+	display: block;
+	float: left;
+	width: 60px;
+}
+
+.site-logo > img {
+	max-height:30px;
+}
+
+
+.logo-mobile {
+	display: block;
+}
+.logo-desktop {
+	display: none;
+}
+
+@media screen and (min-width: 48em) {
+
+	.logo-mobile {
+		display: none;
+	}
+	.logo-desktop {
+		display: block;
+	}
+
+}
+
+
+/*------------------------------------*\
+		$NAVIGATION
+\*------------------------------------*/
+
+nav[role="navigation"] {
+	float: right;
+}
+
+
+
+.flexbox nav[role="navigation"] {
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: flex-end;
+     -ms-flex-pack: end;
+         justify-content: flex-end;
+}
+
+@media screen and (min-width: 420px) {
+	.flexbox nav[role="navigation"] {
+		width: 80%;
+	}
+}
+
+
+@media screen and (min-width: 60em) {
+	.flexbox nav[role="navigation"] {
+		  width: 90%;
+		  -webkit-justify-content: flex-end;
+      	  -ms-flex-pack: end;
+          justify-content: flex-end;
+	}
+}
+
+/*------------------------------------*\
+		$NAV-PRIMARY
+\*------------------------------------*/
+
+
+.no-flexbox .nav-primary {
+	float: left;
+	width: 70%;
+}
+
+
+.flexbox .nav-primary {
+	-webkit-flex: 0 1 auto;
+	-ms-flex: 0 1 auto;
+	flex: 0 1 auto;
+	padding-right: .5em;
+}
+
+@media screen and (min-width: 420px) {
+	.flexbox .nav-primary {
+		padding-right: 18%;
+	}
+}
+
+@media screen and (min-width: 60em) {
+	.flexbox .nav-primary {
+		padding-right: .5em;
+	}
+}
+
+.nav__item {
+	position: relative;
+	margin-right: .15em;
+}
+
+@media screen and (min-width: 48em) {
+	.nav__item {
+		margin-right: .5em;
+	}
+}
+
+.nav__item:last-child {
+	margin-right: 0;
+}
+
+.nav__item > a {
+	display: block;
+	color: #222222;
+	font-size: 1.25em;
+}
+
+@media screen and (min-width: 48em) {
+	.nav__item > a {
+		font-size: 1em;
+	}
+}
+
+.nav__item > a > i {
+
+}
+
+@media screen and (min-width: 60em) {
+	.nav__item > a > i {
+		margin-right: .25em;
+		vertical-align: -1px;
+	}
+}
+
+.nav__item > a > span {
+	display: none;
+}
+
+.count {
+	position: absolute;
+	top: -17px;
+	right: 0;
+	display: inline-block;
+	padding: 1px 5px;
+	border-radius: 50%;
+	font-size: 12px;
+	font-style: normal;
+}
+
+@media screen and (min-width: 60em) {
+	.nav__item > a > span {
+		display: inline-block;
+	}
+}
+
+
+/*------------------------------------*\
+		$NAV-SETTINGS
+\*------------------------------------*/
+
+.no-flexbox .nav-settings {
+	float: right;
+	width: 30%;
+	padding-right: .5em;
+	text-align: right;
+}
+
+.flexbox .nav-settings {
+	  -webkit-flex: 0 1 auto;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+}
+
+@media screen and (min-width: 48em) {
+	.nav-settings> .nav__item > a > span {
+		display: inline-block;
+	}
+}
+
+/*------------------------------------*\
+		$LOGIN
+\*------------------------------------*/
+
+
+.login, .settings-container {
+	margin: 1.5em auto 0;
+	max-width: 600px;
+	clear:both;
+}
+
+.js .login, .js .settings-container {
+	max-height: 0;
+	overflow: hidden;
+	-moz-transition: .4s;
+  -ms-transition: .4s;
+  -o-transition: .4s;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.js .js-login-open, .js .js-settings-open {
+	max-height: 999px;
+}
+
+.form--login {
+	margin: 1.5em 0;
+}
+
+.form--login > .ow > input {
+	width:100%
+}
+
+.pw-forgot {
+	display:inline-block;
+	margin-bottom:.5em
+}
+
+.signup-intro {
+	display:block;
+	margin-bottom:.5em;
+	font-size:18px
+}
+
+/*------------------------------------*\
+		$REGISTRATION
+\*------------------------------------*/
+
+.registration__form > .grid {
+	margin: 0 auto 1.5em;
+	width: 80%;
+	max-width: 800px;
+}
+
+.registration__action {
+	clear: both;
+}
+
+/*------------------------------------*\
+		$MESSAGING
+\*------------------------------------*/
+.message {
+	padding:.5em;
+	text-align:center;
+	border:solid 3px;
+	border-radius:9px
+}
+
+.message__body {
+	position:relative;
+	padding:0 1em
+}
+
+.message__close {
+	position:absolute;
+	top:-.5em;
+	right:0;
+	cursor:pointer;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+/* Theming of the messages */
+.message--main {
+	color:#007E84;
+	border-color:#007E84
+}
+
+.message--emphasized {
+	color:#00444A;
+	border-color:#00444A
+}
+
+.message--another {
+	color:#00D3CA;
+	border-color:#00D3CA
+}
+
+.message--particular {
+	color:#FF69E8;
+	border-color:#FF69E8
+}
+
+.message--serious {
+	color:#9E2E8D;
+	border-color:#9E2E8D
+}
+
+.message--different {
+	color:#690055;
+	border-color:#690055
+}
+
+/*------------------------------------*\
+		$HELPER TEXT
+\*------------------------------------*/
+.helper {
+	position:relative;
+}
+
+.helper__toggle {
+	position:absolute;
+	top: -1.5em;
+	right: 0;
+	cursor:pointer
+}
+
+.helper > input {
+	width:100%
+}
+
+.helper__body {
+	padding:.25em 0
+}
+
+.js .helper__body {
+	display:none
+}
+
+/*------------------------------------*\
+		$FADER
+\*------------------------------------*/
+
+
+.fadeout {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-height: 100px;
+  padding-bottom: 70px;
+}
+.no-js .fadeout {
+  max-height: 100%;
+  padding-bottom: 10px;
+}
+.no-js .fadeout .read-more {
+  display: none;
+}
+.fadeout.smaller {
+  max-height: 150px;
+}
+.fadeout.tiny {
+  max-height: 200px;
+}
+.fadeout.open {
+  max-height: 100%;
+  padding-bottom: 10px;
+  overflow: auto;
+}
+.fadeout .read-more {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0;
+  z-index: 2;
+  width: 100%;
+  height: 70px;
+  background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 85%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(85%, white));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 85%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 85%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 85%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 85%);
+  /* W3C */
+}
+.fadeout .read-more a {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-decoration: none;
+  padding-right: 1em;
+}
+.fadeout .read-more a.pt-fix {
+  top: 0;
+}
+.fadeout .read-more a:before {
+  font-size: 24px;
+  position: absolute;
+  right: -4px;
+  top: 2px;
+}
+
+
+/*------------------------------------*\
+		$COMMENTS
+\*------------------------------------*/
+.comment {
+	margin-bottom:1.5em
+}
+
+.comment:last-child {
+	margin-bottom:0
+}
+
+.comment__img {
+	float:left;
+	margin:0 .25em 0 0;
+	font-size:38px;
+	height:38px
+}
+
+.comment__meta > a {
+	display:inline-block;
+	font-weight:700
+}
+
+.comment__meta > time {
+	display:inline-block;
+	color:#007E84
+}
+
+.comment__body {
+	margin-bottom:.5em
+}
+
+.comment__actions {
+	color:#007E84;
+	text-align:right
+}
+
+.comment-toggle, .like-toggle {
+	cursor:pointer
+}
+
+.comment-field {
+	margin-bottom: 1.5em;
+}
+
+.comment-field > textarea {
+	display: inline-block;
+	min-width: 250px;
+	width: 80%;
+}
+
+.comment-field > .btn-group {
+	display: inline-block;
+}
+
+/*------------------------------------*\
+		$DISCUSSION
+\*------------------------------------*/
+.discussion {
+	padding:.625em
+}
+
+
+/*------------------------------------*\
+		$ARGUMENTING
+\*------------------------------------*/
+
+.argumenting .icon-avatar_circle {
+	font-size: 38px;
+}
+
+.argumenting .btn-group {
+	display: inline-block;
+}
+
+/*------------------------------------*\
+		$NOTIFICATIONS
+\*------------------------------------*/
+.notifications-list {
+}
+
+.notification {
+	position:relative;
+	margin-bottom:1.5em
+}
+
+/*
+	.notification:before {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 15%;
+		width: 70%;
+		background-color: #007e84;
+		height: 1px; }*/
+.notification__body {
+	padding-bottom:1.5em;
+	border-bottom:solid 1px #007e84
+}
+
+.notification__title {
+	margin-bottom:.25em
+}
+
+.notification__lead {
+	margin-bottom:.25em
+}
+
+.notification__meta {
+	font-size:80%
+}
+
+/*------------------------------------*\
+		$PROFILE
+\*------------------------------------*/
+
+.profile {
+	margin:0 auto;
+	padding:1.5em 1em 0;
+	max-width:480px;
+	clear:both
+}
+
+.profile__img {
+	margin:0 auto 1.5em;
+	max-width:480px;
+	text-align:center
+}
+
+.profile__img > img {
+	display:inline-block
+}
+
+.profile__img > figcaption {
+	margin-top:1em;
+	font-size:18px
+}
+
+.profile__form {
+	margin:0 auto 1.5em;
+
+	max-width:380px
+}
+
+.profile__form input,.profile__form textarea {
+	width:100%
+}
+
+.profile__form textarea {
+	min-height:100px
+}
+
+/*------------------------------------*\
+		$ARTICLE
+\*------------------------------------*/
+
+
+.article {
+
+}
+
+@media screen and (min-width: 30em) {
+	.article__img {
+		float: left;
+		margin-right: 1.5em;
+	}
+}
+
+.article__tags {
+	margin-bottom: 1em;
+}
+
+.article__tags > i {
+	margin-right: .5em;
+	vertical-align: middle;
+	font-size: 22px;
+}
+
+.article__tags > ul {
+	display: inline-block;
+}
+
+
+.article__body {
+	clear: both;
+}

@@ -8,7 +8,7 @@ from django.contrib.postgres import fields as pgfields
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.utils.timezone import get_default_timezone, now
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import slugify
+from django.template.defaultfilters import slugify, linebreaks, escape
 from django.contrib.auth.models import User
 
 from dateutil.parser import parse
@@ -227,7 +227,7 @@ class Comment(models.Model):
         return {
             "poster": self.user.username if self.user else _("guest"),
             "selector": self.selector,
-            "text": self.text,
+            "text": linebreaks(escape(self.text)),
             "created_timestamp": self.created.isoformat(),
             "created": arrow.get(self.created).humanize(locale=get_language())
         }

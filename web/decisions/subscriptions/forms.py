@@ -15,25 +15,20 @@ class RegisterForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "placeholder": _("user@example.com"),
-                "class": "form-control"
             }
         ),
     )
     username = forms.CharField(
         label=_("Display name"),
         required=False,
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control"
-            }
-        ),
+        widget=forms.TextInput(),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+        widget=forms.PasswordInput(),
         label=_("Password")
     )
     password_again = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+        widget=forms.PasswordInput(),
         label=_("Password again"),
         help_text=string_concat(
             _("Your password must meet these requirements:"),
@@ -84,12 +79,11 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "placeholder": _("user@example.com"),
-                "class": "form-control"
             }
         ),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+        widget=forms.PasswordInput(),
         label=_("Password")
     )
     next = forms.CharField(widget=forms.HiddenInput, required=False)
@@ -105,7 +99,6 @@ class SubscriptionForm(forms.Form):
         label=_('Search term'),
         widget=forms.TextInput(
             attrs={
-            "class": "form-control"
             })
     )
     send_mail = forms.BooleanField(
