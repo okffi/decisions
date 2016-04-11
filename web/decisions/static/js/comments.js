@@ -152,6 +152,33 @@
 	});
     });
 
+    // maybe show a feedback text beside the submit button if there's enough text
+    var text_max = 300;
+    var show_threshold = 173;
+    var $textarea = $form.find("textarea")
+    $textarea.on("keyup", function() {
+      var text_length = $textarea.val().length;
+      var text_remaining = text_max - text_length;
+      if (text_length > show_threshold) {
+        var feedback_text = gettext("%s/%s characters used");
+        $form.find(".length-feedback").html(interpolate(feedback_text, [text_length, text_max]));
+      } else {
+        $form.find(".length-feedback").html("");
+      }
+      if (text_length > text_max) {
+        $form.find("button[type=submit]").prop("disabled", true);
+      } else {
+        $form.find("button[type=submit]").prop("disabled", false);
+      }
+    });
+
+    // make the textarea resize with comment length
+    $textarea.css('height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+    $textarea.on("input", function () {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+
     if (!commenting_enabled) {
       $form.find("form").remove();
     }

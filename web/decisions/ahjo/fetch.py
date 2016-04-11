@@ -16,8 +16,8 @@ def get_decisions_since(since=None, limit=50):
     response = requests.get(
         url,
         params={
-            "last_modified_time__gt": since,
-            "order_by": "-last_modified_time",
+            "last_modified_time__gt": since.isoformat(),
+            "order_by": "last_modified_time",
             "limit": limit,
         })
 
