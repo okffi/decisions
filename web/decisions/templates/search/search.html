@@ -18,7 +18,7 @@
     {% endif %}
 
     {% if object_list %}
-    <ol class="search-results">
+    <ol class="search-results list-unstyled">
       {% for result in object_list %}
       <li>
 	<a href="{{ result.object.get_absolute_url }}?q={{ request.GET.q }}"><h3>{{ result.object.title }}</h3></a>
