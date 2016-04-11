@@ -89,9 +89,7 @@
       {% csrf_token %}
       {{ comment_form.as_p }}
       <button type="submit" class="btn btn-primary">{% trans "Send Comment" %}</button>
-      <button type="button" class="btn btn-default dismiss-button">{% trans "Close" %}</button>
     </form>
-    <button type="button" class="btn btn-default dismiss-button" style="display: none;">{% trans "Close" %}</button>
   </div>
 </div>
 {% endblock %}

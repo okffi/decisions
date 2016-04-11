@@ -1,6 +1,8 @@
 (function($) {
   var cloneCount = 1;
   var all_comments = {};
+  var cached_forms = {};
+  var current_form = null;
 
   var render_comments = function(selector) {
     var comments = all_comments[selector];
@@ -52,19 +54,20 @@
   };
 
   var close_comment_form = function(e) {
-    // can be bound to a button on the form or the p element itself
-    if (e.target.tagName.toUpperCase() === "BUTTON") {
-      var $form = $(e.target).parents(".comment-form");
-      var $p = $form.prev("p");
-    } else {
-      var $p = $(get_closest_p(e.target));
-      var $form = $p.next(".comment-form");
-    }
+    var $p = $(get_closest_p(e.target));
+    var $form = $p.next(".comment-form");
+    hide_comment_form($form);
+  };
+
+  var hide_comment_form = function($form) {
+    var $p = $form.prev("p");
 
     // don't accept more click events during animation
     $p.off("click");
 
     $form.hide(400, function() {
+      // remove the form from the DOM
+      $form.detach();
       var offset = $p.offset();
       if ($(document).scrollTop() > offset["top"] + $p.outerHeight()) {
 	$(document).scrollTop(offset["top"]);
@@ -91,17 +94,26 @@
       return;
     }
 
-    var $existing_form = $(target).next(".comment-form");
-    if ($existing_form.length > 0) {
+    if (current_form != null && current_form != selector) {
+      // hide the previously open form
+      hide_comment_form(cached_forms[current_form]);
+    }
+
+    var $existing_form = cached_forms[selector];
+    if (typeof $existing_form !== "undefined") {
       // toggle the target paragraph's event handler
       $target.off("click");
       $target.on("click", close_comment_form);
       // reuse the existing form
+      $existing_form.insertAfter($(target));
       $existing_form.show(400);
+      current_form = selector;
       return;
     }
 
     var $form = $(".snippets .comment-form").clone();
+    cached_forms[selector] = $form;
+    current_form = selector;
 
     // render comments
     $comments = render_comments(selector);
@@ -123,9 +135,6 @@
     $form.find("#" + cloneCount.toString() + "_" + "id_selector").val(selector);
     cloneCount++;
 
-    // close commenting
-    $form.find(".dismiss-button").on("click", close_comment_form);
-
     // ajax submit comment
     $form.find(":input[type=submit]").on("click", function(e) {
       e.preventDefault();
@@ -134,7 +143,6 @@
 	.done(function() {
 	  $actual_form.hide(400, function() {
 	    $actual_form.remove();
-	    $(".dismiss-button").show();
 	  });
 	  update().done(function() {
 	    var $new_comments = render_comments(selector);
@@ -151,9 +159,7 @@
     // slide in the entire thing
     $form.hide();
     $form.insertAfter($(target));
-    $form.show(400, function() {
-      if (!commenting_enabled) { $(".dismiss-button").show(); }
-    });
+    $form.show(400);
   };
 
   // get new comments and return a deferred
