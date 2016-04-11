@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-16 16:47+0200\n"
+"POT-Creation-Date: 2016-04-11 11:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,107 +22,115 @@ msgstr ""
 msgid "Ahjo"
 msgstr "Ahjo"
 
-#: decisions/ahjo/models.py:66
+#: decisions/ahjo/forms.py:14
+msgid "Write your comment here"
+msgstr "Voit kirjoittaa kommenttisi tähän"
+
+#: decisions/ahjo/forms.py:23
+msgid "Comment should be under 300 characters"
+msgstr "Kommentin pitäisi olla alle 300 merkkiä pitkä"
+
+#: decisions/ahjo/models.py:71
 msgid "Passed as drafted"
 msgstr "Hyväksytty"
 
-#: decisions/ahjo/models.py:67
+#: decisions/ahjo/models.py:72
 msgid "Passed after a vote"
 msgstr "Hyväksytty äänestyksen jälkeen"
 
-#: decisions/ahjo/models.py:68
+#: decisions/ahjo/models.py:73
 msgid "Passed revised by presenter"
 msgstr "Hyväksytty esittelijän muutoksen jälkeen"
 
-#: decisions/ahjo/models.py:69
+#: decisions/ahjo/models.py:74
 msgid "Passed modified"
 msgstr "Hyväksytty muutettuna"
 
-#: decisions/ahjo/models.py:70
+#: decisions/ahjo/models.py:75
 msgid "Rejected"
 msgstr "Hylätty"
 
-#: decisions/ahjo/models.py:71
+#: decisions/ahjo/models.py:76
 msgid "Noted as informational"
 msgstr "Tiedoksi"
 
-#: decisions/ahjo/models.py:72
+#: decisions/ahjo/models.py:77
 msgid "Returned to preparation"
 msgstr "Palautettu valmisteluun"
 
-#: decisions/ahjo/models.py:73
+#: decisions/ahjo/models.py:78
 msgid "Removed from agenda"
 msgstr "Poistettu päiväjärjestyksestä"
 
-#: decisions/ahjo/models.py:74
+#: decisions/ahjo/models.py:79
 msgid "Tabled"
 msgstr "Jätetty pöydälle"
 
-#: decisions/ahjo/models.py:75
+#: decisions/ahjo/models.py:80
 msgid "Election"
 msgstr "Äänestys"
 
-#: decisions/ahjo/models.py:76
+#: decisions/ahjo/models.py:81
 msgid "Unknown"
 msgstr "Ei päätöstä vielä"
 
-#: decisions/ahjo/models.py:85
+#: decisions/ahjo/models.py:90
 msgid "Subject"
 msgstr "Aihe"
 
-#: decisions/ahjo/models.py:89 decisions/ahjo/templates/ahjo/view.html.py:23
+#: decisions/ahjo/models.py:94 decisions/ahjo/templates/ahjo/view.html.py:23
 msgid "Preparer"
 msgstr "Esittelijä"
 
-#: decisions/ahjo/models.py:95 decisions/ahjo/templates/ahjo/view.html.py:26
+#: decisions/ahjo/models.py:100 decisions/ahjo/templates/ahjo/view.html.py:26
 msgid "Resolution"
 msgstr "Ratkaisu"
 
-#: decisions/ahjo/models.py:99
+#: decisions/ahjo/models.py:104
 msgid "Classification code"
 msgstr "Lajittelukoodi"
 
-#: decisions/ahjo/models.py:103
+#: decisions/ahjo/models.py:108
 msgid "Last modified time"
 msgstr "Viimeisin muokkausaika"
 
-#: decisions/ahjo/models.py:107
+#: decisions/ahjo/models.py:112
 msgid "Original"
 msgstr "Alkuperäinen"
 
-#: decisions/ahjo/models.py:118
+#: decisions/ahjo/models.py:123
 msgid "agenda item"
 msgstr "esitys"
 
-#: decisions/ahjo/models.py:119
+#: decisions/ahjo/models.py:124
 msgid "agenda items"
 msgstr "esityksiä"
 
-#: decisions/ahjo/models.py:148
+#: decisions/ahjo/models.py:209
 msgid "This is the element where the comment attaches on a decision"
 msgstr "Kommentti liittyy tähän elementtiin"
 
-#: decisions/ahjo/models.py:152
+#: decisions/ahjo/models.py:213
 msgid "Quote"
 msgstr "Sitaatti"
 
-#: decisions/ahjo/models.py:153
+#: decisions/ahjo/models.py:214
 msgid "Quotes are required."
 msgstr "Sitaatti vaaditaan"
 
-#: decisions/ahjo/models.py:156
+#: decisions/ahjo/models.py:217
 msgid "Comment"
 msgstr "Kommentti"
 
-#: decisions/ahjo/models.py:161
+#: decisions/ahjo/models.py:222
 msgid "comment"
 msgstr "kommentti"
 
-#: decisions/ahjo/models.py:162
+#: decisions/ahjo/models.py:223
 msgid "comments"
 msgstr "kommentteja"
 
-#: decisions/ahjo/models.py:167
+#: decisions/ahjo/models.py:228
 msgid "guest"
 msgstr "vieras"
 
@@ -167,14 +175,18 @@ msgstr "Lautakunta"
 msgid "Date"
 msgstr "Päiväys"
 
-#: decisions/ahjo/templates/ahjo/view.html:91
+#: decisions/ahjo/templates/ahjo/view.html:93
 msgid "Send Comment"
 msgstr "Kommentoi"
 
-#: decisions/ahjo/templates/ahjo/view.html:92
-#: decisions/ahjo/templates/ahjo/view.html:94 decisions/templates/base.html:52
-msgid "Close"
-msgstr "Sulje"
+#: decisions/subscriptions/api.py:159
+#, python-format
+msgid "Search feed for %(username)s"
+msgstr "Hakusyöte käyttäjälle %(username)s"
+
+#: decisions/subscriptions/api.py:168
+msgid "No description provided"
+msgstr "Kuvausta ei ole annettu"
 
 #: decisions/subscriptions/apps.py:9
 msgid "Subscriptions"
@@ -188,27 +200,27 @@ msgstr "Sähköpostiosoite"
 msgid "user@example.com"
 msgstr "kayttaja@example.fi"
 
-#: decisions/subscriptions/forms.py:23
+#: decisions/subscriptions/forms.py:22
 msgid "Display name"
 msgstr "Nimimerkki"
 
-#: decisions/subscriptions/forms.py:33 decisions/subscriptions/forms.py:88
+#: decisions/subscriptions/forms.py:28 decisions/subscriptions/forms.py:87
 msgid "Password"
 msgstr "Salasana"
 
-#: decisions/subscriptions/forms.py:37
+#: decisions/subscriptions/forms.py:32
 msgid "Password again"
 msgstr "Salasana uudelleen"
 
-#: decisions/subscriptions/forms.py:39
+#: decisions/subscriptions/forms.py:34
 msgid "Your password must meet these requirements:"
 msgstr "Salasanasi pitäisi täyttää nämä vaatimukset:"
 
-#: decisions/subscriptions/forms.py:46 decisions/subscriptions/forms.py:48
+#: decisions/subscriptions/forms.py:43 decisions/subscriptions/forms.py:45
 msgid "Passwords don't match"
 msgstr "Salasanat eivät täsmää"
 
-#: decisions/subscriptions/forms.py:56
+#: decisions/subscriptions/forms.py:55
 msgid "Please choose another display name"
 msgstr "Ole hyvä ja valitse joku muu nimimerkki"
 
@@ -216,19 +228,19 @@ msgstr "Ole hyvä ja valitse joku muu nimimerkki"
 msgid "Please choose another email address"
 msgstr "Ole hyvä ja valitse joku muu sähköpostiosoite"
 
-#: decisions/subscriptions/forms.py:95
+#: decisions/subscriptions/forms.py:94
 msgid "Email or password did not match. Please try again."
 msgstr "Sähköposti tai salasana ei täsmää. Ole hyvä ja yritä uudestaan"
 
-#: decisions/subscriptions/forms.py:100 decisions/subscriptions/models.py:77
+#: decisions/subscriptions/forms.py:99 decisions/subscriptions/models.py:80
 msgid "Search term"
 msgstr "Hakuteksti"
 
-#: decisions/subscriptions/forms.py:107 decisions/subscriptions/models.py:36
+#: decisions/subscriptions/forms.py:105 decisions/subscriptions/models.py:39
 msgid "Sends email"
 msgstr "Lähettää sähköpostia"
 
-#: decisions/subscriptions/forms.py:108
+#: decisions/subscriptions/forms.py:106
 msgid ""
 "If checked, notifications about new search results are also sent by email. "
 "Otherwise they will just show up in your feed."
@@ -236,11 +248,11 @@ msgstr ""
 "Jos ruksittu, ilmoitukset uusista hakutuloksista lähetetään myös "
 "sähköpostitse. Muutoin ne ilmaantuvat vain syötteeseesi."
 
-#: decisions/subscriptions/forms.py:114 decisions/subscriptions/models.py:33
+#: decisions/subscriptions/forms.py:112 decisions/subscriptions/models.py:36
 msgid "Active"
 msgstr "Toiminnassa"
 
-#: decisions/subscriptions/forms.py:115
+#: decisions/subscriptions/forms.py:113
 msgid ""
 "If you do not wish to receive any more notifications from this "
 "subscriptions, you can disable it. Old notifications will not disappear from "
@@ -249,31 +261,31 @@ msgstr ""
 "Jos et halua saada ilmoituksia tästä tilauksesta enää, voit peruuttaa sen. "
 "Olemassaolevat ilmoitukset eivät katoa syötteestäsi."
 
-#: decisions/subscriptions/models.py:50
+#: decisions/subscriptions/models.py:53
 msgid "subscribed user"
 msgstr "tilaaja"
 
-#: decisions/subscriptions/models.py:51
+#: decisions/subscriptions/models.py:54
 msgid "subscribed users"
 msgstr "tilaajia"
 
-#: decisions/subscriptions/models.py:87
+#: decisions/subscriptions/models.py:90
 msgid "subscription"
 msgstr "tilaus"
 
-#: decisions/subscriptions/models.py:88
+#: decisions/subscriptions/models.py:91
 msgid "subscriptions"
 msgstr "tilauksia"
 
-#: decisions/subscriptions/models.py:106
+#: decisions/subscriptions/models.py:109
 msgid "subscription hit"
 msgstr "tilauksen osuma"
 
-#: decisions/subscriptions/models.py:107
+#: decisions/subscriptions/models.py:110
 msgid "subscription hits"
 msgstr "tilauksen osumia"
 
-#: decisions/subscriptions/process.py:78
+#: decisions/subscriptions/process.py:83
 #, python-format
 msgid "[%(SITE_NAME)s] %(event_count)s new event"
 msgid_plural "[%(SITE_NAME)s] %(event_count)s new events"
@@ -461,32 +473,32 @@ msgstr "Rekisteröidy"
 msgid "Your email address has been confirmed."
 msgstr "Sähköpostiosoitteesi on vahvistettu."
 
-#: decisions/subscriptions/views.py:244
+#: decisions/subscriptions/views.py:243
 msgid "You have logged out."
 msgstr "Olet kirjautunut ulos."
 
-#: decisions/templates/base.html:10 decisions/templates/base.html.py:19
+#: decisions/templates/base.html:10 decisions/templates/base.html.py:27
 msgid "Decisions"
 msgstr "Päätökset"
 
-#: decisions/templates/base.html:23
+#: decisions/templates/base.html:31
 msgid "Search from decisions"
 msgstr "Hae päätöksistä"
 
-#: decisions/templates/base.html:25
+#: decisions/templates/base.html:33
 msgid "Search"
 msgstr "Hae"
 
-#: decisions/templates/base.html:36
+#: decisions/templates/base.html:44
 #, python-format
 msgid "Logged in as <strong>%(username)s</strong>"
 msgstr "Kirjautuneena käyttäjällä <strong>%(username)s</strong>"
 
-#: decisions/templates/base.html:39
+#: decisions/templates/base.html:47
 msgid "Log out"
 msgstr "Kirjaudu ulos"
 
-#: decisions/templates/base.html:70
+#: decisions/templates/base.html:75
 #, python-format
 msgid ""
 "This website is free open source software. Source code is available <a href="
@@ -564,6 +576,9 @@ msgstr "Hae päätöksiä"
 #: decisions/templates/snippets/form_group.html:8
 msgid "Required"
 msgstr "Tärkeä kenttä"
+
+#~ msgid "Close"
+#~ msgstr "Sulje"
 
 #~ msgid "E.g. bicycling, beer gardens"
 #~ msgstr "Esim. polkupyöräily, terassit"

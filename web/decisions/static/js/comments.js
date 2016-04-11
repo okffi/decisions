@@ -160,7 +160,8 @@
       var text_length = $textarea.val().length;
       var text_remaining = text_max - text_length;
       if (text_length > show_threshold) {
-        $form.find(".length-feedback").html(text_length + '/' + text_max + ' characters used');
+        var feedback_text = gettext("%s/%s characters used");
+        $form.find(".length-feedback").html(interpolate(feedback_text, [text_length, text_max]));
       } else {
         $form.find(".length-feedback").html("");
       }

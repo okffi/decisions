@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-07 14:00+0200\n"
+"POT-Creation-Date: 2016-04-11 11:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,12 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: decisions/static/js/comments.js:22
+#: decisions/static/js/comments.js:28
 #, javascript-format
 msgid "posted by <strong>%s</strong>"
 msgstr "kirjoittanut <strong>%s</strong>"
 
-#: decisions/static/js/comments.js:127
+#: decisions/static/js/comments.js:163
+#, javascript-format
+msgid "%s/%s characters used"
+msgstr "%s/%s merkkiä käytetty"
+
+#: decisions/static/js/comments.js:205
 #, javascript-format
 msgid "%s comment"
 msgid_plural "%s comments"
