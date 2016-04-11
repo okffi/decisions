@@ -6,11 +6,13 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
     {% if query %}
+    {% with request.GET.q as search_term %}
     {% if object_list %}
     <h2>{% blocktrans count result_count=paginator.count %}{{ result_count }} result for your search '{{ search_term }}'{% plural %}{{ result_count }} results for your search '{{ search_term }}'{% endblocktrans %}</h2>
     {% else %}
     <h2>{% blocktrans %}No results for your search '{{ search_term }}'{% endblocktrans %}</h2>
     {% endif %}
+    {% endwith %}
 
      {% if user.is_authenticated %}
     <p>{% trans "You can save this search and get notified when new results come up" %}</p>
@@ -25,7 +27,15 @@
     <ol class="search-results list-unstyled" id="search-results">
       {% for result in object_list %}
       <li>
-	<a href="{{ result.object.get_absolute_url }}?q={{ request.GET.q }}"><h3>{{ result.object.title }}</h3></a>
+	<h3>
+	  <a href="{{ result.object.get_absolute_url }}?q={{ request.GET.q }}">
+	    {{ result.object.title }}
+	  </a>
+	  <br>
+	  <small>
+	    <time datetime="{{ result.object.last_modified_time.isoformat }}">{% blocktrans with result.object.last_modified_time|timesince as since %}{{ since }} ago{% endblocktrans %}</time>
+	  </small>
+	</h3>
 	<p>{{ result.object.original.issue.summary }}</p>
       </li>
       {% endfor %}
@@ -52,7 +62,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $("#search-results").hide();
-    $("#search-results").fadeIn();
+    $("#search-results").slideDown();
   });
 </script>
 {% endblock %}
