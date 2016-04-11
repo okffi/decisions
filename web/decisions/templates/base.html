@@ -96,9 +96,12 @@
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 <script src="{% static "js/autocomplete.js" %}"></script>
 <script type="text/javascript">
-  AutoComplete({
-    EmptyMessage: "…",
-    Url: "{% url "suggest" %}"
+  $(document).ready(function() {
+    AutoComplete({
+      EmptyMessage: "…",
+      Url: "{% url "suggest" %}"
+    });
+    $("#search-input").focus();
   });
 </script>
 {% block script %}{% endblock %}
