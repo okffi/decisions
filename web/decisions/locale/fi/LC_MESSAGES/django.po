@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 11:30+0300\n"
+"POT-Creation-Date: 2016-04-13 13:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,6 +135,7 @@ msgid "guest"
 msgstr "vieras"
 
 #: decisions/ahjo/templates/ahjo/view.html:15
+#: decisions/templates/search/search.html:36
 #, python-format
 msgid "%(since)s ago"
 msgstr "%(since)s sitten"
@@ -544,38 +545,50 @@ msgstr ""
 msgid "Login"
 msgstr "Kirjaudu"
 
-#: decisions/templates/search/search.html:9
-msgid "Results"
-msgstr "Tulokset"
+#: decisions/templates/search/search.html:11
+#, python-format
+msgid "%(result_count)s result for your search '%(search_term)s'"
+msgid_plural "%(result_count)s results for your search '%(search_term)s'"
+msgstr[0] ""
+msgstr[1] ""
 
-#: decisions/templates/search/search.html:12
+#: decisions/templates/search/search.html:13
+#, fuzzy, python-format
+#| msgid "No results found. Try a broader search term"
+msgid "No results for your search '%(search_term)s'"
+msgstr "Hakutuloksia ei löytynyt. Kokeile laajempaa hakusanaa"
+
+#: decisions/templates/search/search.html:18
 msgid "You can save this search and get notified when new results come up"
 msgstr ""
 "Voit tallentaa tämän haun ja ilmoitamme sinulle kun uusia tuloksia tulee"
 
-#: decisions/templates/search/search.html:15
+#: decisions/templates/search/search.html:21
 msgid "Subscribe to this search"
 msgstr "Tilaa tämä haku"
 
-#: decisions/templates/search/search.html:30
+#: decisions/templates/search/search.html:44
 msgid "No results found. Try a broader search term"
 msgstr "Hakutuloksia ei löytynyt. Kokeile laajempaa hakusanaa"
 
-#: decisions/templates/search/search.html:35
+#: decisions/templates/search/search.html:49
 msgid "Previous"
 msgstr "Edelliset"
 
-#: decisions/templates/search/search.html:37
+#: decisions/templates/search/search.html:51
 msgid "Next"
 msgstr "Seuraavat"
 
-#: decisions/templates/search/search.html:41
+#: decisions/templates/search/search.html:55
 msgid "Search for decisions"
 msgstr "Hae päätöksiä"
 
 #: decisions/templates/snippets/form_group.html:8
 msgid "Required"
 msgstr "Tärkeä kenttä"
+
+#~ msgid "Results"
+#~ msgstr "Tulokset"
 
 #~ msgid "Close"
 #~ msgstr "Sulje"

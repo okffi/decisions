@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-11 11:32+0300\n"
+"POT-Creation-Date: 2016-04-13 13:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,9 +28,13 @@ msgstr "kirjoittanut <strong>%s</strong>"
 msgid "%s/%s characters used"
 msgstr "%s/%s merkkiä käytetty"
 
-#: decisions/static/js/comments.js:205
+#: decisions/static/js/comments.js:212
+msgid "Write a comment"
+msgstr "Kirjoita kommentti"
+
+#: decisions/static/js/comments.js:231
 #, javascript-format
-msgid "%s comment"
-msgid_plural "%s comments"
-msgstr[0] "%s kommentti"
-msgstr[1] "%s kommenttia"
+msgid "Read %s comment"
+msgid_plural "Read %s comments"
+msgstr[0] "Lue %s kommentti"
+msgstr[1] "Lue %s kommenttia"

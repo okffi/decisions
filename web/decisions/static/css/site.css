@@ -14,3 +14,25 @@
 #search-button {
     padding: 9px 12px;
 }
+
+.commentable {
+    position: relative;
+}
+
+.comments-bubble i {
+    margin-right: .2em;
+}
+
+@media (min-width: 992px) {
+    .comments-bubble {
+        position: absolute;
+	left: 648px; /* 8 * 81px */
+	width: 130px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .comments-bubble {
+	left: 776px; /* 8 * 97px */
+    }
+}
