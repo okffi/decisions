@@ -8,37 +8,8 @@
   <div class="col-md-8 col-md-offset-2">
     <hr>
     <p>{% blocktrans %}Get involved with your community. Find where decisions are made, comment on them and get notified when things you care about come up{% endblocktrans %}</p>
-    <p>{% blocktrans %}Log in or register to save your searches and receive notifications about new developments. You can also comment on decisions{% endblocktrans %}</p>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4 col-md-offset-2">
-    <h3>{% trans "Register" %}</h3>
-
-    <form action="{% url 'register' %}" method="post">
-      {% csrf_token %}
-      {% for field in register_form %}
-      {% include "snippets/form_group.html" %}
-      {% endfor %}
-
-      <button type="submit" class="btn btn-primary">
-	{% trans "Register" %}
-      </button>
-    </form>
-  </div>
-  <div class="col-md-4">
-    <h3>{% trans "Login" %}</h3>
-
-    <form action="{% url 'login' %}" method="post">
-      {% csrf_token %}
-      {% for field in login_form %}
-      {% include "snippets/form_group.html" %}
-      {% endfor %}
-
-      <button type="submit" class="btn btn-primary">
-	{% trans "Log in" %}
-      </button>
-    </form>
+    {% url 'login-or-register' as login_or_register_url %}
+    <p>{% blocktrans %}<a href="{{ login_or_register_url }}">Log in or register</a> to save your searches and receive notifications about new developments. You can also comment on decisions{% endblocktrans %}</p>
   </div>
 </div>
 {% else %}

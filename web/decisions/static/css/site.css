@@ -23,6 +23,49 @@
     margin-right: .2em;
 }
 
+
+.site-logo {
+    width: auto;
+}
+.site-logo h1 {}
+
+.site-logo img {
+    height: 35px;
+}
+
+.nav-logout-form {
+    margin: 0;
+}
+
+.search-form {
+    margin-top: 1em;
+}
+
+@media (max-width: 48em) {
+    .custom-logo-mobile {
+	display: inline-block;
+    }
+    .custom-logo-desktop {
+	display: none;
+    }
+
+    .flexbox nav[role="navigation"] {
+	width: 100%;
+    }
+}
+
+@media (min-width: 48em) {
+    .custom-logo-mobile {
+	display: none;
+    }
+    .custom-logo-desktop {
+	display: inline-block;
+    }
+    .flexbox nav[role="navigation"] {
+	width: 70%;
+    }
+}
+
 @media (min-width: 992px) {
     .comments-bubble {
         position: absolute;

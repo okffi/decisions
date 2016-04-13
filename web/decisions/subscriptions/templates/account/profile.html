@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>
+      {% blocktrans with username=profile_user.username %}Profile for '{{ username }}'{% endblocktrans %}
+    </h2>
+    <p>{% blocktrans with since=profile_user.date_joined|timesince %}Member for {{ since }}{% endblocktrans %}</p>
+  </div>
+</div>
+{% endblock %}
