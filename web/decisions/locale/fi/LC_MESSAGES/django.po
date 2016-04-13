@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-13 13:00+0300\n"
+"POT-Creation-Date: 2016-04-13 13:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,109 +74,131 @@ msgstr "Äänestys"
 msgid "Unknown"
 msgstr "Ei päätöstä vielä"
 
-#: decisions/ahjo/models.py:90
-msgid "Subject"
-msgstr "Aihe"
-
-#: decisions/ahjo/models.py:94 decisions/ahjo/templates/ahjo/view.html.py:23
-msgid "Preparer"
-msgstr "Esittelijä"
-
-#: decisions/ahjo/models.py:100 decisions/ahjo/templates/ahjo/view.html.py:26
+#: decisions/ahjo/models.py:86 decisions/ahjo/models.py:109
+#: decisions/ahjo/templates/ahjo/view.html:27
 msgid "Resolution"
 msgstr "Ratkaisu"
 
-#: decisions/ahjo/models.py:104
+#: decisions/ahjo/models.py:87
+msgid "Summary"
+msgstr "Yhteenveto"
+
+#: decisions/ahjo/models.py:88
+msgid "Presenter"
+msgstr "Esittelijä"
+
+#: decisions/ahjo/models.py:89
+msgid "Hearing"
+msgstr "Kuuleminen"
+
+#: decisions/ahjo/models.py:90
+msgid "Reasons for resolution"
+msgstr "Perustelut ratkaisulle"
+
+#: decisions/ahjo/models.py:91
+#, python-format
+msgid "Section: %(section_type)s"
+msgstr "Kappale: %(section_type)s"
+
+#: decisions/ahjo/models.py:99
+msgid "Subject"
+msgstr "Aihe"
+
+#: decisions/ahjo/models.py:103 decisions/ahjo/templates/ahjo/view.html.py:24
+msgid "Preparer"
+msgstr "Esittelijä"
+
+#: decisions/ahjo/models.py:113
 msgid "Classification code"
 msgstr "Lajittelukoodi"
 
-#: decisions/ahjo/models.py:108
+#: decisions/ahjo/models.py:117
 msgid "Last modified time"
 msgstr "Viimeisin muokkausaika"
 
-#: decisions/ahjo/models.py:112
+#: decisions/ahjo/models.py:121
 msgid "Original"
 msgstr "Alkuperäinen"
 
-#: decisions/ahjo/models.py:123
+#: decisions/ahjo/models.py:132
 msgid "agenda item"
 msgstr "esitys"
 
-#: decisions/ahjo/models.py:124
+#: decisions/ahjo/models.py:133
 msgid "agenda items"
 msgstr "esityksiä"
 
-#: decisions/ahjo/models.py:209
+#: decisions/ahjo/models.py:218
 msgid "This is the element where the comment attaches on a decision"
 msgstr "Kommentti liittyy tähän elementtiin"
 
-#: decisions/ahjo/models.py:213
+#: decisions/ahjo/models.py:222
 msgid "Quote"
 msgstr "Sitaatti"
 
-#: decisions/ahjo/models.py:214
+#: decisions/ahjo/models.py:223
 msgid "Quotes are required."
 msgstr "Sitaatti vaaditaan"
 
-#: decisions/ahjo/models.py:217
+#: decisions/ahjo/models.py:226
 msgid "Comment"
 msgstr "Kommentti"
 
-#: decisions/ahjo/models.py:222
+#: decisions/ahjo/models.py:231
 msgid "comment"
 msgstr "kommentti"
 
-#: decisions/ahjo/models.py:223
+#: decisions/ahjo/models.py:232
 msgid "comments"
 msgstr "kommentteja"
 
-#: decisions/ahjo/models.py:228
+#: decisions/ahjo/models.py:237
 msgid "guest"
 msgstr "vieras"
 
-#: decisions/ahjo/templates/ahjo/view.html:15
+#: decisions/ahjo/templates/ahjo/view.html:16
 #: decisions/templates/search/search.html:36
 #, python-format
 msgid "%(since)s ago"
 msgstr "%(since)s sitten"
 
-#: decisions/ahjo/templates/ahjo/view.html:24
+#: decisions/ahjo/templates/ahjo/view.html:25
 msgid "Date updated"
 msgstr "Päivitetty"
 
-#: decisions/ahjo/templates/ahjo/view.html:25
+#: decisions/ahjo/templates/ahjo/view.html:26
 msgid "Classification"
 msgstr "Luokittelu"
 
-#: decisions/ahjo/templates/ahjo/view.html:37
+#: decisions/ahjo/templates/ahjo/view.html:38
 msgid "Attachments"
 msgstr "Liitetiedostot"
 
-#: decisions/ahjo/templates/ahjo/view.html:45
+#: decisions/ahjo/templates/ahjo/view.html:46
 msgid "Download"
 msgstr "Lataa"
 
-#: decisions/ahjo/templates/ahjo/view.html:50
+#: decisions/ahjo/templates/ahjo/view.html:51
 msgid "This decision has no attachments."
 msgstr "Tällä päätöksellä ei ole liitetiedostoja."
 
-#: decisions/ahjo/templates/ahjo/view.html:56
+#: decisions/ahjo/templates/ahjo/view.html:57
 msgid "Issue"
 msgstr "Aihe"
 
-#: decisions/ahjo/templates/ahjo/view.html:63
+#: decisions/ahjo/templates/ahjo/view.html:64
 msgid "Meeting information"
 msgstr "Kokoustietoja"
 
-#: decisions/ahjo/templates/ahjo/view.html:64
+#: decisions/ahjo/templates/ahjo/view.html:65
 msgid "Council"
 msgstr "Lautakunta"
 
-#: decisions/ahjo/templates/ahjo/view.html:65
+#: decisions/ahjo/templates/ahjo/view.html:66
 msgid "Date"
 msgstr "Päiväys"
 
-#: decisions/ahjo/templates/ahjo/view.html:93
+#: decisions/ahjo/templates/ahjo/view.html:94
 msgid "Send Comment"
 msgstr "Kommentoi"
 

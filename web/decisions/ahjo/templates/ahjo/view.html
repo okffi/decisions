@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load staticfiles %}
+{% load ahjo_tags %}
 
 {% block content %}
 <div class="row">
@@ -29,7 +30,7 @@
     <div id="content_block">
       {% for c in agendaitem.original.content %}
       <div class="agenda_content">
-	<small>{{ c.type }}</small>
+	<h3>{{ c.type|map_section_type }}</h3>
 	{{ c.text|safe }}
       </div>
       {% endfor %}
