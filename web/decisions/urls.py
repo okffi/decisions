@@ -19,7 +19,7 @@ from django.views.i18n import javascript_catalog
 from django.shortcuts import render
 
 from decisions.subscriptions.forms import LoginForm, RegisterForm
-from decisions.subscriptions.views import dashboard
+from decisions.subscriptions.views import dashboard, profile
 
 js_info_dict = {
     'packages': ('decisions',),
@@ -41,10 +41,11 @@ urlpatterns = [
         js_info_dict,
         name='javascript-catalog'),
     url(r'^search/', include('decisions.subscriptions.search_urls')),
-    #url(r'^search/', include('haystack.urls')),
     url(r'^$', index, name='index'),
     url(r'^subscriptions/', include('decisions.subscriptions.urls')),
+    url(r'^account/', include('decisions.subscriptions.account_urls')),
     url(r'^api/v1/', include([
         url(r'^feed/', include('decisions.subscriptions.api_urls')),
     ])),
+    url(r'^p/(?P<username>[\w.@+-]+)/$', profile, name='profile'),
 ]

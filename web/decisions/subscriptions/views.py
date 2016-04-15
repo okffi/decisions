@@ -33,6 +33,9 @@ from decisions.subscriptions.forms import (
 
 @login_required
 def dashboard(request):
+    """
+    Brief snippets of all interesting site features
+    """
     all_subscriptions = SubscriptionUser.objects.filter(user=request.user)
     subscriptions = all_subscriptions.filter(active=True)
     inactive_subscriptions = all_subscriptions.filter(active=False)
@@ -69,6 +72,62 @@ def dashboard(request):
         })
 
 @login_required
+def subscriptions(request):
+    """
+    Detailed subscription management page
+
+    TODO: More detail
+    """
+    all_subscriptions = SubscriptionUser.objects.filter(user=request.user)
+    subscriptions = all_subscriptions.filter(active=True)
+    inactive_subscriptions = all_subscriptions.filter(active=False)
+    for subscription in subscriptions:
+        subscription.fresh_for_user = subscription.is_fresh(request.user)
+
+    return render(
+        request,
+        "subscriptions/subscriptions.html",
+        {
+            "subscriptions": subscriptions,
+            "inactive_subscriptions": inactive_subscriptions,
+        })
+
+@login_required
+def feed(request):
+    """
+    Detailed feed browsing pages
+
+    TODO: paginate and allow browsing all of the feed
+    """
+    hits = (
+        SubscriptionHit.objects
+        .filter(notified_users=request.user)
+        .order_by('-created')
+        [:30]
+    )
+
+    for hit in hits:
+        # intersect user's subscriptions and the hit's subscriptions
+        hit_terms = [
+            subscription.search_term
+            for subscription in hit.subscriptions.all()
+        ]
+        user_terms = [
+            subscription.search_term
+            for subscription in request.user.subscription_set.all()
+        ]
+        terms = set(hit_terms).intersection(user_terms)
+        hit.user_search_terms = terms
+
+    return render(
+        request,
+        "subscriptions/feed.html",
+        {
+            "feed": hits,
+        })
+
+
+@login_required
 def add_subscription(request):
     if request.method == "POST":
         form = SubscriptionForm(request.POST)
@@ -90,7 +149,7 @@ def add_subscription(request):
             messages.success(
                 request,
                 _("You have subscribed to the search term <tt>%(search_term)s</tt>") % form.cleaned_data)
-            return redirect("index")
+            return redirect("subscriptions")
     else:
         form = SubscriptionForm(initial={"search_term": request.GET.get("q")})
 
@@ -128,7 +187,7 @@ def edit_subscription(request, subscription_id):
                 request,
                 _("You have edited your subscription to <tt>%(search_term)s</tt>") % form.cleaned_data)
 
-            return redirect("index")
+            return redirect("subscriptions")
     else:
         form = SubscriptionEditForm(initial={
             "search_term": usersub.subscription.search_term,
@@ -168,9 +227,9 @@ def login(request):
     else:
         form = LoginForm(initial={"next": redirect_to})
 
-    return render(request, "form.html", {
+    return render(request, "account/login.html", {
         "form": form,
-        "verb": _("Log in"),
+        "next": redirect_to,
     })
 
 def register(request):
@@ -216,6 +275,12 @@ def register(request):
 
     return render(request, "form.html", {"form": form, "verb": _("Register")})
 
+def login_or_register(request):
+    return render(request, "account/login_or_register.html", {
+        "login_form": LoginForm(),
+        "register_form": RegisterForm(),
+    })
+
 def confirm_email(request, confirm_code):
     try:
         user = User.objects.get(
@@ -250,12 +315,27 @@ def suggest(request):
     currently it only finds and suggests fresh subscriptions
     """
 
+    q = request.GET.get("q")
+
+    if q is None:
+        return JsonResponse([])
+
     fresh_subscriptions = (
         Subscription.objects
         .get_fresh()
-        .filter(search_term__startswith=request.GET.get("q"))
+        .filter(search_term__startswith=q)
     )[:5]
 
     ret = [sub.search_term for sub in fresh_subscriptions]
 
     return JsonResponse(ret)
+
+def profile(request, username):
+    return render(
+        request,
+        "account/profile.html",
+        {"profile_user": get_object_or_404(User, username=username)}
+    )
+
+def edit_profile(request):
+    return render(request, "account/edit_profile.html")

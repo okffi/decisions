@@ -1,5 +1,7 @@
 <!doctype html>
 
+<html class="flexbox">
+
 {% load i18n %}
 {% load staticfiles %}
 
@@ -9,9 +11,8 @@
 
 <title>{% trans "Decisions" %}</title>
 
-<!-- Site/Custom CSS -->
+<!-- Standard CSS -->
 <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
-<link href="{% static "css/site.css" %}" rel="stylesheet">
 <link href="{% static "css/autocomplete.css" %}" rel="stylesheet">
 
 <!-- D-CENT standard CSS -->
@@ -21,38 +22,68 @@
 <link href="{% static "dcent/css/fonts.css" %}" rel="stylesheet">
 <link rel="shortcut icon" href="{% static "dcent/img/favicon.png" %}">
 
+<!-- Custom CSS Overrides Everything Else -->
+<link href="{% static "css/site.css" %}" rel="stylesheet">
+
+<div class="wrap--header bc-grey--lightest header--sticky custom-header">
+  <header class="header--login l-constrained" role="banner">
+    <a class="site-logo" href="{% url 'index' %}">
+      <h1>
+	<img class="logo-mobile custom-logo-mobile" src="{% static "dcent/img/logo.svg" %}" alt="{% trans "Decisions" %}">
+	<img class="logo-desktop custom-logo-desktop" src="{% static "dcent/img/D-CENT_logo.svg" %}" alt="{% trans "Decisions" %}">
+	{% trans "Decisions" %}
+      </h1>
+    </a>
+
+    <nav role="navigation">
+      <ul class="bare-list nav nav-primary">
+        <li class="nav__item">
+	  <a href="{% url 'feed' %}"><i class="fa fa-comments"></i>
+	    <span>{% trans "Feed" %}
+	      {% if unread_notifications %}<i class="count c-white bc-comp--light">{{ unread_notifications }}</i>{% endif %}</span>
+	  </a>
+	</li>
+        <li class="nav__item">
+	  <a href="{% url 'subscriptions' %}"><i class="icon icon-chat"></i>
+	    <span>{% trans "Subscriptions" %}</span>
+	  </a>
+	</li>
+      </ul>
+      <ul class="bare-list nav nav-settings">
+	{% if user.is_authenticated %}
+        <li class="nav__item">
+	  <a href="{% url 'edit-profile' %}"><i class="icon icon-avatar"></i>
+	    <span>{% blocktrans with username=user.username %}Logged in: <strong>{{ username }}</strong>{% endblocktrans %}</span>
+	  </a>
+	</li>
+	<li class="nav__item">
+	  <form method="post" action="{% url 'logout' %}" class="inline-block nav-logout-form">
+	    {% csrf_token %}
+	    <button class="btn">{% trans "Log out" %}</button>
+	  </form>
+	</li>
+	{% else %}
+	<li class="nav__item">
+	  <a href="{% url 'login-or-register' %}">
+	    <i class="icon icon-avatar"></i>
+	    <span>
+	      {% trans "Log in or register" %}
+	    </span>
+	  </a>
+	</li>
+	{% endif %}
+      </ul>
+    </nav>
+  </header>
+</div>
+
+{% block content_bare %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <a href="{% url 'index' %}"><h1>{% trans "Decisions" %}</h1></a>
-
-      <form method="get" action="{% url "haystack_search" %}">
-	<div class="input-group">
-	  <input type="text" name="q" placeholder="{% trans "Search from decisions" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} id="search-input">
-	  <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit" id="search-button">{% trans "Search" %}</button>
-	  </span>
-	</div>
-      </form>
-
-    </div>
-  </div>
-
-  {% if user.is_authenticated %}
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <span>{% blocktrans with user.username as username %}Logged in as <strong>{{ username }}</strong>{% endblocktrans %}</span>
-      <form method="post" action="{% url 'logout' %}" class="inline-block">
-	{% csrf_token %}
-	<button class="btn btn-link">{% trans "Log out" %}</button>
-      </form>
-    </div>
-  </div>
-  {% endif %}
+  {% block search_bar %}{% endblock %}
 
   {% for message in messages %}
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-12">
       <br>
       <div class="message alert alert-dismissible alert-{{ message.level_tag }} {{ message.extra_tags }}">
 	<div class="message__body">{{ message.message|safe }}
@@ -66,7 +97,7 @@
   {% block content %}{% endblock %}
 
   <div class="row">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-12">
       <hr>
       <footer>
 	<div class="row">
@@ -90,15 +121,18 @@
     </div>
   </div>
 </div>
+{% endblock %}
 
 <script src="{% static "js/jquery-2.2.1.js" %}"></script>
 <script src="{% static "js/bootstrap.min.js" %}"></script>
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-<script src="{% static "js/autocomplete.js" %}"></script>
+{% block base_script %}{% endblock %}
+{% block script %}{% endblock %}
+
 <script type="text/javascript">
-  AutoComplete({
-    EmptyMessage: "…",
-    Url: "{% url "suggest" %}"
+  $(document).ready(function() {
+    {% block ready_script %}{% endblock %}
   });
 </script>
-{% block script %}{% endblock %}
+
+</html>

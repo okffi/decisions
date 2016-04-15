@@ -81,6 +81,15 @@ RESOLUTION_CHOICES = (
     (UNKNOWN, _('Unknown')),
 )
 
+# Section types can apparently be as follows. Mark for translation
+SECTION_TYPE_MAP = {
+    "resolution": _("Resolution"),
+    "summary": _("Summary"),
+    "presenter": _("Presenter"),
+    "hearing": _("Hearing"),
+    "reasons for resolution": _("Reasons for resolution"),
+    "default": _("Section: %(section_type)s"),
+}
 
 class AgendaItem(models.Model):
     ahjo_id = models.IntegerField(db_index=True)

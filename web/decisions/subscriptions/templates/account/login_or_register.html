@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h2>{% trans "Log in or register" %}</h2>
+
+    <p>{% blocktrans %}You can comment and track decisions by logging in to your account. Or if you don't have one, you can register a new account now.{% endblocktrans %}</p>
+
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <h3>{% trans "Register" %}</h3>
+
+    <form action="{% url 'register' %}" method="post">
+      {% csrf_token %}
+      {% for field in register_form %}
+      {% include "snippets/form_group.html" %}
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary">
+	{% trans "Register" %}
+      </button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <h3>{% trans "Login" %}</h3>
+
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      {% for field in login_form %}
+      {% include "snippets/form_group.html" %}
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary">
+	{% trans "Log in" %}
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,48 +1,58 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
 {% load i18n %}
+
+{% block search_bar %}{% endblock %}
 
 {% block content %}
 {% if user.is_anonymous %}
-<div class="row">
-  <div class="col-md-8 col-md-offset-2">
-    <hr>
-    <p>{% blocktrans %}Get involved with your community. Find where decisions are made, comment on them and get notified when things you care about come up{% endblocktrans %}</p>
-    <p>{% blocktrans %}Log in or register to save your searches and receive notifications about new developments. You can also comment on decisions{% endblocktrans %}</p>
-  </div>
+<div class="jumbotron jumbo-bg">
+  <h1 class="bc-base--lightest c-base">{% trans "Decisions at your fingertips" %}</h1>
+  <p class="bc-comp--lightest">{% blocktrans %}Get involved with your community. Find where decisions are made, comment on them and get notified when things you care about come up{% endblocktrans %}</p>
+  <form method="get" action="{% url "haystack_search" %}" class="search-form">
+    <div class="input-group">
+      <input type="text" name="q" placeholder="{% trans "E.g. Bicycling" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} id="search-input">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit" id="search-button">{% trans "Search" %}</button>
+      </span>
+    </div>
+  </form>
+  {% url 'login-or-register' as login_or_register_url %}
+  <p class="bc-comp--lightest">{% blocktrans %}<a href="{{ login_or_register_url }}">Log in or register</a> to save your searches and receive notifications about new developments. While logged in, you can also comment on decisions{% endblocktrans %}</p>
 </div>
+
 <div class="row">
-  <div class="col-md-4 col-md-offset-2">
-    <h3>{% trans "Register" %}</h3>
+  <div class="col-md-4">
+    <h3>{% trans "About this service" %}</h3>
 
-    <form action="{% url 'register' %}" method="post">
-      {% csrf_token %}
-      {% for field in register_form %}
-      {% include "snippets/form_group.html" %}
-      {% endfor %}
+    <p>{% trans "Currently indexing about 40 000 decisions from the City of Helsinki" %}</p>
 
-      <button type="submit" class="btn btn-primary">
-	{% trans "Register" %}
-      </button>
-    </form>
+    <p>{% trans "More cities and other public decisionmakers coming soon!" %}</p>
+
+    <p><i class="icon-tasks"></i> <a href="https://github.com/okffi/decisions/issues/new">{% trans "Give feedback, report an issue, suggest improvements, etc." %}</a> {% trans "(Requires Github account)" %}</p>
+    <p><i class="icon-question_ring"></i> <a href="https://github.com/okffi/decisions/issues">{% trans "What's going on behind the scenes?" %}</a></p>
   </div>
   <div class="col-md-4">
-    <h3>{% trans "Login" %}</h3>
+    <h3>{% trans "Recent comment" %}</h3>
 
-    <form action="{% url 'login' %}" method="post">
-      {% csrf_token %}
-      {% for field in login_form %}
-      {% include "snippets/form_group.html" %}
-      {% endfor %}
-
-      <button type="submit" class="btn btn-primary">
-	{% trans "Log in" %}
-      </button>
-    </form>
+    <p>{% trans "We'll showcase some comments soon!" %}</p>
   </div>
 </div>
 {% else %}
 {% include "subscriptions/dashboard.html" %}
 {% endif %}
 
+{% endblock %}
+
+{% block script %}
+<script src="{% static "js/autocomplete.js" %}"></script>
+{% endblock %}
+
+{% block ready_script %}
+AutoComplete({
+  EmptyMessage: "…",
+  Url: "{% url "suggest" %}"
+});
+$("#search-input").focus();
 {% endblock %}

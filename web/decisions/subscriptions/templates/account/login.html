@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    {% if next %}
+    <h2>{% trans "Log in to continue" %}</h2>
+
+    <div class="message message--particular">
+      <div class="message__body">
+	{% url 'register' as register_url %}
+	{% blocktrans %}You need to log in to access this page. If you don't have an account, you can <a href="{{ register_url }}">register a free account</a> and try again.{% endblocktrans %}
+      </div>
+    </div>
+    {% else %}
+    <h2>{% trans "Log in" %}</h2>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+      {% include "snippets/form_group.html" %}
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -149,6 +149,7 @@ DEFAULT_FROM_EMAIL = "noreply@example.com"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_URL = os.environ.get("SITE_URL", "http://localhost:8000")
 SITE_NAME = "Decisions"
+LOGIN_URL = "/account/login/"
 
 # Set up logging
 

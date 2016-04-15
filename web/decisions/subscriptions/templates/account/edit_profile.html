@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>
+      {% blocktrans with username=user.username %}Edit profile for '{{ username }}'{% endblocktrans %}
+    </h2>
+    <p><a href="{% url 'profile' username=user.username %}">{% trans "View public profile" %}</a></p>
+    <p>{% trans "Account management coming soon!" %}</p>
+  </div>
+</div>
+{% endblock %}

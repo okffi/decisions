@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h2>{% trans "Subscriptions" %}</h2>
+
+    <h3>{% trans "Add a new subscription" %}</h3>
+
+    <form method="post" action="{% url 'add-subscription' %}">
+      {% csrf_token %}
+      <p><input name="search_term" placeholder="{% trans "Search term…" %}"></p>
+      <p><button type="submit" class="btn">{% trans "Subscribe" %}</button></p>
+    </form>
+
+    <h3>{% trans "Active subscriptions" %}</h3>
+
+    <ul class="list-group">
+      {% for s in subscriptions %}
+      <li class="list-group-item subscription-list-item">
+
+	{% if s.send_mail %}
+	<span class="badge">
+	  <i class="glyphicon glyphicon-envelope"></i>
+	</span>
+	{% endif %}
+
+	{% if s.fresh_for_user %}
+	<span class="badge">
+	  <i class="glyphicon glyphicon-leaf"></i>
+	  {% if s.fresh_for_user > 1 %}{{ s.fresh_for_user }}{% endif %}
+	</span>
+	{% endif %}
+
+	<a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term }}">{{ s.subscription.search_term }}</a>
+
+	<div class="pull-right">
+	  <small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small>
+	</div>
+      </li>
+      {% empty %}
+      <li class="list-group-item list-group-item-info text-center bc-base--lightest">
+	{% blocktrans %}You can create subscriptions by saving searches you have made{% endblocktrans %}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="legend">
+      <h4>{% trans "Legend" %}</h4>
+      <p>
+	<span class="badge">
+	  <i class="glyphicon glyphicon-envelope"></i>
+	</span>
+	{% trans "New notifications are sent to you by email as well" %}
+      </p>
+      <p>
+	<span class="badge">
+	  <i class="glyphicon glyphicon-leaf"></i>
+	</span>
+	{% trans "Fresh. Has triggered notifications for you recently" %}
+      </p>
+    </div>
+    {% if inactive_subscriptions %}
+    <h3>{% trans "Dormant subscriptions" %}</h3>
+
+    <p>{% blocktrans %}These subscriptions will not add notifications to your feed or send email. You can enable subscriptions from here by editing them.{% endblocktrans %}</p>
+
+    <ul class="list-group">
+      {% for s in inactive_subscriptions %}
+      <li class="list-group-item">
+	<p>{{ s.subscription.search_term }}</p>
+
+	<small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

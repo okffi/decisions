@@ -1,4 +1,7 @@
+from __future__ import unicode_literals
+
 from django import forms
+from django.forms import widgets
 from django.utils.translation import ugettext_lazy as _, string_concat
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import (
@@ -94,6 +97,29 @@ class LoginForm(forms.Form):
             raise forms.ValidationError(_("Email or password did not match. Please try again."))
         return self.cleaned_data
 
+class BSRadioChoiceInput(widgets.RadioChoiceInput):
+    def render(self, name=None, value=None, attrs=None, choices=()):
+        from django.utils.html import format_html
+
+        if self.id_for_label:
+            label_for = format_html(' for="{}"', self.id_for_label)
+        else:
+            label_for = ''
+        attrs = dict(self.attrs, **attrs) if attrs else self.attrs
+        print self.attrs
+        active = "active" if self.is_checked() else ""
+        return format_html(
+            '<label{} class="btn {}">{} {}</label>', label_for, active, self.tag(attrs), self.choice_label
+        )
+
+class BSRadioFieldRenderer(widgets.ChoiceFieldRenderer):
+    choice_input_class = BSRadioChoiceInput
+    outer_html = '<div{id_attr} class="btn-group" data-toggle="buttons">{content}</div>'
+    inner_html = '{choice_value}{sub_widgets}'
+
+class BSRadioSelect(forms.RadioSelect):
+    renderer = BSRadioFieldRenderer
+
 class SubscriptionForm(forms.Form):
     search_term = forms.CharField(
         label=_('Search term'),
@@ -104,12 +130,20 @@ class SubscriptionForm(forms.Form):
     send_mail = forms.BooleanField(
         label=_('Sends email'),
         help_text=_('If checked, notifications about new search results are also sent by email. Otherwise they will just show up in your feed.'),
-        required=False
+        required=False,
+        widget=BSRadioSelect(choices=[
+            (True, _("Sends email")),
+            (False, _("No"))
+        ])
     )
 
 class SubscriptionEditForm(SubscriptionForm):
     active = forms.BooleanField(
         label=_('Active'),
         help_text=_('If you do not wish to receive any more notifications from this subscriptions, you can disable it. Old notifications will not disappear from your feed.'),
-        required=False
+        required=False,
+        widget=BSRadioSelect(choices=[
+            (True, _("Active")),
+            (False, _("No"))
+        ])
     )

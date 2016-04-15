@@ -155,7 +155,7 @@
     // maybe show a feedback text beside the submit button if there's enough text
     var text_max = 300;
     var show_threshold = 173;
-    var $textarea = $form.find("textarea")
+    var $textarea = $form.find("textarea");
     $textarea.on("keyup", function() {
       var text_length = $textarea.val().length;
       var text_remaining = text_max - text_length;
@@ -193,17 +193,44 @@
   var update = function() {
     return $.get(comments_url).done(function(data) {
       all_comments = data["content"];
+      // attach a nice comment float to each commentable thing
+      // TODO: attach it nicer because float seems not too nice
+      $("#content_block p").addClass("commentable");
+      $("#content_block p").each(function() {
+        var $this = $(this);
+        var $div;
+        if ($this.find(".comments-bubble").length) {
+          $div = $this.find(".comments-bubble");
+        } else {
+          $div = $("<div>");
+          $div.addClass("comments-bubble");
+          $div.prependTo($this);
+        }
+
+        var bubble_html = "";
+        if (commenting_enabled) {
+          bubble_html += "<i class=\"fa fa-comments\"></i>"
+          bubble_html += "<small><a href=\"#\">" + gettext("Write a comment") + "</a></small>";
+        }
+
+        $div.html(bubble_html);
+      });
+
       $.each(all_comments, function(selector, comments) {
 	var $comment_counter = $(selector).find(".comment-counter");
 	if ($comment_counter.length == 0) {
 	  $comment_counter = $("<small>");
-	  $comment_counter.addClass("comment-counter badge");
-	  $comment_counter.appendTo($(selector));
+	  $comment_counter.addClass("comment-counter");
+          var $bubble = $(selector).find(".comments-bubble");
+          $bubble.html("<i class=\"fa fa-comments\"></i>");
+          var $a = $("<a href=\"#\">");
+          $comment_counter.appendTo($a);
+          $a.appendTo($bubble);
 	}
 
 	var text = ngettext(
-	  "%s comment",
-	  "%s comments",
+	  "Read %s comment",
+	  "Read %s comments",
 	  comments.length
 	);
 	$comment_counter.text(interpolate(text, [comments.length]));
