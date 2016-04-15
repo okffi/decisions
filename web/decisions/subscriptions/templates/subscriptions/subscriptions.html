@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-12">
     <h2>{% trans "Subscriptions" %}</h2>
 
     <h3>{% trans "Add a new subscription" %}</h3>
@@ -19,7 +19,7 @@
 
     <ul class="list-group">
       {% for s in subscriptions %}
-      <li class="list-group-item">
+      <li class="list-group-item subscription-list-item">
 
 	{% if s.send_mail %}
 	<span class="badge">
@@ -34,9 +34,11 @@
 	</span>
 	{% endif %}
 
-	<p><a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term }}">{{ s.subscription.search_term }}</a></p>
+	<a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term }}">{{ s.subscription.search_term }}</a>
 
-	<p><small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small></p>
+	<div class="pull-right">
+	  <small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small>
+	</div>
       </li>
       {% empty %}
       <li class="list-group-item list-group-item-info text-center bc-base--lightest">

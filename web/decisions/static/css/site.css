@@ -49,6 +49,15 @@
     background-image: url("../img/kuulutustaulu-1600.png");
 }
 
+.subscription-list-item button.btn {
+    font-size: 11px;
+}
+
+.btn.active {
+    background: #FFEAFC;
+    color: #222222;
+}
+
 @media (max-width: 48em) {
     .custom-logo-mobile {
 	display: inline-block;
