@@ -227,9 +227,9 @@ def login(request):
     else:
         form = LoginForm(initial={"next": redirect_to})
 
-    return render(request, "form.html", {
+    return render(request, "account/login.html", {
         "form": form,
-        "verb": _("Log in"),
+        "next": redirect_to,
     })
 
 def register(request):

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Decisions 1.0\n"
-"Report-Msgid-Bugs-To: https://github.com/okffi/decisions/issues\n"
-"POT-Creation-Date: 2016-04-13 16:51+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-15 10:37+0300\n"
 "PO-Revision-Date: 2016-04-13 16:51+0300\n"
 "Last-Translator: Leo Honkanen <leo.o.honkanen@gmail.com>\n"
 "Language-Team: Finnish <LL@li.org>\n"
@@ -329,6 +329,23 @@ msgstr "Näytä yleinen profiili"
 msgid "Account management coming soon!"
 msgstr "Tilinhallinta tulee kohta!"
 
+#: decisions/subscriptions/templates/account/login.html:9
+msgid "Log in to continue"
+msgstr "Kirjaudu jatkaaksesi"
+
+#: decisions/subscriptions/templates/account/login.html:14
+#, python-format
+msgid ""
+"You need to log in to access this page. If you don't have an account, you "
+"can <a href=\"%(register_url)s\">register a free account</a> and try again."
+msgstr "Tämä sivu vaatii kirjautumista. Jos sinulla ei ole tiliä jolle kirjautua, voit <a href=\"%(register_url)s\">rekisteröidä ilmaisen tilin</a> ja yrittää uudelleen."
+
+#: decisions/subscriptions/templates/account/login.html:18
+#: decisions/subscriptions/templates/account/login.html:27
+#: decisions/subscriptions/templates/account/login_or_register.html:42
+msgid "Log in"
+msgstr "Kirjaudu"
+
 #: decisions/subscriptions/templates/account/login_or_register.html:8
 #: decisions/templates/base.html:70
 msgid "Log in or register"
@@ -338,7 +355,9 @@ msgstr "Kirjaudu tai rekisteröidy"
 msgid ""
 "You can comment and track decisions by logging in to your account. Or if you "
 "don't have one, you can register a new account now."
-msgstr "Voit kommentoida ja seurata päätöksiä kirjautumalla käyttäjätilillesi. Tai voit luoda uuden käyttäjätilin, jos sinulla ei vielä ole tiliä."
+msgstr ""
+"Voit kommentoida ja seurata päätöksiä kirjautumalla käyttäjätilillesi. Tai "
+"voit luoda uuden käyttäjätilin, jos sinulla ei vielä ole tiliä."
 
 #: decisions/subscriptions/templates/account/login_or_register.html:19
 #: decisions/subscriptions/templates/account/login_or_register.html:28
@@ -348,11 +367,6 @@ msgstr "Rekisteröidy"
 
 #: decisions/subscriptions/templates/account/login_or_register.html:33
 msgid "Login"
-msgstr "Kirjaudu"
-
-#: decisions/subscriptions/templates/account/login_or_register.html:42
-#: decisions/subscriptions/views.py:232
-msgid "Log in"
 msgstr "Kirjaudu"
 
 #: decisions/subscriptions/templates/account/profile.html:9
@@ -471,7 +485,8 @@ msgstr "Voit selata syötettäsi ja hallita tilauksiasi mittarikentällämme:"
 msgid ""
 "Every time your subscriptions find new decisions, they are listed on this "
 "page."
-msgstr "Aina kun tilauksesi löytävät uusia päätöksiä, ne listataan tällä sivulla."
+msgstr ""
+"Aina kun tilauksesi löytävät uusia päätöksiä, ne listataan tällä sivulla."
 
 #: decisions/subscriptions/templates/subscriptions/not_confirmed.html:8
 msgid "Not confirmed"
@@ -584,15 +599,7 @@ msgstr "Kirjautuneena: <strong>%(username)s</strong>"
 msgid "Log out"
 msgstr "Kirjaudu ulos"
 
-#: decisions/templates/base.html:85
-msgid "Search from decisions"
-msgstr "Hae päätöksistä"
-
-#: decisions/templates/base.html:87
-msgid "Search"
-msgstr "Hae"
-
-#: decisions/templates/base.html:116
+#: decisions/templates/base.html:106
 #, python-format
 msgid ""
 "This website is free open source software. Source code is available <a href="
@@ -618,7 +625,11 @@ msgstr "Lomake"
 msgid "Submit"
 msgstr "Lähetä"
 
-#: decisions/templates/index.html:10
+#: decisions/templates/index.html:11
+msgid "Decisions at your fingertips"
+msgstr "Päätökset kämmenelläsi"
+
+#: decisions/templates/index.html:12
 msgid ""
 "Get involved with your community. Find where decisions are made, comment on "
 "them and get notified when things you care about come up"
@@ -626,27 +637,70 @@ msgstr ""
 "Osallistu kuntasi toimintaan. Hae missä päätöksiä tehdään ja saa ilmoituksia "
 "kun kiinnostavia asioita tapahtuu"
 
-#: decisions/templates/index.html:12
+#: decisions/templates/index.html:15
+msgid "E.g. Bicycling"
+msgstr "Esim. polkupyöräily"
+
+#: decisions/templates/index.html:17 decisions/templates/search_base.html:12
+msgid "Search"
+msgstr "Hae"
+
+#: decisions/templates/index.html:22
 #, python-format
 msgid ""
 "<a href=\"%(login_or_register_url)s\">Log in or register</a> to save your "
-"searches and receive notifications about new developments. You can also "
-"comment on decisions"
+"searches and receive notifications about new developments. While logged in, "
+"you can also comment on decisions"
 msgstr ""
-"<a href=\"%(login_or_register_url)s\">Kirjaudu tai rekisteröidy</a> tallentaaksesi hakuja ja saadaksesi ilmoituksia "
-"kun hakuihin tulee uusia tuloksia. Voit myös kommentoida päätöksiä"
+"<a href=\"%(login_or_register_url)s\">Kirjaudu tai rekisteröidy</a> "
+"tallentaaksesi hakuja ja saadaksesi ilmoituksia kun hakuihin tulee uusia "
+"tuloksia. Kirjautuneena voit myös kommentoida päätöksiä"
+
+#: decisions/templates/index.html:27
+msgid "About this service"
+msgstr "Tietoja palvelusta"
+
+#: decisions/templates/index.html:29
+msgid "Currently indexing about 40 000 decisions from the City of Helsinki"
+msgstr "Haettavissa noin 40 000 päätöstä Helsingin kaupungilta"
+
+#: decisions/templates/index.html:31
+msgid "More cities and other public decisionmakers coming soon!"
+msgstr "Enemmän kuntia ja muita julkisia päätöksentekijöitä tulossa!"
+
+#: decisions/templates/index.html:33
+msgid "Give feedback, report an issue, suggest improvements, etc."
+msgstr "Anna palautetta, ilmoita ongelmasta, ehdota parannuksia jne."
+
+#: decisions/templates/index.html:33
+msgid "(Requires Github account)"
+msgstr "(Tarvitsee Github-tilin)"
+
+#: decisions/templates/index.html:34
+msgid "What's going on behind the scenes?"
+msgstr "Mitä kulissien takana tapahtuu?"
+
+#: decisions/templates/index.html:37
+msgid "Recent comment"
+msgstr "Hiljattainen kommentti"
+
+#: decisions/templates/index.html:39
+msgid "We'll showcase some comments soon!"
+msgstr "Esittelemme joitain kommentteja kohta!"
 
 #: decisions/templates/search/search.html:11
 #, python-format
 msgid "%(result_count)s result for your search '%(search_term)s'"
 msgid_plural "%(result_count)s results for your search '%(search_term)s'"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(result_count)s tulos haullesi '%(search_term)s'"
+msgstr[1] "%(result_count)s tulosta haullesi '%(search_term)s'"
 
 #: decisions/templates/search/search.html:13
 #, python-format
 msgid "No results for your search '%(search_term)s'"
-msgstr "Hakutuloksia ei löytynyt ehdoilla '%(search_term)s'. Kokeile laajempaa hakusanaa"
+msgstr ""
+"Hakutuloksia ei löytynyt ehdoilla '%(search_term)s'. Kokeile laajempaa "
+"hakusanaa"
 
 #: decisions/templates/search/search.html:18
 msgid "You can save this search and get notified when new results come up"
@@ -673,15 +727,10 @@ msgstr "Seuraavat"
 msgid "Search for decisions"
 msgstr "Hae päätöksiä"
 
+#: decisions/templates/search_base.html:10
+msgid "Search from decisions"
+msgstr "Hae päätöksistä"
+
 #: decisions/templates/snippets/form_group.html:8
 msgid "Required"
 msgstr "Tärkeä kenttä"
-
-#~ msgid "Results"
-#~ msgstr "Tulokset"
-
-#~ msgid "Close"
-#~ msgstr "Sulje"
-
-#~ msgid "E.g. bicycling, beer gardens"
-#~ msgstr "Esim. polkupyöräily, terassit"

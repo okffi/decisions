@@ -25,7 +25,7 @@
 <!-- Custom CSS Overrides Everything Else -->
 <link href="{% static "css/site.css" %}" rel="stylesheet">
 
-<div class="wrap--header bc-grey--lightest header--sticky">
+<div class="wrap--header bc-grey--lightest header--sticky custom-header">
   <header class="header--login l-constrained" role="banner">
     <a class="site-logo" href="{% url 'index' %}">
       <h1>
@@ -77,19 +77,9 @@
   </header>
 </div>
 
+{% block content_bare %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <form method="get" action="{% url "haystack_search" %}" class="search-form">
-	<div class="input-group">
-	  <input type="text" name="q" placeholder="{% trans "Search from decisions" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} id="search-input">
-	  <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit" id="search-button">{% trans "Search" %}</button>
-	  </span>
-	</div>
-      </form>
-    </div>
-  </div>
+  {% block search_bar %}{% endblock %}
 
   {% for message in messages %}
   <div class="row">
@@ -131,20 +121,18 @@
     </div>
   </div>
 </div>
+{% endblock %}
 
 <script src="{% static "js/jquery-2.2.1.js" %}"></script>
 <script src="{% static "js/bootstrap.min.js" %}"></script>
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-<script src="{% static "js/autocomplete.js" %}"></script>
+{% block base_script %}{% endblock %}
+{% block script %}{% endblock %}
+
 <script type="text/javascript">
   $(document).ready(function() {
-    AutoComplete({
-      EmptyMessage: "…",
-      Url: "{% url "suggest" %}"
-    });
-    $("#search-input").focus();
+    {% block ready_script %}{% endblock %}
   });
 </script>
-{% block script %}{% endblock %}
 
 </html>
