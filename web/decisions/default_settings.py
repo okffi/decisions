@@ -44,11 +44,13 @@ INSTALLED_APPS = [
 
     # third party apps
     'haystack',
+    'tagging',
 
     # first party apps
     'decisions.ahjo',
     'decisions.subscriptions'
 ]
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -243,6 +245,10 @@ CELERYBEAT_SCHEDULE = {
 }
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = "json"
+
+# Tagging
+FORCE_LOWERCASE_TAGS = True
+
 
 if "DATABASE_URL" in os.environ:
     # Heroku database integration

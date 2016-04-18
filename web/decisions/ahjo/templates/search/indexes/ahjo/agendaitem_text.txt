@@ -7,3 +7,6 @@
 {% for c in object.original.content %}
 {{ c.text|voikko_simplify:"fi" }}
 {% endfor %}
+{% for tag in object.generate_tags %}
+{{ tag.name }}
+{% endfor %}

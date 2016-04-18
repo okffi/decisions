@@ -21,6 +21,11 @@
     {% endif %}
 
     <div class="agenda_info">
+      <div class="tags">
+	{% for tag in agendaitem.tags.all %}
+	<a href="{% url "haystack_search" %}?q={{ tag.name }}" class="tag">{{ tag.name }}</a>
+	{% endfor %}
+      </div>
       <p><strong>{% trans "Preparer" %}:</strong> {{ agendaitem.preparer }}</p>
       <p><strong>{% trans "Date updated" %}:</strong> {{ agendaitem.last_modified_time }}</p>
       <p><strong>{% trans "Classification" %}:</strong> {{ agendaitem.original.classification_description }}</p>

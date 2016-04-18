@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 from dateutil.parser import parse
 import arrow
 from pytz import timezone, UTC
+from tagging.registry import register as tagging_register
+from tagging.models import Tag
 
 from decisions.ahjo.utils import b36encode, b36decode
 
@@ -208,6 +210,34 @@ class AgendaItem(models.Model):
         if self.original["content"]:
             return self.original["content"][0]["text"]
         return u""
+
+    def generate_tags(self):
+        "scours the instance data for useful tags"
+        tags = set()
+
+        keys = [
+            ["classification_description"],
+            ["preparer"],
+            ["introducer"],
+            ["issue", "category_name"],
+            ["meeting", "policymaker_name"]
+        ]
+        for key in keys:
+            value = self.original
+            try:
+                for part in key:
+                    value = value[part]
+                if value is not None:
+                    tags.add(slugify(value)[:50])
+            except KeyError:
+                continue
+
+        for t in tags:
+            Tag.objects.add_tag(self, t)
+
+        return self.tags
+
+tagging_register(AgendaItem)
 
 
 class Comment(models.Model):
