@@ -16,6 +16,7 @@ from django.core.mail import send_mail
 from django.utils.timezone import now
 from django.utils.http import is_safe_url
 from django.db.transaction import atomic
+from django.http import JsonResponse
 
 from decisions.subscriptions.models import (
     UserProfile,

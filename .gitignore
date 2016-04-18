@@ -21,3 +21,4 @@ celeryd.pid
 *~
 whoosh.idx/
 web/staticfiles/
+celerybeat-schedule
