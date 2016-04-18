@@ -8,7 +8,7 @@
 {% block content %}
 {% if user.is_anonymous %}
 <div class="jumbotron jumbo-bg">
-  <h1 class="bc-base--lightest c-base">{% trans "Decisions at your fingertips" %}</h1>
+  <h1><span class="bc-base--lightest c-dark">{% trans "Decisions at your fingertips" %}</span></h1>
   <p class="bc-comp--lightest">{% blocktrans %}Get involved with your community. Find where decisions are made, comment on them and get notified when things you care about come up{% endblocktrans %}</p>
   <form method="get" action="{% url "haystack_search" %}" class="search-form">
     <div class="input-group">
