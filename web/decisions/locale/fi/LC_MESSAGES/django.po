@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Decisions 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-15 10:37+0300\n"
+"POT-Creation-Date: 2016-04-18 15:24+0300\n"
 "PO-Revision-Date: 2016-04-13 16:51+0300\n"
 "Last-Translator: Leo Honkanen <leo.o.honkanen@gmail.com>\n"
 "Language-Team: Finnish <LL@li.org>\n"
@@ -212,59 +212,60 @@ msgstr "Kuvausta ei ole annettu"
 
 #: decisions/subscriptions/apps.py:9
 #: decisions/subscriptions/templates/subscriptions/subscriptions.html:8
-#: decisions/templates/base.html:48
+#: decisions/templates/base.html:47
 msgid "Subscriptions"
 msgstr "Tilaukset"
 
-#: decisions/subscriptions/forms.py:14 decisions/subscriptions/forms.py:78
+#: decisions/subscriptions/forms.py:17 decisions/subscriptions/forms.py:81
 msgid "Email address"
 msgstr "Sähköpostiosoite"
 
-#: decisions/subscriptions/forms.py:17 decisions/subscriptions/forms.py:81
+#: decisions/subscriptions/forms.py:20 decisions/subscriptions/forms.py:84
 msgid "user@example.com"
 msgstr "kayttaja@example.fi"
 
-#: decisions/subscriptions/forms.py:22
+#: decisions/subscriptions/forms.py:25
 msgid "Display name"
 msgstr "Nimimerkki"
 
-#: decisions/subscriptions/forms.py:28 decisions/subscriptions/forms.py:87
+#: decisions/subscriptions/forms.py:31 decisions/subscriptions/forms.py:90
 msgid "Password"
 msgstr "Salasana"
 
-#: decisions/subscriptions/forms.py:32
+#: decisions/subscriptions/forms.py:35
 msgid "Password again"
 msgstr "Salasana uudelleen"
 
-#: decisions/subscriptions/forms.py:34
+#: decisions/subscriptions/forms.py:37
 msgid "Your password must meet these requirements:"
 msgstr "Salasanasi pitäisi täyttää nämä vaatimukset:"
 
-#: decisions/subscriptions/forms.py:43 decisions/subscriptions/forms.py:45
+#: decisions/subscriptions/forms.py:46 decisions/subscriptions/forms.py:48
 msgid "Passwords don't match"
 msgstr "Salasanat eivät täsmää"
 
-#: decisions/subscriptions/forms.py:55
+#: decisions/subscriptions/forms.py:58
 msgid "Please choose another display name"
 msgstr "Ole hyvä ja valitse joku muu nimimerkki"
 
-#: decisions/subscriptions/forms.py:62
+#: decisions/subscriptions/forms.py:65
 msgid "Please choose another email address"
 msgstr "Ole hyvä ja valitse joku muu sähköpostiosoite"
 
-#: decisions/subscriptions/forms.py:94
+#: decisions/subscriptions/forms.py:97
 msgid "Email or password did not match. Please try again."
 msgstr "Sähköposti tai salasana ei täsmää. Ole hyvä ja yritä uudestaan"
 
-#: decisions/subscriptions/forms.py:99 decisions/subscriptions/models.py:80
+#: decisions/subscriptions/forms.py:125 decisions/subscriptions/models.py:80
 msgid "Search term"
 msgstr "Hakuteksti"
 
-#: decisions/subscriptions/forms.py:105 decisions/subscriptions/models.py:39
+#: decisions/subscriptions/forms.py:131 decisions/subscriptions/forms.py:135
+#: decisions/subscriptions/models.py:39
 msgid "Sends email"
 msgstr "Lähettää sähköpostia"
 
-#: decisions/subscriptions/forms.py:106
+#: decisions/subscriptions/forms.py:132
 msgid ""
 "If checked, notifications about new search results are also sent by email. "
 "Otherwise they will just show up in your feed."
@@ -272,11 +273,16 @@ msgstr ""
 "Jos ruksittu, ilmoitukset uusista hakutuloksista lähetetään myös "
 "sähköpostitse. Muutoin ne ilmaantuvat vain syötteeseesi."
 
-#: decisions/subscriptions/forms.py:112 decisions/subscriptions/models.py:36
+#: decisions/subscriptions/forms.py:136 decisions/subscriptions/forms.py:147
+msgid "No"
+msgstr ""
+
+#: decisions/subscriptions/forms.py:142 decisions/subscriptions/forms.py:146
+#: decisions/subscriptions/models.py:36
 msgid "Active"
 msgstr "Toiminnassa"
 
-#: decisions/subscriptions/forms.py:113
+#: decisions/subscriptions/forms.py:143
 msgid ""
 "If you do not wish to receive any more notifications from this "
 "subscriptions, you can disable it. Old notifications will not disappear from "
@@ -338,7 +344,10 @@ msgstr "Kirjaudu jatkaaksesi"
 msgid ""
 "You need to log in to access this page. If you don't have an account, you "
 "can <a href=\"%(register_url)s\">register a free account</a> and try again."
-msgstr "Tämä sivu vaatii kirjautumista. Jos sinulla ei ole tiliä jolle kirjautua, voit <a href=\"%(register_url)s\">rekisteröidä ilmaisen tilin</a> ja yrittää uudelleen."
+msgstr ""
+"Tämä sivu vaatii kirjautumista. Jos sinulla ei ole tiliä jolle kirjautua, "
+"voit <a href=\"%(register_url)s\">rekisteröidä ilmaisen tilin</a> ja yrittää "
+"uudelleen."
 
 #: decisions/subscriptions/templates/account/login.html:18
 #: decisions/subscriptions/templates/account/login.html:27
@@ -347,7 +356,7 @@ msgid "Log in"
 msgstr "Kirjaudu"
 
 #: decisions/subscriptions/templates/account/login_or_register.html:8
-#: decisions/templates/base.html:70
+#: decisions/templates/base.html:69
 msgid "Log in or register"
 msgstr "Kirjaudu tai rekisteröidy"
 
@@ -361,7 +370,7 @@ msgstr ""
 
 #: decisions/subscriptions/templates/account/login_or_register.html:19
 #: decisions/subscriptions/templates/account/login_or_register.html:28
-#: decisions/subscriptions/views.py:276
+#: decisions/subscriptions/views.py:277
 msgid "Register"
 msgstr "Rekisteröidy"
 
@@ -389,7 +398,7 @@ msgid "Active subscriptions"
 msgstr "Aktiivisia tilauksia"
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:28
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:43
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:45
 msgid "You can create subscriptions by saving searches you have made"
 msgstr "Voit luoda tilauksia tallentamalla hakuja joita olet tehnyt"
 
@@ -399,7 +408,7 @@ msgstr "Muokkaa ja näytä enemmän tilauksia"
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:36
 #: decisions/subscriptions/templates/subscriptions/feed.html:8
-#: decisions/templates/base.html:42
+#: decisions/templates/base.html:41
 msgid "Feed"
 msgstr "Syöte"
 
@@ -509,32 +518,32 @@ msgid "Search term…"
 msgstr "Hakuteksti…"
 
 #: decisions/subscriptions/templates/subscriptions/subscriptions.html:15
-#: decisions/subscriptions/views.py:156
+#: decisions/subscriptions/views.py:157
 msgid "Subscribe"
 msgstr "Tilaa"
 
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:39
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:73
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:40
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:75
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:49
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:51
 msgid "Legend"
 msgstr "Selite"
 
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:54
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:56
 msgid "New notifications are sent to you by email as well"
 msgstr "Uudet ilmoitukset lähetetään myös sähköpostiisi"
 
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:60
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:62
 msgid "Fresh. Has triggered notifications for you recently"
 msgstr "Tuore. On tuottanut ilmoituksia hiljattain"
 
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:64
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:66
 msgid "Dormant subscriptions"
 msgstr "Nukkuvia tilauksia"
 
-#: decisions/subscriptions/templates/subscriptions/subscriptions.html:66
+#: decisions/subscriptions/templates/subscriptions/subscriptions.html:68
 msgid ""
 "These subscriptions will not add notifications to your feed or send email. "
 "You can enable subscriptions from here by editing them."
@@ -542,34 +551,34 @@ msgstr ""
 "Nämä tilaukset eivät lisää ilmoituksia syötteeseesi tai lähetä sähköpostia. "
 "Voit herättää tilauksia muokkaamalla niitä."
 
-#: decisions/subscriptions/views.py:151
+#: decisions/subscriptions/views.py:152
 #, python-format
 msgid "You have subscribed to the search term <tt>%(search_term)s</tt>"
 msgstr "Olet tilannut hakuehdon <tt>%(search_term)s</tt>"
 
-#: decisions/subscriptions/views.py:188
+#: decisions/subscriptions/views.py:189
 #, python-format
 msgid "You have edited your subscription to <tt>%(search_term)s</tt>"
 msgstr "Olet muokannut tilaustasi <tt>%(search_term)s</tt>"
 
-#: decisions/subscriptions/views.py:200
+#: decisions/subscriptions/views.py:201
 msgid "Edit subscription"
 msgstr "Muokkaa tilausta"
 
-#: decisions/subscriptions/views.py:217
+#: decisions/subscriptions/views.py:218
 msgid "Logged in successfully"
 msgstr "Kirjauduttu sisään"
 
-#: decisions/subscriptions/views.py:226
+#: decisions/subscriptions/views.py:227
 msgid "Your account is disabled. Please contact webmaster."
 msgstr "Käyttäjätilisi on estetty. Ota yhteyttä ylläpitoon"
 
-#: decisions/subscriptions/views.py:257
+#: decisions/subscriptions/views.py:258
 #, python-format
 msgid "Confirm your %(site)s registration"
 msgstr "Vahvista rekisteröitymisesi sivustolle %(site)s"
 
-#: decisions/subscriptions/views.py:270
+#: decisions/subscriptions/views.py:271
 msgid ""
 "Your account has been registered. Check your mail to confirm your email "
 "address."
@@ -577,29 +586,29 @@ msgstr ""
 "Käyttäjätilisi on nyt rekisteröity. Tarkista sähköpostilaatikkosi "
 "vahvistaaksesi sähköpostiosoitteesi"
 
-#: decisions/subscriptions/views.py:299
+#: decisions/subscriptions/views.py:300
 msgid "Your email address has been confirmed."
 msgstr "Sähköpostiosoitteesi on vahvistettu."
 
-#: decisions/subscriptions/views.py:308
+#: decisions/subscriptions/views.py:309
 msgid "You have logged out."
 msgstr "Olet kirjautunut ulos."
 
 #: decisions/templates/base.html:12 decisions/templates/base.html.py:32
-#: decisions/templates/base.html:33 decisions/templates/base.html.py:34
+#: decisions/templates/base.html:33
 msgid "Decisions"
 msgstr "Päätökset"
 
-#: decisions/templates/base.html:56
+#: decisions/templates/base.html:55
 #, python-format
 msgid "Logged in: <strong>%(username)s</strong>"
 msgstr "Kirjautuneena: <strong>%(username)s</strong>"
 
-#: decisions/templates/base.html:62
+#: decisions/templates/base.html:61
 msgid "Log out"
 msgstr "Kirjaudu ulos"
 
-#: decisions/templates/base.html:106
+#: decisions/templates/base.html:105
 #, python-format
 msgid ""
 "This website is free open source software. Source code is available <a href="
@@ -608,11 +617,11 @@ msgstr ""
 "Tämä nettisivu on ilmaista avoimen lähdekoodin ohjelmistoa. Lähdekoodin voi "
 "ladata <a href=\"%(project_url)s\">Githubista</a>."
 
-#: decisions/templates/email_footer.txt:2
+#: decisions/templates/email_footer.txt:4
 msgid "Regards,"
 msgstr "Terveisin,"
 
-#: decisions/templates/email_footer.txt:3
+#: decisions/templates/email_footer.txt:5
 #, python-format
 msgid "%(SITE_NAME)s operators"
 msgstr "%(SITE_NAME)s ylläpito"
@@ -641,9 +650,9 @@ msgstr ""
 msgid "E.g. Bicycling"
 msgstr "Esim. polkupyöräily"
 
-#: decisions/templates/index.html:17 decisions/templates/search_base.html:12
-msgid "Search"
-msgstr "Hae"
+#: decisions/templates/index.html:17 decisions/templates/search_base.html:13
+msgid "Search decisions"
+msgstr "Hae päätöksistä"
 
 #: decisions/templates/index.html:22
 #, python-format
@@ -727,10 +736,13 @@ msgstr "Seuraavat"
 msgid "Search for decisions"
 msgstr "Hae päätöksiä"
 
-#: decisions/templates/search_base.html:10
+#: decisions/templates/search_base.html:11
 msgid "Search from decisions"
 msgstr "Hae päätöksistä"
 
 #: decisions/templates/snippets/form_group.html:8
 msgid "Required"
 msgstr "Tärkeä kenttä"
+
+#~ msgid "Search"
+#~ msgstr "Hae"

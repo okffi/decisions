@@ -58,6 +58,10 @@
     color: #222222;
 }
 
+#search-input {
+    min-width: 150px;
+}
+
 @media (max-width: 48em) {
     .custom-logo-mobile {
 	display: inline-block;

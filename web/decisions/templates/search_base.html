@@ -6,11 +6,11 @@
 {% block search_bar %}
 <div class="row">
   <div class="col-md-12">
-    <form method="get" action="{% url "haystack_search" %}" class="search-form">
-      <div class="input-group">
+    <form method="get" action="{% url "haystack_search" %}" class="search-form" id="search-form">
+      <div class="input-group" id="search-group">
 	<input type="text" name="q" placeholder="{% trans "Search from decisions" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} id="search-input">
-	<span class="input-group-btn">
-          <button class="btn btn-primary" type="submit" id="search-button">{% trans "Search" %}</button>
+	<span class="input-group-btn" id="search-go">
+          <button class="btn btn-primary" type="submit" id="search-button">{% trans "Search decisions" %}</button>
 	</span>
       </div>
     </form>
@@ -20,6 +20,7 @@
 
 {% block base_script %}
 <script src="{% static "js/autocomplete.js" %}"></script>
+<script src="{% static "js/search.js" %}"></script>
 {% endblock %}
 
 {% block ready_script %}
@@ -27,5 +28,4 @@ AutoComplete({
   EmptyMessage: "…",
   Url: "{% url "suggest" %}"
 });
-$("#search-input").focus();
 {% endblock %}
