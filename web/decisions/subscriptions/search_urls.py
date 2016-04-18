@@ -8,7 +8,7 @@ from decisions.subscriptions.voikko import VoikkoSearchQuerySet
 
 class DecisionsSearchForm(SearchForm):
     def __init__(self, *args, **kwargs):
-        kwargs["searchqueryset"] = VoikkoSearchQuerySet()
+        kwargs["searchqueryset"] = VoikkoSearchQuerySet().order_by("-pub_date")
         super(DecisionsSearchForm, self).__init__(*args, **kwargs)
 
 class DecisionsSearchView(SearchView):
