@@ -241,7 +241,8 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(hour=11, minute=45)
     }
 }
-
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = "json"
 
 if "DATABASE_URL" in os.environ:
     # Heroku database integration
