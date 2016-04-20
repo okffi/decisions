@@ -347,7 +347,7 @@ def suggest(request):
 
     ret = [sub.search_term for sub in fresh_subscriptions]
 
-    return JsonResponse(ret, safe=True)
+    return JsonResponse(ret, safe=False)
 
 def profile(request, username):
     return render(

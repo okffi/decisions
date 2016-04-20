@@ -48,7 +48,8 @@ INSTALLED_APPS = [
 
     # first party apps
     'decisions.ahjo',
-    'decisions.subscriptions'
+    'decisions.subscriptions',
+    'decisions.comments',
 ]
 
 

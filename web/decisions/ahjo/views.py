@@ -7,6 +7,7 @@ from django.http import JsonResponse, HttpResponseBadRequest, Http404
 from decisions.ahjo.utils import b36decode
 from decisions.ahjo.models import AgendaItem
 from decisions.ahjo.forms import CommentForm
+from decisions.comments.models import Comment
 
 
 def view(request, ahjo_id_b36, slug=None, disambiguation_id=None):
@@ -82,9 +83,11 @@ def get_comments(request, ahjo_id_b36, disambiguation_id):
     ahjo_id = b36decode(ahjo_id_b36)
     item = get_object_or_404(AgendaItem, ahjo_id=ahjo_id, pk=disambiguation_id)
 
+    comment_set = Comment.objects.filter(object_id=item.pk, content_type=ContentType.get_for_model(AgendaItem))
+
     comments = itertools.groupby(
         (c.get_dict() for c
-         in item.comment_set.order_by('selector', 'created')),
+         in comment_set.order_by('selector', 'created')),
         lambda c: c["selector"]
     )
 

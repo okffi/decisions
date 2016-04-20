@@ -1,5 +1,5 @@
-Helsinki Decisions
-==================
+Decisions
+=========
 
 Browse and annotate decisions made by the [city of Helsinki](http://www.hri.fi/en/) and other
 [OpenAhjo](http://dev.hel.fi/apis/openahjo/) users.
