@@ -18,6 +18,8 @@ from django.utils.http import is_safe_url
 from django.db.transaction import atomic
 from django.http import JsonResponse
 
+from tagging.utils import calculate_cloud
+
 from decisions.subscriptions.models import (
     UserProfile,
     Subscription,
@@ -61,7 +63,8 @@ def dashboard(request):
         hit.user_search_terms = terms
 
     for subscription in subscriptions:
-        subscription.fresh_for_user = subscription.is_fresh(request.user)
+        subscription.count = max(1, subscription.is_fresh(request.user))
+    subscriptions = calculate_cloud(subscriptions)
 
     return render(
         request,
@@ -127,6 +130,21 @@ def feed(request):
             "feed": hits,
         })
 
+def public_feed(request):
+    "Recent feed hits from everyone's saved searches"
+    hits = (
+        SubscriptionHit.objects
+        .order_by('-created')
+        [:30]
+    )
+
+    return render(
+        request,
+        "subscriptions/public_feed.html",
+        {
+            "feed": hits
+        }
+    )
 
 @login_required
 def add_subscription(request):
@@ -319,7 +337,7 @@ def suggest(request):
     q = request.GET.get("q")
 
     if q is None:
-        return JsonResponse([])
+        return JsonResponse([], safe=True)
 
     fresh_subscriptions = (
         Subscription.objects
@@ -329,7 +347,7 @@ def suggest(request):
 
     ret = [sub.search_term for sub in fresh_subscriptions]
 
-    return JsonResponse(ret)
+    return JsonResponse(ret, safe=True)
 
 def profile(request, username):
     return render(

@@ -58,6 +58,19 @@
     color: #222222;
 }
 
+#search-input {
+    min-width: 150px;
+}
+
+.tag {
+    margin-bottom: 6px;
+}
+
+.tag-size-1 {font-size: 90%;}
+.tag-size-2 {font-size: 110%;}
+.tag-size-3 {font-size: 140%;}
+.tag-size-4 {font-size: 160%;}
+
 @media (max-width: 48em) {
     .custom-logo-mobile {
 	display: inline-block;
@@ -79,13 +92,13 @@
 @media (min-width: 992px) {
     .comments-bubble {
         position: absolute;
-	left: 648px; /* 8 * 81px */
+	left: 810px; /* 10 * 81px */
 	width: 130px;
     }
 }
 
 @media (min-width: 1200px) {
     .comments-bubble {
-	left: 776px; /* 8 * 97px */
+	left: 970px; /* 10 * 97px */
     }
 }

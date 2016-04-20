@@ -193,8 +193,6 @@
   var update = function() {
     return $.get(comments_url).done(function(data) {
       all_comments = data["content"];
-      // attach a nice comment float to each commentable thing
-      // TODO: attach it nicer because float seems not too nice
       $("#content_block p").addClass("commentable");
       $("#content_block p").each(function() {
         var $this = $(this);
@@ -209,7 +207,7 @@
 
         var bubble_html = "";
         if (commenting_enabled) {
-          bubble_html += "<i class=\"fa fa-comments\"></i>"
+          bubble_html += "<i class=\"fa fa-comments\"></i>";
           bubble_html += "<small><a href=\"#\">" + gettext("Write a comment") + "</a></small>";
         }
 
@@ -241,6 +239,9 @@
   $(document).ready(function() {
     update().done(function() {
       $("#content_block p").on("click", make_comment_form);
+      // Some browsers won't propagate click events from elements
+      // positioned outside their parent element
+      $("#content_block .comments-bubble").on("click", make_comment_form);
     });
   });
 })(jQuery);
