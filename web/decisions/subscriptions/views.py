@@ -130,6 +130,21 @@ def feed(request):
             "feed": hits,
         })
 
+def public_feed(request):
+    "Recent feed hits from everyone's saved searches"
+    hits = (
+        SubscriptionHit.objects
+        .order_by('-created')
+        [:30]
+    )
+
+    return render(
+        request,
+        "subscriptions/public_feed.html",
+        {
+            "feed": hits
+        }
+    )
 
 @login_required
 def add_subscription(request):

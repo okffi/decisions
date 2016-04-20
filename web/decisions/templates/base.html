@@ -37,10 +37,16 @@
     <nav role="navigation">
       <ul class="bare-list nav nav-primary">
         <li class="nav__item">
+	  {% if user.is_authenticated %}
 	  <a href="{% url 'feed' %}"><i class="fa fa-comments"></i>
 	    <span>{% trans "Feed" %}
 	      {% if unread_notifications %}<i class="count c-white bc-comp--light">{{ unread_notifications }}</i>{% endif %}</span>
 	  </a>
+	  {% else %}
+	  <a href="{% url 'public-feed' %}"><i class="fa fa-comments"></i>
+	    <span>{% trans "Feed" %}</span>
+	  </a>
+	  {% endif %}
 	</li>
         <li class="nav__item">
 	  <a href="{% url 'subscriptions' %}"><i class="icon icon-chat"></i>
