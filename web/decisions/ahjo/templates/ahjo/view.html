@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="col-md-10">
     <h2>{{ agendaitem.subject }}</h2>
 
     {% if more_items %}
@@ -22,11 +22,13 @@
 
     <div class="agenda_info">
       <div class="tags">
-	{% for tag in agendaitem.tags.all %}
-	<a href="{% url "haystack_search" %}?q={{ tag.name }}" class="tag">{{ tag.name }}</a>
+	{% for tag in agendaitem.tag_cloud %}
+	<a href="{% url "haystack_search" %}?q={{ tag.name }}" class="tag tag-size-{{ tag.font_size }}">{{ tag.name }}</a>
 	{% endfor %}
       </div>
+      {% if agendaitem.preparer %}
       <p><strong>{% trans "Preparer" %}:</strong> {{ agendaitem.preparer }}</p>
+      {% endif %}
       <p><strong>{% trans "Date updated" %}:</strong> {{ agendaitem.last_modified_time }}</p>
       <p><strong>{% trans "Classification" %}:</strong> {{ agendaitem.original.classification_description }}</p>
       <p><strong>{% trans "Resolution" %}:</strong> {{ agendaitem.get_resolution_display }}</p>

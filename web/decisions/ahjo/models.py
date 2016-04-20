@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 import operator
 
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.contrib.postgres import fields as pgfields
 from django.utils.translation import ugettext_lazy as _, get_language
 from django.utils.timezone import get_default_timezone, now
@@ -16,6 +16,7 @@ import arrow
 from pytz import timezone, UTC
 from tagging.registry import register as tagging_register
 from tagging.models import Tag
+from tagging.utils import calculate_cloud
 
 from decisions.ahjo.utils import b36encode, b36decode
 
@@ -90,6 +91,7 @@ SECTION_TYPE_MAP = {
     "presenter": _("Presenter"),
     "hearing": _("Hearing"),
     "reasons for resolution": _("Reasons for resolution"),
+    "draft resolution": _("Draft resolution"),
     "default": _("Section: %(section_type)s"),
 }
 
@@ -228,7 +230,7 @@ class AgendaItem(models.Model):
                 for part in key:
                     value = value[part]
                 if value is not None:
-                    tags.add(slugify(value)[:50])
+                    tags.add("#" + slugify(value)[:49])
             except KeyError:
                 continue
 
@@ -236,6 +238,15 @@ class AgendaItem(models.Model):
             Tag.objects.add_tag(self, t)
 
         return self.tags
+
+    def tag_cloud(self):
+        "Returns instance tags annotated with tag cloud weights"
+        # Just using self.tags doesn't aggregate properly (the only
+        # matching item is self)
+        tags = (Tag.objects
+                .filter(pk__in=[t.pk for t in self.tags])
+                .annotate(count=Count('items')))
+        return calculate_cloud(tags)
 
 tagging_register(AgendaItem)
 
