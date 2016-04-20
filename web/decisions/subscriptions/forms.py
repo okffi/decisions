@@ -18,16 +18,21 @@ class RegisterForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "placeholder": _("user@example.com"),
+                "autocomplete": "username",
             }
         ),
     )
     username = forms.CharField(
         label=_("Display name"),
         required=False,
-        widget=forms.TextInput(),
+        widget=forms.TextInput(attrs={
+            "autocomplete": "nickname"
+        }),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(),
+        widget=forms.PasswordInput(attrs={
+            "autocomplete": "new-password"
+        }),
         label=_("Password")
     )
     password_again = forms.CharField(
@@ -82,11 +87,14 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "placeholder": _("user@example.com"),
+                "autocomplete": "username",
             }
         ),
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(),
+        widget=forms.PasswordInput(attrs={
+            "autocomplete": "current-password"
+        }),
         label=_("Password")
     )
     next = forms.CharField(widget=forms.HiddenInput, required=False)
