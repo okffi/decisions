@@ -93,3 +93,8 @@ def get_comments(request, ahjo_id_b36, disambiguation_id):
     return JsonResponse({
         "content": comments,
     })
+
+def get_geometry(request, agendaitem_id):
+    item = get_object_or_404(AgendaItem, pk=agendaitem_id)
+
+    return JsonResponse({"content": item.original["issue"]["geometries"]})

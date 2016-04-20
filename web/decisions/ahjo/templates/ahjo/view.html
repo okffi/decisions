@@ -34,6 +34,11 @@
       <p><strong>{% trans "Resolution" %}:</strong> {{ agendaitem.get_resolution_display }}</p>
     </div>
 
+    {% if agendaitem.has_geometry %}
+    <div id="content_map">
+    </div>
+    {% endif %}
+
     <div id="content_block">
       {% for c in agendaitem.original.content %}
       <div class="agenda_content">
@@ -80,9 +85,24 @@
 
 {% endblock %}
 
+{% block css %}
+{% if agendaitem.has_geometry %}
+<link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}" />
+{% endif %}
+{% endblock %}
+
 {% block script %}
 <script src="{% static "js/optimal-select.js" %}"></script>
 <script src="{% static "js/comments.js" %}"></script>
+
+{% if agendaitem.has_geometry %}
+<script src="{% static "leaflet/leaflet.js" %}"></script>
+<script type="text/javascript">
+  var geometry_url = '{% url 'ahjo-get-geometry' agendaitem.pk %}';
+</script>
+<script src="{% static "js/contentmap.js" %}"></script>
+
+{% endif %}
 
 <script type="text/javascript">
   comments_url = "{% url "ahjo-get-comments" id_b36 agendaitem.pk %}";

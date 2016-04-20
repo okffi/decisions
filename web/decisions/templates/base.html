@@ -25,6 +25,8 @@
 <!-- Custom CSS Overrides Everything Else -->
 <link href="{% static "css/site.css" %}" rel="stylesheet">
 
+{% block css %}{% endblock %}
+
 <div class="wrap--header bc-grey--lightest header--sticky custom-header">
   <header class="header--login l-constrained" role="banner">
     <a class="site-logo" href="{% url 'index' %}">

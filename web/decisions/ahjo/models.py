@@ -127,6 +127,9 @@ class AgendaItem(models.Model):
 
     objects = AgendaItemQuerySet.as_manager()
 
+    def has_geometry(self):
+        return self.original["issue"]["geometries"]
+
     def title(self):
         return self.subject
 

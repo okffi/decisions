@@ -71,6 +71,10 @@
 .tag-size-3 {font-size: 140%;}
 .tag-size-4 {font-size: 160%;}
 
+#content_map {
+    height: 500px;
+}
+
 @media (max-width: 48em) {
     .custom-logo-mobile {
 	display: inline-block;
