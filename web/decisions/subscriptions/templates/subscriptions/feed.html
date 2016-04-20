@@ -7,6 +7,8 @@
   <div class="col-md-12">
     <h2>{% trans "Feed" %}</h2>
 
+    <a href="{% url 'public-feed' %}">{% trans "Public Feed" %}</a>
+
     {% if feed %}
     <ol class="list-group">
       {% for item in feed %}

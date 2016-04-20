@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Decisions 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-20 10:24+0300\n"
+"POT-Creation-Date: 2016-04-20 10:34+0300\n"
 "PO-Revision-Date: 2016-04-13 16:51+0300\n"
 "Last-Translator: Leo Honkanen <leo.o.honkanen@gmail.com>\n"
 "Language-Team: Finnish <LL@li.org>\n"
@@ -418,7 +418,7 @@ msgid "Feed"
 msgstr "Syöte"
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:38
-#: decisions/subscriptions/templates/subscriptions/feed.html:15
+#: decisions/subscriptions/templates/subscriptions/feed.html:17
 #, python-format
 msgid ""
 "from search <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
@@ -438,7 +438,7 @@ msgid "Every time your subscriptions find new decisions, they are listed here."
 msgstr "Aina kun tilauksesi löytävät uusia päätöksiä, ne listataan tähän."
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:45
-#: decisions/subscriptions/templates/subscriptions/feed.html:22
+#: decisions/subscriptions/templates/subscriptions/feed.html:24
 msgid ""
 "This is just the new stuff, old results from new subscriptions are never "
 "added to the feed."
@@ -495,7 +495,12 @@ msgstr "Voit selata niitä osoitteessa:"
 msgid "You can view your feed and manage your subscriptions in our dashboard:"
 msgstr "Voit selata syötettäsi ja hallita tilauksiasi mittarikentällämme:"
 
-#: decisions/subscriptions/templates/subscriptions/feed.html:21
+#: decisions/subscriptions/templates/subscriptions/feed.html:10
+#: decisions/subscriptions/templates/subscriptions/public_feed.html:8
+msgid "Public Feed"
+msgstr "Yleinen syöte"
+
+#: decisions/subscriptions/templates/subscriptions/feed.html:23
 msgid ""
 "Every time your subscriptions find new decisions, they are listed on this "
 "page."
@@ -514,10 +519,6 @@ msgstr ""
 "Aktivoitavaa käyttäjätunnusta ei löytynyt. Jos tulit tänne "
 "vahvistussähköpostin kautta, ole hyvä ja ota yhteyttä sivuston ylläpitoon. "
 
-#: decisions/subscriptions/templates/subscriptions/public_feed.html:8
-msgid "Public Feed"
-msgstr "Yleinen syöte"
-
 #: decisions/subscriptions/templates/subscriptions/public_feed.html:11
 msgid "Recent decisions people are subscribing to will show up here"
 msgstr "Tänne ilmestyy päätöksiä, joista ihmiset ovat kiinnostuneet"
@@ -527,7 +528,9 @@ msgstr "Tänne ilmestyy päätöksiä, joista ihmiset ovat kiinnostuneet"
 msgid ""
 "You can <a href=\"%(login_or_register_url)s\">login or register</a> to "
 "customize your own feed"
-msgstr "Voit <a href=\"%(login_or_register_url)s\">kirjautua tai rekisteröityä</a> laatiaksesi oman syötteen"
+msgstr ""
+"Voit <a href=\"%(login_or_register_url)s\">kirjautua tai rekisteröityä</a> "
+"laatiaksesi oman syötteen"
 
 #: decisions/subscriptions/templates/subscriptions/subscriptions.html:10
 msgid "Add a new subscription"
@@ -763,6 +766,3 @@ msgstr "Hae päätöksistä"
 #: decisions/templates/snippets/form_group.html:8
 msgid "Required"
 msgstr "Tärkeä kenttä"
-
-#~ msgid "Search"
-#~ msgstr "Hae"
