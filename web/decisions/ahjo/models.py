@@ -21,6 +21,7 @@ from tagging.models import Tag
 from tagging.utils import calculate_cloud
 
 from decisions.ahjo.utils import b36encode, b36decode
+from decisions import comments
 
 
 AHJO_TZ = timezone('Europe/Helsinki')
@@ -97,6 +98,7 @@ SECTION_TYPE_MAP = {
     "default": _("Section: %(section_type)s"),
 }
 
+@comments.register(slug="ahjo")
 class AgendaItem(models.Model):
     ahjo_id = models.IntegerField(db_index=True)
     subject = models.CharField(
@@ -142,6 +144,12 @@ class AgendaItem(models.Model):
         verbose_name_plural = _("agenda items")
         get_latest_by = "last_modified_time"
         ordering = ("-last_modified_time",)
+
+    def can_comment(self):
+        """returns whether the comments app allows creating a comment on this
+        model instance
+        """
+        return True
 
     def get_absolute_url(self):
         if self.has_revisions:

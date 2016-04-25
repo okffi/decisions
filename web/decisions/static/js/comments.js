@@ -3,6 +3,7 @@
   var all_comments = {};
   var cached_forms = {};
   var current_form = null;
+  var animating = false;
 
   var render_comments = function(selector) {
     var comments = all_comments[selector];
@@ -53,40 +54,42 @@
     return element;
   };
 
-  var close_comment_form = function(e) {
-    var $p = $(get_closest_p(e.target));
-    var $form = $p.next(".comment-form");
-    hide_comment_form($form);
-  };
-
   var hide_comment_form = function($form) {
     var $p = $form.prev("p");
 
-    // don't accept more click events during animation
-    $p.off("click");
+    var deferred = $.Deferred();
 
     $form.hide(400, function() {
-      // remove the form from the DOM
+      // remove the form from the DOM so it doesn't mess with comment
+      // anchors
       $form.detach();
       var offset = $p.offset();
       if ($(document).scrollTop() > offset["top"] + $p.outerHeight()) {
 	$(document).scrollTop(offset["top"]);
       }
       update().done(function() {
-        // toggle the paragraph's handler back
-	$p.on("click", make_comment_form);
+        deferred.resolve();
       });
     });
+
+    return deferred.promise();
   };
 
-  var make_comment_form = function(e) {
+  var toggle_comment_form = function(e) {
+    e.preventDefault();
+
+    // do nothing if we're currently doing something with the ui
+    if (animating) { return; }
+
     // select the closest paragraph ancestor (P)
     var target = get_closest_p(e.target);
     if (typeof target == "null") {
       // bogus click
       return;
     }
-    var selector = OptimalSelect.select(target);
+    var selector = $(target).data("selector");
+    console.log("Selector: " + selector);
+
     var $target = $(target);
 
     if (!commenting_enabled && !(selector in all_comments)) {
@@ -94,18 +97,36 @@
       return;
     }
 
-    if (current_form != null && current_form != selector) {
-      // hide the previously open form
-      hide_comment_form(cached_forms[current_form]);
+    // determine whether we're opening or closing the comments
+    if (current_form != null) {
+      if (current_form == selector) {
+        // close this form
+        var $p = $(get_closest_p(e.target));
+        var $form = $p.next(".comment-form");
+        hide_comment_form($form).done(function() {
+          current_form = null;
+        });
+      } else {
+        // hide the previously open form
+        // XXX still loses track sometimes
+        if (cached_forms[current_form].closest(document.documentElement).length) {
+          hide_comment_form(cached_forms[current_form]).done(function() {
+            // only proceed with form building after the hiding is done
+            build_comment_form(selector, $target);
+          });
+        }
+      }
+    } else {
+      build_comment_form(selector, $target);
     }
+  };
 
+  var build_comment_form = function(selector, $target) {
     var $existing_form = cached_forms[selector];
+
     if (typeof $existing_form !== "undefined") {
-      // toggle the target paragraph's event handler
-      $target.off("click");
-      $target.on("click", close_comment_form);
       // reuse the existing form
-      $existing_form.insertAfter($(target));
+      $existing_form.insertAfter($target);
       $existing_form.show(400);
       current_form = selector;
       return;
@@ -118,10 +139,6 @@
     // render comments
     $comments = render_comments(selector);
     $comments.prependTo($form);
-
-    // toggle the type of handler on the target
-    $target.off("click");
-    $target.on("click", close_comment_form);
 
     // fix up labels/field IDs to be unique and matching
     $form.find("label[for]").each(function() {
@@ -185,7 +202,7 @@
 
     // slide in the entire thing
     $form.hide();
-    $form.insertAfter($(target));
+    $form.insertAfter($target);
     $form.show(400);
   };
 
@@ -238,10 +255,15 @@
 
   $(document).ready(function() {
     update().done(function() {
-      $("#content_block p").on("click", make_comment_form);
+      $("#content_block p").on("click", toggle_comment_form);
       // Some browsers won't propagate click events from elements
       // positioned outside their parent element
-      $("#content_block .comments-bubble").on("click", make_comment_form);
+      $("#content_block .comments-bubble").on("click", toggle_comment_form);
+      // Create canonical selector data attributes, allowing us to
+      // mess with DOM from now on
+      $("#content_block p").each(function() {
+        $(this).data("selector", OptimalSelect.select(this));
+      });
     });
   });
 })(jQuery);

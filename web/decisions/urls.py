@@ -41,6 +41,7 @@ urlpatterns = [
         js_info_dict,
         name='javascript-catalog'),
     url(r'^search/', include('decisions.subscriptions.search_urls')),
+    url(r'^comments/', include('decisions.comments.urls')),
     url(r'^$', index, name='index'),
     url(r'^subscriptions/', include('decisions.subscriptions.urls')),
     url(r'^account/', include('decisions.subscriptions.account_urls')),

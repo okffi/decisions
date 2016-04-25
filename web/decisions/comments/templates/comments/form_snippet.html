@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if slug %}
+<form method="post" action="{% url 'post-comment' slug object_id %}">
+  {% csrf_token %}
+  {{ comment_form.selector }}
+  <p>{{ comment_form.text }}</p>
+  <div class="meta">
+    <button type="submit" class="btn btn-primary">{% trans "Send Comment" %}</button>
+    <span class="length-feedback"></span>
+  </div>
+</form>
+{% endif %}

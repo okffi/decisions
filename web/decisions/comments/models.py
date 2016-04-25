@@ -4,11 +4,18 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, get_language
 from django.utils.timezone import now
+from django.template.defaultfilters import slugify, linebreaks, escape
 
 import arrow
 
+class CommentQuerySet(models.QuerySet):
+    def get_comments(self, instance):
+        "get comments for any model instance"
+        inst_pk = instance.pk
+        inst_ct = ContentType.objects.get_for_model(instance)
+        return self.filter(object_id=inst_pk, content_type=inst_ct)
 
 class Comment(models.Model):
     user = models.ForeignKey(User, null=True)
@@ -29,6 +36,8 @@ class Comment(models.Model):
         verbose_name=_("Comment")
     )
     created = models.DateTimeField(default=now, editable=False)
+
+    objects = CommentQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("comment")

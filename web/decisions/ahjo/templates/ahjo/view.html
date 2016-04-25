@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load staticfiles %}
 {% load ahjo_tags %}
+{% load comment_tags %}
 
 {% block content %}
 <div class="row">
@@ -105,7 +106,7 @@
 {% endif %}
 
 <script type="text/javascript">
-  comments_url = "{% url "ahjo-get-comments" id_b36 agendaitem.pk %}";
+  comments_url = "{% comments_url agendaitem %}";
   item_id = "{{ id_b36 }}";
   commenting_enabled = {{ request.user.is_authenticated|yesno:"true,false" }};
 </script>
@@ -113,15 +114,7 @@
 <div style="display:none;" class="snippets">
   <!-- HTML snippets for javascript -->
   <div class="comment-form">
-    <form method="post" action="{% url 'ahjo-comment' id_b36 agendaitem.pk %}">
-      {% csrf_token %}
-      {{ comment_form.selector }}
-      <p>{{ comment_form.text }}</p>
-      <div class="meta">
-	<button type="submit" class="btn btn-primary">{% trans "Send Comment" %}</button>
-	<span class="length-feedback"></span>
-      </div>
-    </form>
+    {% comment_form agendaitem %}
   </div>
 </div>
 {% endblock %}
