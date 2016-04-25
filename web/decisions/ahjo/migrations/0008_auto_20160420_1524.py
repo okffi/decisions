@@ -11,8 +11,9 @@ def migrate_foreign_key(apps, schema_editor):
     """
     Comment = apps.get_model('ahjo', 'Comment')
     ContentType = apps.get_model('contenttypes', 'ContentType')
+    AgendaItem = apps.get_model('ahjo', 'AgendaItem')
 
-    agendaitem_content_type = ContentType.objects.get(app_label='ahjo', model='agendaitem')
+    agendaitem_content_type = ContentType.objects.get_for_model(AgendaItem)
 
     for comment in Comment.objects.all():
         comment.content_type = agendaitem_content_type
@@ -22,6 +23,7 @@ def migrate_foreign_key(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('contenttypes', '0001_initial'),
         ('ahjo', '0007_auto_20160420_1523'),
     ]
 
