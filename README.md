@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/okffi/decisions.png?label=ready&title=Ready)](https://waffle.io/okffi/decisions)
 Helsinki Decisions
 ==================
 
