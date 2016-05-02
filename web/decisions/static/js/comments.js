@@ -318,6 +318,7 @@
         var comment_match = /#c(\d+)/.exec(location.hash);
         var comment_id = parseInt(comment_match[1]);
         if (comment_id > 0) {
+          animating = true;
           var comment_selector = null;
           $.each(all_comments, function(selector, comments) {
             $.each(comments, function(idx, comment) {
@@ -331,7 +332,6 @@
             }
           });
 
-          animating = true;
           build_comment_form(comment_selector, $(comment_selector)).done(function() {
             var offset = $(comment_selector).offset();
             $(document).scrollTop(offset.top - 25);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-13 13:00+0300\n"
+"POT-Creation-Date: 2016-05-02 16:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,21 +18,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: decisions/static/js/comments.js:28
+#: decisions/static/js/comments.js:30
 #, javascript-format
 msgid "posted by <strong>%s</strong>"
 msgstr "kirjoittanut <strong>%s</strong>"
 
-#: decisions/static/js/comments.js:163
+#: decisions/static/js/comments.js:45
+msgid "Delete comment"
+msgstr "Poista kommentti"
+
+#: decisions/static/js/comments.js:50
+msgid "Are you sure?"
+msgstr "Oletko varma?"
+
+#: decisions/static/js/comments.js:51
+msgid "Delete"
+msgstr "Poista"
+
+#: decisions/static/js/comments.js:52
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: decisions/static/js/comments.js:227
 #, javascript-format
 msgid "%s/%s characters used"
 msgstr "%s/%s merkkiä käytetty"
 
-#: decisions/static/js/comments.js:212
+#: decisions/static/js/comments.js:277
 msgid "Write a comment"
 msgstr "Kirjoita kommentti"
 
-#: decisions/static/js/comments.js:231
+#: decisions/static/js/comments.js:296
 #, javascript-format
 msgid "Read %s comment"
 msgid_plural "Read %s comments"

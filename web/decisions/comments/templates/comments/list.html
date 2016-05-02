@@ -6,7 +6,7 @@
 
 <h2>{% block list_title %}{% trans "List of latest comments" %}{% endblock %}</h2>
 
-<ul class="unstyled-list">
+<ul class="list-unstyled">
   {% for comment in comments %}
   <li>
     <h4><a href="{{ comment.content_object.get_absolute_url }}#c{{ comment.pk }}">{{ comment.content_object }}</a></h4>
