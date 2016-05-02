@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+
+<h2>{% block list_title %}{% trans "List of latest comments" %}{% endblock %}</h2>
+
+<ul class="unstyled-list">
+  {% for comment in comments %}
+  <li>
+    <h4><a href="{{ comment.content_object.get_absolute_url }}#c{{ comment.pk }}">{{ comment.content_object }}</a></h4>
+
+    <div class="comment__body">{{ comment.text|linebreaks }}</div>
+
+    <div class="comment__meta">
+      {% blocktrans with username=comment.user.username %}posted by <strong>{{ username }}</strong>{% endblocktrans %}
+      {% blocktrans with since=comment.created|timesince %}{{ since }} ago{% endblocktrans %}
+      {% if comment.edit_log.count %}
+      {% blocktrans with since=comment.edited|timesince total=comment.edit_log.count %}last edited {{ since }} ago with total {{ total }} edits{% endblocktrans %}
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

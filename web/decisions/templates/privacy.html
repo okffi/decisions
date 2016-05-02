@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h1>{% trans "Privacy policy" %}</h1>
+
+    <p>§1 {% blocktrans %}We may set tracking cookies, including third party tracking cookies for internal analytics purposes. Other third party services embedded to this site may introduce additional privacy policies.{% endblocktrans %}</p>
+
+    <p>§2 {% blocktrans %}We will not share enumerated user account data with third parties. However, there are public profile pages associated with user accounts that contain some general information about that user.{% endblocktrans %}</p>
+
+    <p>§3 {% blocktrans %}Saved searches are public information, but not necessarily connected to specific user accounts.{% endblocktrans %}</p>
+
+    <p>§4 {% blocktrans %}Comments made on this site are public information that are enumerated to user accounts. We reserve the right to publish and republish comments on any medium.{% endblocktrans %}</p>
+  </div>
+</div>
+
+{% endblock %}

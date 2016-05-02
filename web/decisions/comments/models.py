@@ -17,6 +17,12 @@ class CommentQuerySet(models.QuerySet):
         inst_ct = ContentType.objects.get_for_model(instance)
         return self.filter(object_id=inst_pk, content_type=inst_ct)
 
+_manager = models.Manager.from_queryset(CommentQuerySet)
+
+class VisibleManager(_manager):
+    def get_queryset(self):
+        return super(VisibleManager, self).get_queryset().filter(deleted__isnull=True)
+
 class Comment(models.Model):
     user = models.ForeignKey(User, null=True)
     content_type = models.ForeignKey(ContentType)
@@ -36,8 +42,12 @@ class Comment(models.Model):
         verbose_name=_("Comment")
     )
     created = models.DateTimeField(default=now, editable=False)
+    edited = models.DateTimeField(default=now, editable=False)
+    deleted = models.DateTimeField(null=True, blank=True)
 
+    # Overrides the 'objects' manager
     objects = CommentQuerySet.as_manager()
+    visible = VisibleManager()
 
     class Meta:
         verbose_name = _("comment")
@@ -46,9 +56,22 @@ class Comment(models.Model):
 
     def get_dict(self):
         return {
+            "comment_id": self.pk,
             "poster": self.user.username if self.user else _("guest"),
             "selector": self.selector,
             "text": linebreaks(escape(self.text)),
             "created_timestamp": self.created.isoformat(),
-            "created": arrow.get(self.created).humanize(locale=get_language())
+            "created": arrow.get(self.created).humanize(locale=get_language()),
+            "has_edit": self.created != self.edited,
+            "edited_timestamp": self.edited.isoformat(),
+            "edited": arrow.get(self.edited).humanize(locale=get_language()),
+            "edits_total": self.edit_log.count()
         }
+
+class CommentEdit(models.Model):
+    "represents an old version of an edited comment"
+    comment = models.ForeignKey(Comment, related_name="edit_log")
+    text = models.TextField(
+        verbose_name=_("Comment")
+    )
+    created = models.DateTimeField()

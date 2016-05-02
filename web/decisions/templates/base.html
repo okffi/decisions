@@ -108,12 +108,25 @@
       <hr>
       <footer>
 	<div class="row">
-	  <div class="col-md-6">
+	  <div class="col-md-4">
+	    <h4>{% trans "About" %}</h4>
+
 	    {% with "https://github.com/okffi/decisions" as project_url %}
 	    <p>{% blocktrans %}This website is free open source software. Source code is available <a href="{{ project_url }}">on Github</a>.{% endblocktrans %}</p>
 	    {% endwith %}
 	  </div>
 	  <div class="col-md-4">
+	    <h4>{% trans "Links" %}</h4>
+
+	    <ul>
+	      <li><a href="{% url 'list-comments' %}">{% trans "Latest comments" %}</a></li>
+	      <li><a href="https://github.com/okffi/decisions/issues">{% trans "Issue tracker" %}</a></li>
+	      <li><a href="{% url 'privacy' %}">{% trans "Privacy policy" %}</a></li>
+	    </ul>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-md-4 col-md-offset-6">
 	    <a href="http://www.okfn.org/">
 	      <img src="{% static "img/okf.png" %}" alt="Open Knowledge Foundation">
 	    </a>
@@ -139,6 +152,33 @@
 <script type="text/javascript">
   $(document).ready(function() {
     {% block ready_script %}{% endblock %}
+  });
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+      if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+      }
+    }
   });
 </script>
 

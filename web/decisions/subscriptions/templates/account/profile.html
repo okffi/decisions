@@ -9,6 +9,7 @@
       {% blocktrans with username=profile_user.username %}Profile for '{{ username }}'{% endblocktrans %}
     </h2>
     <p>{% blocktrans with since=profile_user.date_joined|timesince %}Member for {{ since }}{% endblocktrans %}</p>
+    <p><a href="{% url 'list-comments' username=user.username %}">{% blocktrans with username=user.username %}Read comments by <strong>{{ username }}</strong>{% endblocktrans %}</a></p>
   </div>
 </div>
 {% endblock %}

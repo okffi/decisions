@@ -24,7 +24,7 @@
     <div class="agenda_info">
       <div class="tags">
 	{% for tag in agendaitem.tag_cloud %}
-	<a href="{% url "haystack_search" %}?q={{ tag.name }}" class="tag tag-size-{{ tag.font_size }}">{{ tag.name }}</a>
+	<a href="{% url "haystack_search" %}?q={{ tag.name|urlencode }}" class="tag tag-size-{{ tag.font_size }}">{{ tag.name }}</a>
 	{% endfor %}
       </div>
       {% if agendaitem.preparer %}
@@ -109,6 +109,7 @@
   comments_url = "{% comments_url agendaitem %}";
   item_id = "{{ id_b36 }}";
   commenting_enabled = {{ request.user.is_authenticated|yesno:"true,false" }};
+  logged_in_user = "{{ user.username }}";
 </script>
 
 <div style="display:none;" class="snippets">

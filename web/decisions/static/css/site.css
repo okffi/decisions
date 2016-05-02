@@ -75,6 +75,13 @@
     height: 500px;
 }
 
+.comment-delete {
+    margin-left: .5em;
+}
+.comment-delete button {
+    margin-left: .5em;
+}
+
 @media (max-width: 48em) {
     .custom-logo-mobile {
 	display: inline-block;

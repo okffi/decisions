@@ -36,11 +36,57 @@
       $date.attr("datetime", comment["created_timestamp"]);
       $date.appendTo($meta);
 
+      if (comment["poster"] == logged_in_user) {
+        // add edit/delete links
+        var $delete = $("<span>").addClass("comment-delete");
+        $delete.data("comment_id", comment['comment_id']);
+
+        var $delete_button = $("<button>").addClass("btn btn-small ask-delete").text(gettext("Delete comment"));
+        $delete_button.on('click', confirm_delete_comment);
+        $delete_button.appendTo($delete);
+
+        var $c = $("<span>").addClass("confirm-delete").hide();
+        var $text = $("<span>").text(gettext("Are you sure?")).appendTo($c);
+        var $yes = $("<button>").text(gettext("Delete")).addClass("btn btn-small").appendTo($c);
+        var $no = $("<button>").text(gettext("Cancel")).addClass("btn btn-small").appendTo($c);
+
+        $yes.on("click", delete_comment);
+        $no.on("click", cancel_delete_comment);
+
+        $c.appendTo($delete);
+
+        // TODO integrate editor form neatly
+
+        $delete.appendTo($meta);
+      }
+
       $meta.appendTo($d);
 
       $d.appendTo($comments);
     });
     return $comments;
+  };
+
+  var confirm_delete_comment = function(event) {
+    var $container = $(this).parents(".comment-delete");
+
+    $container.find(".ask-delete").hide();
+    $container.find(".confirm-delete").show();
+  };
+
+  var cancel_delete_comment = function(event) {
+    var $container = $(this).parents(".comment-delete");
+
+    $container.find(".confirm-delete").hide();
+    $container.find(".ask-delete").show();
+  };
+
+  var delete_comment = function(event) {
+    var $container = $(this).parents(".comment-delete");
+    $.post("/comments/delete/" + $container.data("comment_id") + "/").done(function() {
+             var $com = $container.parents(".comment");
+             $com.fadeOut(400, function() { $com.remove(); });
+    });
   };
 
   var get_closest_p = function(element) {
@@ -60,8 +106,6 @@
     var deferred = $.Deferred();
 
     $form.hide(400, function() {
-      // remove the form from the DOM so it doesn't mess with comment
-      // anchors
       $form.detach();
       var offset = $p.offset();
       if ($(document).scrollTop() > offset["top"] + $p.outerHeight()) {
@@ -79,7 +123,10 @@
     e.preventDefault();
 
     // do nothing if we're currently doing something with the ui
-    if (animating) { return; }
+    if (animating) {
+      return;
+    }
+    animating = true;
 
     // select the closest paragraph ancestor (P)
     var target = get_closest_p(e.target);
@@ -105,31 +152,32 @@
         var $form = $p.next(".comment-form");
         hide_comment_form($form).done(function() {
           current_form = null;
+          animating = false;
         });
       } else {
         // hide the previously open form
-        // XXX still loses track sometimes
         if (cached_forms[current_form].closest(document.documentElement).length) {
           hide_comment_form(cached_forms[current_form]).done(function() {
             // only proceed with form building after the hiding is done
             build_comment_form(selector, $target);
-          });
+          }).done(function() { animating = false });
         }
       }
     } else {
-      build_comment_form(selector, $target);
+      build_comment_form(selector, $target).done(function() { animating = false; });
     }
   };
 
   var build_comment_form = function(selector, $target) {
     var $existing_form = cached_forms[selector];
+    var deferred = $.Deferred();
 
     if (typeof $existing_form !== "undefined") {
       // reuse the existing form
       $existing_form.insertAfter($target);
-      $existing_form.show(400);
+      $existing_form.show(400, function() { deferred.resolve() });
       current_form = selector;
-      return;
+      return deferred.promise();
     }
 
     var $form = $(".snippets .comment-form").clone();
@@ -203,7 +251,9 @@
     // slide in the entire thing
     $form.hide();
     $form.insertAfter($target);
-    $form.show(400);
+    $form.show(400, function() { deferred.resolve() });
+
+    return deferred.promise();
   };
 
   // get new comments and return a deferred
@@ -264,6 +314,7 @@
       $("#content_block p").each(function() {
         $(this).data("selector", OptimalSelect.select(this));
       });
+      // TODO: If we have a comment anchor, open that comment, highlight it and scroll to it
     });
   });
 })(jQuery);

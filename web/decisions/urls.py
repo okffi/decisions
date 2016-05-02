@@ -49,4 +49,5 @@ urlpatterns = [
         url(r'^feed/', include('decisions.subscriptions.api_urls')),
     ])),
     url(r'^p/(?P<username>[\w.@+-]+)/$', profile, name='profile'),
+    url(r'^privacy/$', lambda request: render(request, "privacy.html"), name="privacy"),
 ]
