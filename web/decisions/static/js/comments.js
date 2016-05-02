@@ -15,6 +15,7 @@
       var $d = $("<div>");
       $d.appendTo($l);
       $d.addClass("comment");
+      $d.attr("id", "c" + comment["comment_id"]);
 
       var $p = $("<p>");
       $p.addClass("comment__body");
@@ -135,8 +136,6 @@
       return;
     }
     var selector = $(target).data("selector");
-    console.log("Selector: " + selector);
-
     var $target = $(target);
 
     if (!commenting_enabled && !(selector in all_comments)) {
@@ -314,7 +313,33 @@
       $("#content_block p").each(function() {
         $(this).data("selector", OptimalSelect.select(this));
       });
-      // TODO: If we have a comment anchor, open that comment, highlight it and scroll to it
+
+      if (location.hash.length) {
+        var comment_match = /#c(\d+)/.exec(location.hash);
+        var comment_id = parseInt(comment_match[1]);
+        if (comment_id > 0) {
+          var comment_selector = null;
+          $.each(all_comments, function(selector, comments) {
+            $.each(comments, function(idx, comment) {
+              if (comment['comment_id'] == comment_id) {
+                comment_selector = selector;
+                return false;
+              }
+            });
+            if (comment_selector !== null) {
+              return false;
+            }
+          });
+
+          animating = true;
+          build_comment_form(comment_selector, $(comment_selector)).done(function() {
+            var offset = $(comment_selector).offset();
+            $(document).scrollTop(offset.top - 25);
+            $("#c" + comment_id).addClass("bc-base--lightest");
+            animating = false;
+          });
+        }
+      }
     });
   });
 })(jQuery);
