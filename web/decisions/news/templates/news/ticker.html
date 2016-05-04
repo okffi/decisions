@@ -1,0 +1,11 @@
+{% load i18n %}
+<ul class="list-unstyled">
+  {% for e in entries %}
+  <li>
+    <h5>
+      <a href="{{ e.get_absolute_url }}">{{ e.subject }}</a>
+      <br><small>{% blocktrans with since=e.pub_date|timesince %}{{ since }} ago{% endblocktrans %}</small>
+    </h5>
+  </li>
+  {% endfor %}
+</ul>

@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from decisions.ahjo.models import AgendaItem
+
+class AgendaItemAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(AgendaItem, AgendaItemAdmin)

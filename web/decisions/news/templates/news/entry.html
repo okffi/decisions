@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col col-md-12">
+    <h2>{{ entry.subject }}<br>
+      <small>
+	{% if entry.author %}
+	{% blocktrans with author_name=entry.author.username %}Written by <strong>{{ author_name }}</strong>{% endblocktrans %}
+	{% else %}
+	{% trans "System bulletin" %}
+	{% endif %}
+	{% blocktrans with since=entry.pub_date|timesince %}{{ since }} ago{% endblocktrans %}
+      </small>
+    </h2>
+    <p>
+
+    </p>
+
+    {{ entry.text|safe|linebreaks }}
+  </div>
+</div>
+{% endblock %}

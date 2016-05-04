@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from decisions.comments.models import Comment
+
+class CommentAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Comment, CommentAdmin)

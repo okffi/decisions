@@ -26,6 +26,9 @@ class UserProfile(models.Model):
 
     extra = pgfields.JSONField(default=dict)
 
+    def __unicode__(self):
+        return self.user.username
+
     def confirmed_email(self):
         if self.email_confirmed:
             return self.user.email

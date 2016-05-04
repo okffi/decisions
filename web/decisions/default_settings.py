@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'decisions.ahjo',
     'decisions.subscriptions',
     'decisions.comments',
+    'decisions.news',
 ]
 
 
@@ -121,7 +122,12 @@ AUTHENTICATION_BACKENDS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
+_ = lambda s: s
+
 LANGUAGE_CODE = 'fi'
+LANGUAGES = (
+    ('fi', _('Finnish')),
+)
 
 TIME_ZONE = 'Europe/Helsinki'
 

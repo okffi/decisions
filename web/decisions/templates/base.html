@@ -4,6 +4,7 @@
 
 {% load i18n %}
 {% load staticfiles %}
+{% load news_tags %}
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -124,6 +125,10 @@
 	      <li><a href="{% url 'privacy' %}">{% trans "Privacy policy" %}</a></li>
 	      <li><a href="{% url 'forgot-password' %}">{% trans "Forgot password" %}</a></li>
 	    </ul>
+	  </div>
+	  <div class="col-md-4">
+	    <h4>{% trans "Site Updates" %}</h4>
+	    {% news_ticker %}
 	  </div>
 	</div>
 	<div class="row">
