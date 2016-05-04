@@ -273,3 +273,5 @@ if "MAILGUN_SMTP_SERVER" in os.environ:
     EMAIL_PORT = os.environ["MAILGUN_SMTP_PORT"]
     EMAIL_USER = os.environ["MAILGUN_SMTP_USER"]
     EMAIL_PASSWORD = os.environ["MAILGUN_SMTP_PASSWORD"]
+
+SITE_ID = 1
