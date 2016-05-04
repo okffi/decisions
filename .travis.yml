@@ -3,5 +3,7 @@ python:
   - "2.7"
 addons:
   postgresql: "9.4"
+services:
+  - redis-server
 install: "pip install -r web/requirements.txt"
 script: "cd web && python manage.py test"
