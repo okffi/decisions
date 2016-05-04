@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+  <div class="col col-md-12">
+    <h2>{% trans "Can't reset" %}</h2>
+
+    <p>{% blocktrans %}This password reset either doesn't exist or has expired. You can try requesting another reset.{% endblocktrans %}</p>
+
+    <p>{% trans "Please contact site administrators if account problems persist." %}</p>
+  </div>
+</div>
+{% endblock %}

@@ -155,3 +155,67 @@ class SubscriptionEditForm(SubscriptionForm):
             (False, _("No"))
         ])
     )
+
+class ChangePasswordForm(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        label=_("Old password"),
+    )
+
+    new_password = forms.CharField(
+        widget=forms.PasswordInput,
+        label=_("New password"),
+    )
+    new_password_again = forms.CharField(
+        widget=forms.PasswordInput,
+        label=_("New password again"),
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user")
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        if "password" in self.cleaned_data:
+            authenticated_user = authenticate(email=self.user.email,
+                                              password=self.cleaned_data["password"])
+            if not authenticated_user:
+                self.add_error("password",
+                               forms.ValidationError(_("Please provide the current password")))
+
+        if ("new_password" in self.cleaned_data
+            and "new_password_again" in self.cleaned_data):
+            if self.cleaned_data["new_password"] != self.cleaned_data["new_password_again"]:
+                self.add_error("new_password",
+                               forms.ValidationError(_("Passwords don't match")))
+                self.add_error("new_password_again",
+                               forms.ValidationError(_("Passwords don't match")))
+
+        return self.cleaned_data
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(
+        label=_("Email address"),
+        help_text=_("Please provide your email address. We will send password reset instructions there.")
+    )
+
+class ResetPasswordForm(forms.Form):
+    new_password = forms.CharField(
+        widget=forms.PasswordInput,
+        label=_("New password"),
+    )
+    new_password_again = forms.CharField(
+        widget=forms.PasswordInput,
+        label=_("New password again"),
+    )
+
+    def clean(self):
+        if ("new_password" in self.cleaned_data
+            and "new_password_again" in self.cleaned_data):
+            if self.cleaned_data["new_password"] != self.cleaned_data["new_password_again"]:
+                self.add_error("new_password",
+                               forms.ValidationError(_("Passwords don't match")))
+                self.add_error("new_password_again",
+                               forms.ValidationError(_("Passwords don't match")))
+
+        return self.cleaned_data

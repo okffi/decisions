@@ -9,7 +9,8 @@
       {% blocktrans with username=user.username %}Edit profile for '{{ username }}'{% endblocktrans %}
     </h2>
     <p><a href="{% url 'profile' username=user.username %}">{% trans "View public profile" %}</a></p>
-    <p>{% trans "Account management coming soon!" %}</p>
+    <p><a href="{% url 'change-password' %}">{% trans "Change password" %}</a></p>
+    <p>{% trans "More account management coming soon!" %}</p>
   </div>
 </div>
 {% endblock %}

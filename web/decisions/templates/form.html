@@ -5,7 +5,9 @@
 {% block content %}
 <div class="row">
   <div class="col-md-12">
-    <h2>{{ verb|default:_("Form") }}</h2>
+    <h2>{% block form_title %}{{ verb|default:_("Form") }}{% endblock %}</h2>
+
+    {% block before_form %}{% endblock %}
 
     <form method="post">
       {% csrf_token %}
@@ -13,7 +15,7 @@
       {% for field in form %}
       {% include "snippets/form_group.html" %}
       {% endfor %}
-      <button type="submit" class="btn btn-primary">{{ verb|default:_("Submit") }}</button>
+      <button type="submit" class="btn btn-primary">{% block form_submit %}{{ verb|default:_("Submit") }}{% endblock %}</button>
     </form>
   </div>
 </div>

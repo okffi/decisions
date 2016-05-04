@@ -19,7 +19,8 @@ from django.views.i18n import javascript_catalog
 from django.shortcuts import render
 
 from decisions.subscriptions.forms import LoginForm, RegisterForm
-from decisions.subscriptions.views import dashboard, profile
+from decisions.subscriptions.views import dashboard
+from decisions.subscriptions.profile import profile
 
 js_info_dict = {
     'packages': ('decisions',),

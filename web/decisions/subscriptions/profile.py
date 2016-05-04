@@ -17,9 +17,13 @@ from django.core.mail import send_mail
 from django.utils.timezone import now
 from django.utils.http import is_safe_url
 from django.template.loader import render_to_string
+from django.core.cache import cache
 
-from decisions.subscriptions.forms import LoginForm, RegisterForm
-from decisions.subscriptions.models import UserProfile
+from decisions.subscriptions.forms import (
+    LoginForm, RegisterForm,
+    ForgotPasswordForm, ChangePasswordForm, ResetPasswordForm
+)
+from decisions.subscriptions.models import UserProfile, make_confirm_code
 
 def login(request):
     redirect_to = request.POST.get("next",
@@ -135,5 +139,88 @@ def profile(request, username):
         {"profile_user": get_object_or_404(User, username=username)}
     )
 
+@login_required
 def edit_profile(request):
     return render(request, "account/edit_profile.html")
+
+def forgot_password(request):
+    if request.method == "POST":
+        form = ForgotPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data["email"]
+
+            # Don't send resets too often
+            recent_reset = cache.get("recent-reset-codes-%s" % email)
+            if recent_reset and recent_reset > now() - timedelta(days=2):
+                recent_ok = False
+            else:
+                recent_ok = True
+
+            # Only send mail to addresses we know
+            if User.objects.filter(email=email, is_active=True).count():
+                email_ok = True
+            else:
+                email_ok = False
+
+            # Process the request only if checks pass
+            if recent_ok and email_ok:
+                reset_code = make_confirm_code()
+                valid_time = 4 * 3600 # seconds
+                cache.set("password-code-%s" % reset_code, email, valid_time)
+                cache.set("recent-reset-codes-%s" % email, now(), valid_time)
+
+                send_mail(
+                    _("Password reset for %(site)s") % {"site": settings.SITE_NAME},
+                    render_to_string("subscriptions/emails/reset_password.txt", {
+                        "confirm_code": reset_code,
+                        "SITE_NAME": settings.SITE_NAME,
+                    "SITE_URL": settings.SITE_URL,
+                    }),
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email]
+                )
+
+            # We will never give feedback on whether we actually have
+            # that email address in our database. Pretend we actually
+            # did something in any case.
+            messages.add_message(request, messages.SUCCESS, _("We have now sent reset instructions."))
+            return redirect("index")
+    else:
+        form = ForgotPasswordForm()
+
+    return render(request, "account/forgot_password.html", {"form": form})
+
+def reset_password(request, reset_code):
+    email = cache.get("password-code-%s" % reset_code)
+    if not email:
+        return render(request, "account/reset_invalid.html")
+
+    # We're reasonably guaranteed the email exists at this point.
+    user = User.objects.get(email=email, is_active=True)
+    if request.method == "POST":
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            user.set_password(form.cleaned_data["new_password"])
+            user.save()
+            messages.add_message(
+                request, messages.SUCCESS,
+                _("Great! You have reset your password. You can now log in using your new password."))
+            return redirect("index")
+    else:
+        form = ResetPasswordForm()
+
+    return render(request, "account/reset_password.html", {"form": form})
+
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        form = ChangePasswordForm(request.POST, user=request.user)
+        if form.is_valid():
+            request.user.set_password(form.cleaned_data["new_password"])
+            request.user.save()
+            messages.add_message(request, messages.SUCCESS, _("You have changed your password successfully."))
+            return redirect("index")
+    else:
+        form = ChangePasswordForm(user=request.user)
+
+    return render(request, "account/change_password.html", {"form": form})
