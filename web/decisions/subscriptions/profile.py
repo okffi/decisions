@@ -202,6 +202,7 @@ def reset_password(request, reset_code):
         if form.is_valid():
             user.set_password(form.cleaned_data["new_password"])
             user.save()
+            cache.delete("password-code-%s" % reset_code)
             messages.add_message(
                 request, messages.SUCCESS,
                 _("Great! You have reset your password. You can now log in using your new password."))
