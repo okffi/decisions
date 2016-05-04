@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from decisions.subscriptions.views import (
+from decisions.subscriptions.profile import (
     login,
     logout,
     register,
