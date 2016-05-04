@@ -7,6 +7,7 @@ dj-database-url==0.4.0
 Django==1.9.3
 -e git+https://github.com/toastdriven/django-haystack.git@6e559dedbc8f17a80d361a05e16e8ce08bb09662#egg=django_haystack
 django-redis-cache==1.6.5
+django-sitemetrics==0.5.2
 django-tagging==0.4.1
 future==0.15.2
 gunicorn==19.4.5

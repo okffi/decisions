@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # third party apps
     'haystack',
     'tagging',
+    'sitemetrics',
 
     # first party apps
     'decisions.ahjo',
@@ -77,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'decisions.subscriptions.context_processors.metrics',
             ],
         },
     },

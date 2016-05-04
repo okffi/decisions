@@ -143,6 +143,8 @@
 </div>
 {% endblock %}
 
+<!-- Here be dragons -->
+
 <script src="{% static "js/jquery-2.2.1.js" %}"></script>
 <script src="{% static "js/bootstrap.min.js" %}"></script>
 <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
@@ -182,4 +184,8 @@
   });
 </script>
 
+{% if google_ua %}
+{% load sitemetrics %}
+{% sitemetrics by google for google_ua %}
+{% endif %}
 </html>
