@@ -26,7 +26,7 @@ def fetch_index(limit=50):
     # Reindex Haystack
     call_command("update_index",
                  interactive=False,
-                 start_date=start.isoformat())
+                 start_date=start)
 
 @app.task()
 def process():
