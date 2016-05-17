@@ -10,3 +10,6 @@ class AgendaItemIndex(indexes.SearchIndex, indexes.Indexable):
 
     def get_model(self):
         return AgendaItem
+
+    def get_updated_field(self):
+        return "last_modified_time"

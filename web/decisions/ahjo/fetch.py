@@ -37,11 +37,11 @@ def get_decisions_before(before, limit=100):
         before = AgendaItem.objects.create_from_json(object).last_modified_time
     return before
 
-def import_latest():
+def import_latest(limit=50):
     if AgendaItem.objects.count():
-        new = get_decisions_since(AgendaItem.objects.latest().last_modified_time)
+        new = get_decisions_since(AgendaItem.objects.latest().last_modified_time, limit=limit)
     else:
-        new = get_decisions_since()
+        new = get_decisions_since(limit=limit)
 
     for obj in new["objects"]:
         AgendaItem.objects.create_from_json(obj)
