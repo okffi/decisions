@@ -21,10 +21,12 @@ def fetch_index(limit=50):
 
     ahjo_fetch.import_latest(limit)
 
+    start = min(earliest_dates).isoformat()
+
     # Reindex Haystack
     call_command("update_index",
                  interactive=False,
-                 after=min(earliest_dates).isoformat())
+                 start_date=start.isoformat())
 
 @app.task()
 def process():
