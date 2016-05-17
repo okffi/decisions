@@ -10,7 +10,7 @@ from decisions.ahjo.models import AgendaItem
 
 
 @app.task()
-def fetch_index():
+def fetch_index(limit=50):
     # Fetch all sorts of new data
     # Fetchers should give a date after which all new entries are
     # We will always re-index at least two hours (this is supposed to be run every hour)
@@ -18,10 +18,15 @@ def fetch_index():
 
     if AgendaItem.objects.count():
         earliest_dates.append(AgendaItem.objects.latest().last_modified_time)
-    ahjo_fetch.import_latest()
+
+    ahjo_fetch.import_latest(limit)
+
+    start = min(earliest_dates).isoformat()
 
     # Reindex Haystack
-    call_command("update_index", interactive=False, after=min(earliest_dates).isoformat())
+    call_command("update_index",
+                 interactive=False,
+                 start_date=start)
 
 @app.task()
 def process():
