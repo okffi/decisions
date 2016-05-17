@@ -25,7 +25,7 @@ services:
 
   postgres:
     restart: always
-    image: postgres:latest
+    image: mdillon/postgis:latest
     volumes:
     - database:/var/lib/postgresql
     expose:

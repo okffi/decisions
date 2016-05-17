@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.postgres',
     'django.contrib.sites',
+    'django.contrib.gis',
 
     # third party apps
     'haystack',
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'decisions.subscriptions',
     'decisions.comments',
     'decisions.news',
+    'decisions.geo',
 ]
 
 
@@ -93,7 +95,7 @@ WSGI_APPLICATION = 'decisions.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'helsinkidecisions',
     }
 }

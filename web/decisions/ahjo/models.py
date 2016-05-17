@@ -12,6 +12,8 @@ from django.template.defaultfilters import slugify, linebreaks, escape
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.gis.geos import Point, Polygon, MultiPolygon
+
 
 from dateutil.parser import parse
 import arrow
@@ -21,7 +23,7 @@ from tagging.models import Tag
 from tagging.utils import calculate_cloud
 
 from decisions.ahjo.utils import b36encode, b36decode
-from decisions import comments
+from decisions import comments, geo
 
 
 AHJO_TZ = timezone('Europe/Helsinki')
@@ -59,6 +61,39 @@ class AgendaItemQuerySet(models.QuerySet):
 
     def get_b36(self, id_b36):
         return self.get(ahjo_id=b36decode(id_b36))
+
+    def filter_points(self):
+        "yield tuples of (object, Point)"
+        objs = self.exclude(original__issue__geometries=[])
+        for o in objs:
+            for geo in o.original["issue"]["geometries"]:
+                if geo["type"] == "Point":
+                    lon, lat = geo["coordinates"]
+                    yield o, Point(lat, lon)
+
+    def filter_polygons(self):
+        """yield tuples of (object, MultiPolygon).
+
+        Polygons are multipolygonized by wrapping them in a
+        MultiPolygon at this point.
+
+        """
+        objs = self.exclude(original__issue__geometries=[])
+        for o in objs:
+            for geo in o.original["issue"]["geometries"]:
+                if geo["type"] == "Polygon":
+                    coords = []
+                    for ring in geo["coordinates"]:
+                        coords.append([(lat,lon) for lon, lat in ring])
+                    yield o, MultiPolygon([Polygon(*coords)])
+                elif geo["type"] == "MultiPolygon":
+                    polygons = []
+                    for polycoords in geo["coordinates"]:
+                        coords = []
+                        for ring in polycoords:
+                            coords.append([(lat,lon) for lon, lat in ring])
+                        polygons.append(Polygon(*coords))
+                    yield o, MultiPolygon(polygons)
 
 # From: https://github.com/City-of-Helsinki/openahjo/blob/master/ahjodoc/models.py#L196
 # Update as necessary
@@ -98,6 +133,7 @@ SECTION_TYPE_MAP = {
     "default": _("Section: %(section_type)s"),
 }
 
+@geo.register()
 @comments.register(slug="ahjo")
 class AgendaItem(models.Model):
     ahjo_id = models.IntegerField(db_index=True)
@@ -225,6 +261,9 @@ class AgendaItem(models.Model):
         if self.original["content"]:
             return self.original["content"][0]["text"]
         return u""
+
+    def get_content_date(self):
+        return self.last_modified_time
 
     def generate_tags(self):
         "scours the instance data for useful tags"
