@@ -49,6 +49,7 @@ def voikko_simplify(text, language):
             if word_class not in ACCEPTABLE_WORD_CLASSES:
                 # filter uninteresting word types outright
                 continue
-            new_words.append(analysis["BASEFORM"])
+            if "BASEFORM" in analysis:
+                new_words.append(analysis["BASEFORM"])
 
     return u" ".join(new_words)

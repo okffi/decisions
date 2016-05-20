@@ -14,7 +14,7 @@ def view(request, ahjo_id_b36, slug=None, disambiguation_id=None):
     items = AgendaItem.objects.filter(ahjo_id=ahjo_id)
 
     if not items:
-        raise http.Http404
+        raise Http404
 
     if disambiguation_id:
         item = get_object_or_404(AgendaItem, pk=disambiguation_id)
