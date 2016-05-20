@@ -4,8 +4,10 @@ from haystack.query import SearchQuerySet
 
 from decisions.subscriptions.templatetags.voikko_tags import voikko_simplify
 
+# XXX voikko is not really behaving
+VoikkoSearchQuerySet = SearchQuerySet
 
-class VoikkoSearchQuerySet(SearchQuerySet):
+class _VoikkoSearchQuerySet(SearchQuerySet):
     def auto_query(self, query_string, **kwargs):
         lang = get_language()
         if lang == u"fi":
