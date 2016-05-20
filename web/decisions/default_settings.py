@@ -248,6 +248,11 @@ CELERYBEAT_SCHEDULE = {
         'task': 'decisions.ahjo.tasks.fetch_index',
         'schedule': crontab(minute=5),
     },
+    # Update geoindex about as frequently as new data is fetched
+    "geoindex": {
+        'task': 'decisions.geo.tasks.update_geoindex',
+        'schedule': crontab(minute=10),
+    },
     # Send email reasonably infrequently
     "process": {
         'task': 'decisions.ahjo.tasks.process',

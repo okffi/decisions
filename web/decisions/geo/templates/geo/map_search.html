@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col col-md-12">
+
+    <ul class="bare-list nav tabs search-tabs">
+      <li>
+	<a class="tab" href="{% url 'haystack_search' %}" id="text-search-link">
+	  {% trans "Text Search" %}
+	</a>
+      </li>
+      <li>
+	<a class="tab tab--active" href="#">
+	  {% trans "Map Search" %}
+	</a>
+      </li>
+    </ul>
+
+    <form method="get" action="" id="search-form" class="search-form">
+      <div class="input-group" id="search-group">
+	<input type="text" name="q" placeholder="{% trans "Places" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} id="search-input">
+
+	<span class="input-group-btn" id="search-go">
+	  <button class="btn btn-primary" type="submit" id="search-button">{% trans "Search the map" %}</button>
+	</span>
+      </div>
+    </form>
+
+    <div id="search_map"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static "leaflet/leaflet.js" %}"></script>
+<script type="text/javascript">
+  var geosearch_url = '{% url 'geosearch' %}';
+</script>
+<script src="{% static "js/mapsearch.js" %}"></script>
+<script src="{% static "js/search.js" %}"></script>
+{% endblock %}

@@ -69,7 +69,7 @@ class AgendaItemQuerySet(models.QuerySet):
             for geo in o.original["issue"]["geometries"]:
                 if geo["type"] == "Point":
                     lon, lat = geo["coordinates"]
-                    yield o, Point(lat, lon)
+                    yield o, Point(lon, lat)
 
     def filter_polygons(self):
         """yield tuples of (object, MultiPolygon).
@@ -84,14 +84,14 @@ class AgendaItemQuerySet(models.QuerySet):
                 if geo["type"] == "Polygon":
                     coords = []
                     for ring in geo["coordinates"]:
-                        coords.append([(lat,lon) for lon, lat in ring])
+                        coords.append([(lon,lat) for lon, lat in ring])
                     yield o, MultiPolygon([Polygon(*coords)])
                 elif geo["type"] == "MultiPolygon":
                     polygons = []
                     for polycoords in geo["coordinates"]:
                         coords = []
                         for ring in polycoords:
-                            coords.append([(lat,lon) for lon, lat in ring])
+                            coords.append([(lon,lat) for lon, lat in ring])
                         polygons.append(Polygon(*coords))
                     yield o, MultiPolygon(polygons)
 
@@ -253,7 +253,7 @@ class AgendaItem(models.Model):
                 "@type": "Content",
                 "type": "Content",
                 "displayName": self.original["issue"]["subject"],
-                "content": self.original["issue"].get("summary")
+                "content": self.original["issue"].get("summary", "")
             }
         }
 
@@ -261,6 +261,9 @@ class AgendaItem(models.Model):
         if self.original["content"]:
             return self.original["content"][0]["text"]
         return u""
+
+    def get_summary(self):
+        return self.original["issue"].get("summary", "")
 
     def get_content_date(self):
         return self.last_modified_time

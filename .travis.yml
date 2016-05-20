@@ -6,4 +6,6 @@ addons:
 services:
   - redis-server
 install: "pip install -r web/requirements.txt"
+before_script:
+  - psql -U postgres -c "create extension postgis"
 script: "cd web && python manage.py test"

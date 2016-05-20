@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Decisions 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 13:50+0300\n"
+"POT-Creation-Date: 2016-05-20 16:04+0300\n"
 "PO-Revision-Date: 2016-04-13 16:51+0300\n"
 "Last-Translator: Leo Honkanen <leo.o.honkanen@gmail.com>\n"
 "Language-Team: Finnish <LL@li.org>\n"
@@ -21,111 +21,112 @@ msgstr ""
 msgid "Ahjo"
 msgstr "Ahjo"
 
-#: decisions/ahjo/models.py:77
+#: decisions/ahjo/models.py:112
 msgid "Passed as drafted"
 msgstr "Hyväksytty"
 
-#: decisions/ahjo/models.py:78
+#: decisions/ahjo/models.py:113
 msgid "Passed after a vote"
 msgstr "Hyväksytty äänestyksen jälkeen"
 
-#: decisions/ahjo/models.py:79
+#: decisions/ahjo/models.py:114
 msgid "Passed revised by presenter"
 msgstr "Hyväksytty esittelijän muutoksen jälkeen"
 
-#: decisions/ahjo/models.py:80
+#: decisions/ahjo/models.py:115
 msgid "Passed modified"
 msgstr "Hyväksytty muutettuna"
 
-#: decisions/ahjo/models.py:81
+#: decisions/ahjo/models.py:116
 msgid "Rejected"
 msgstr "Hylätty"
 
-#: decisions/ahjo/models.py:82
+#: decisions/ahjo/models.py:117
 msgid "Noted as informational"
 msgstr "Tiedoksi"
 
-#: decisions/ahjo/models.py:83
+#: decisions/ahjo/models.py:118
 msgid "Returned to preparation"
 msgstr "Palautettu valmisteluun"
 
-#: decisions/ahjo/models.py:84
+#: decisions/ahjo/models.py:119
 msgid "Removed from agenda"
 msgstr "Poistettu päiväjärjestyksestä"
 
-#: decisions/ahjo/models.py:85
+#: decisions/ahjo/models.py:120
 msgid "Tabled"
 msgstr "Jätetty pöydälle"
 
-#: decisions/ahjo/models.py:86
+#: decisions/ahjo/models.py:121
 msgid "Election"
 msgstr "Äänestys"
 
-#: decisions/ahjo/models.py:87
+#: decisions/ahjo/models.py:122
 msgid "Unknown"
 msgstr "Ei päätöstä vielä"
 
-#: decisions/ahjo/models.py:92 decisions/ahjo/models.py:117
+#: decisions/ahjo/models.py:127 decisions/ahjo/models.py:153
 #: decisions/ahjo/templates/ahjo/view.html:35
 msgid "Resolution"
 msgstr "Ratkaisu"
 
-#: decisions/ahjo/models.py:93
+#: decisions/ahjo/models.py:128
 msgid "Summary"
 msgstr "Yhteenveto"
 
-#: decisions/ahjo/models.py:94
+#: decisions/ahjo/models.py:129
 msgid "Presenter"
 msgstr "Esittelijä"
 
-#: decisions/ahjo/models.py:95
+#: decisions/ahjo/models.py:130
 msgid "Hearing"
 msgstr "Kuuleminen"
 
-#: decisions/ahjo/models.py:96
+#: decisions/ahjo/models.py:131
 msgid "Reasons for resolution"
 msgstr "Perustelut ratkaisulle"
 
-#: decisions/ahjo/models.py:97
+#: decisions/ahjo/models.py:132
 msgid "Draft resolution"
 msgstr "Ratkaisuehdotus"
 
-#: decisions/ahjo/models.py:98
+#: decisions/ahjo/models.py:133
 #, python-format
 msgid "Section: %(section_type)s"
 msgstr "Kappale: %(section_type)s"
 
-#: decisions/ahjo/models.py:107
+#: decisions/ahjo/models.py:143
 msgid "Subject"
 msgstr "Aihe"
 
-#: decisions/ahjo/models.py:111 decisions/ahjo/templates/ahjo/view.html.py:31
+#: decisions/ahjo/models.py:147 decisions/ahjo/templates/ahjo/view.html.py:31
 msgid "Preparer"
 msgstr "Esittelijä"
 
-#: decisions/ahjo/models.py:121
+#: decisions/ahjo/models.py:157
 msgid "Classification code"
 msgstr "Lajittelukoodi"
 
-#: decisions/ahjo/models.py:125
+#: decisions/ahjo/models.py:161
 msgid "Last modified time"
 msgstr "Viimeisin muokkausaika"
 
-#: decisions/ahjo/models.py:129
+#: decisions/ahjo/models.py:165
 msgid "Original"
 msgstr "Alkuperäinen"
 
-#: decisions/ahjo/models.py:143
+#: decisions/ahjo/models.py:179
 msgid "agenda item"
 msgstr "esitys"
 
-#: decisions/ahjo/models.py:144
+#: decisions/ahjo/models.py:180
 msgid "agenda items"
 msgstr "esityksiä"
 
 #: decisions/ahjo/templates/ahjo/view.html:17
 #: decisions/comments/templates/comments/list.html:18
 #: decisions/comments/templates/comments/list_user.html:18
+#: decisions/geo/views.py:55 decisions/geo/views.py:69
 #: decisions/news/templates/news/entry.html:15
 #: decisions/news/templates/news/ticker.html:7
 #: decisions/subscriptions/templates/subscriptions/public_feed.html:21
@@ -231,9 +232,28 @@ msgstr "viimeksi muokattu %(since)s sitten, yhteensä %(total)s muokkauskertaa"
 msgid "List of latest comments by %(username)s"
 msgstr "Viimeisimmät kommentit käyttäjältä %(username)s"
 
-#: decisions/default_settings.py:129
+#: decisions/default_settings.py:131
 msgid "Finnish"
 msgstr "Suomeksi"
+
+#: decisions/geo/templates/geo/map_search.html:17
+#: decisions/templates/search_base.html:12
+msgid "Text Search"
+msgstr "Tekstihaku"
+
+#: decisions/geo/templates/geo/map_search.html:22
+#: decisions/templates/search_base.html:17
+msgid "Map Search"
+msgstr "Karttahaku"
+
+#: decisions/geo/templates/geo/map_search.html:29
+msgid "Places"
+msgstr "Paikka"
+
+#: decisions/geo/templates/geo/map_search.html:32
+#| msgid "Search term"
+msgid "Search the map"
+msgstr "Hae kartalta"
 
 #: decisions/news/models.py:28
 msgid "Entry"
@@ -263,7 +283,7 @@ msgstr "Kuvausta ei ole annettu"
 
 #: decisions/subscriptions/apps.py:9
 #: decisions/subscriptions/templates/subscriptions/subscriptions.html:8
-#: decisions/templates/base.html:56
+#: decisions/templates/base.html:57
 msgid "Subscriptions"
 msgstr "Tilaukset"
 
@@ -480,7 +500,7 @@ msgid "More account management coming soon!"
 msgstr "Lisää tilinhallintaa tulee kohta!"
 
 #: decisions/subscriptions/templates/account/forgot_password.html:5
-#: decisions/templates/base.html:126
+#: decisions/templates/base.html:127
 msgid "Forgot password"
 msgstr "Unohtunut salasana"
 
@@ -505,7 +525,7 @@ msgid "Log in"
 msgstr "Kirjaudu"
 
 #: decisions/subscriptions/templates/account/login_or_register.html:8
-#: decisions/templates/base.html:78
+#: decisions/templates/base.html:79
 msgid "Log in or register"
 msgstr "Kirjaudu tai rekisteröidy"
 
@@ -585,7 +605,7 @@ msgstr "Muokkaa ja näytä enemmän tilauksia"
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:31
 #: decisions/subscriptions/templates/subscriptions/feed.html:8
-#: decisions/templates/base.html:45 decisions/templates/base.html.py:50
+#: decisions/templates/base.html:46 decisions/templates/base.html.py:51
 msgid "Feed"
 msgstr "Syöte"
 
@@ -785,25 +805,25 @@ msgstr "Olet muokannut tilaustasi <tt>%(search_term)s</tt>"
 msgid "Edit subscription"
 msgstr "Muokkaa tilausta"
 
-#: decisions/templates/base.html:13 decisions/templates/base.html.py:35
-#: decisions/templates/base.html:36
+#: decisions/templates/base.html:14 decisions/templates/base.html.py:36
+#: decisions/templates/base.html:37
 msgid "Decisions"
 msgstr "Päätökset"
 
-#: decisions/templates/base.html:64
+#: decisions/templates/base.html:65
 #, python-format
 msgid "Logged in: <strong>%(username)s</strong>"
 msgstr "Kirjautuneena: <strong>%(username)s</strong>"
 
-#: decisions/templates/base.html:70
+#: decisions/templates/base.html:71
 msgid "Log out"
 msgstr "Kirjaudu ulos"
 
-#: decisions/templates/base.html:113
+#: decisions/templates/base.html:114
 msgid "About"
 msgstr "Tietoja"
 
-#: decisions/templates/base.html:116
+#: decisions/templates/base.html:117
 #, python-format
 msgid ""
 "This website is free open source software. Source code is available <a href="
@@ -812,23 +832,23 @@ msgstr ""
 "Tämä nettisivu on ilmaista avoimen lähdekoodin ohjelmistoa. Lähdekoodin voi "
 "ladata <a href=\"%(project_url)s\">Githubista</a>."
 
-#: decisions/templates/base.html:120
+#: decisions/templates/base.html:121
 msgid "Links"
 msgstr "Linkkejä"
 
-#: decisions/templates/base.html:123
+#: decisions/templates/base.html:124
 msgid "Latest comments"
 msgstr "Viimeisimpiä kommentteja"
 
-#: decisions/templates/base.html:124
+#: decisions/templates/base.html:125
 msgid "Issue tracker"
 msgstr "Tehtävien seuranta"
 
-#: decisions/templates/base.html:125 decisions/templates/privacy.html.py:8
+#: decisions/templates/base.html:126 decisions/templates/privacy.html.py:8
 msgid "Privacy policy"
 msgstr "Rekisteriseloste"
 
-#: decisions/templates/base.html:130
+#: decisions/templates/base.html:131
 msgid "Site Updates"
 msgstr "Päivityksiä sivulla"
 
@@ -865,7 +885,7 @@ msgstr ""
 msgid "E.g. Bicycling"
 msgstr "Esim. polkupyöräily"
 
-#: decisions/templates/index.html:17 decisions/templates/search_base.html:13
+#: decisions/templates/index.html:17 decisions/templates/search_base.html:26
 msgid "Search decisions"
 msgstr "Hae päätöksistä"
 
@@ -989,7 +1009,7 @@ msgstr "Seuraavat"
 msgid "Search for decisions"
 msgstr "Hae päätöksiä"
 
-#: decisions/templates/search_base.html:11
+#: decisions/templates/search_base.html:24
 msgid "Search from decisions"
 msgstr "Hae päätöksistä"
 

@@ -9,7 +9,7 @@
   var normalizeCoord = function(lonlat) {
     // swaps the coordinate axes
     return [lonlat[1], lonlat[0]];
-  }
+  };
 
   var normalizePolygon = function(coords) {
     // if the last polygon point is sufficiently equal to the
@@ -33,7 +33,7 @@
         var coords = geo["coordinates"].map(normalizePolygon);
         map.addLayer(L.polygon(coords));
       } else if (geo['type'] == 'MultiPolygon') {
-        var multicoords = []
+        var multicoords = [];
         geo["coordinates"].forEach(function(poly) {
           multicoords.push(poly.map(normalizePolygon));
         });

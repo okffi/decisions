@@ -217,7 +217,7 @@ def suggest(request):
     q = request.GET.get("q")
 
     if q is None:
-        return JsonResponse([], safe=True)
+        return JsonResponse([], safe=False)
 
     fresh_subscriptions = (
         Subscription.objects

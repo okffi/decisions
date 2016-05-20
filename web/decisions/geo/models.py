@@ -23,6 +23,7 @@ class PointIndex(models.Model):
 
     class Meta:
         get_latest_by = "content_date"
+        ordering = ("-content_date",)
 
 class PolygonIndex(models.Model):
     "geographical area lookup"
@@ -41,3 +42,4 @@ class PolygonIndex(models.Model):
 
     class Meta:
         get_latest_by = "content_date"
+        ordering = ("-content_date",)

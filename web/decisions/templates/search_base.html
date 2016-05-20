@@ -6,6 +6,19 @@
 {% block search_bar %}
 <div class="row">
   <div class="col-md-12">
+    <ul class="bare-list nav tabs search-tabs">
+      <li>
+	<a class="tab tab--active" href="#">
+	  {% trans "Text Search" %}
+	</a>
+      </li>
+      <li>
+	<a class="tab" href="{% url "geoindex" %}#q={{ request.GET.q }}">
+	  {% trans "Map Search" %}
+	</a>
+      </li>
+    </ul>
+
     <form method="get" action="{% url "haystack_search" %}" class="search-form" id="search-form">
       <div class="input-group" id="search-group">
 	<input type="text" name="q" placeholder="{% trans "Search from decisions" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} id="search-input">

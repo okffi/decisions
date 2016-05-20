@@ -15,6 +15,15 @@
     padding: 9px 12px;
 }
 
+#geosearch-input {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#geosearch-button {
+    padding: 9px 12px;
+}
+
 .commentable {
     position: relative;
 }
@@ -75,11 +84,19 @@
     height: 500px;
 }
 
+#search_map {
+    height: 500px;
+}
+
 .comment-delete {
     margin-left: .5em;
 }
 .comment-delete button {
     margin-left: .5em;
+}
+
+.search-tabs > li {
+    margin: 0 .25em 0 0;
 }
 
 @media (max-width: 48em) {
