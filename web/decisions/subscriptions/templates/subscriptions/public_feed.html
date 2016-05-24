@@ -8,7 +8,7 @@
     <h2>{% trans "Public Feed" %}</h2>
 
     <div class="well text-center bc-base--lightest">
-      <p>{% trans "Recent decisions people are subscribing to will show up here" %}</p>
+      <p>{% trans "Recent decisions and comments people are subscribing to will show up here" %}</p>
       {% url 'login-or-register' as login_or_register_url %}
       <p>{% blocktrans %}You can <a href="{{ login_or_register_url }}">login or register</a> to customize your own feed{% endblocktrans %}</p>
     </div>
@@ -17,8 +17,15 @@
     <ol class="list-group">
       {% for item in feed %}
       <li class="list-group-item">
+	{% if item.is_search_result %}
 	<p><a href="{{ item.link }}">{{ item.subject }}</a></p>
 	<p><time datetime="{{ item.created.isoformat }}">{% blocktrans with since=item.created|timesince %}{{ since }} ago{% endblocktrans %}</time></p>
+	{% elif item.is_comment_reply %}
+	<p><a href="{{ item.link }}">{{ item.format_subject|safe }}</a></p>
+	<p><time datetime="{{ item.created.isoformat }}">{% blocktrans with since=item.created|timesince %}{{ since }} ago{% endblocktrans %}</time></p>
+	{% else %}
+	<p>!!! Unknown feed item type</p>
+	{% endif %}
       </li>
       {% endfor %}
     </ol>

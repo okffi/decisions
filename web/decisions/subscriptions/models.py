@@ -94,6 +94,7 @@ class Subscription(models.Model):
         verbose_name_plural = _("subscriptions")
 
 
+
 class SubscriptionHit(models.Model):
     subscriptions = models.ManyToManyField(Subscription)
     notified_users = models.ManyToManyField('auth.User')
@@ -101,9 +102,30 @@ class SubscriptionHit(models.Model):
     subject = models.CharField(max_length=300)
     link = models.CharField(max_length=300)
 
+    SEARCH_RESULT, COMMENT_REPLY = range(2)
+    HIT_TYPES = (
+        (SEARCH_RESULT, _("Search result")),
+        (COMMENT_REPLY, _("Comment reply")),
+    )
+
+    hit_type = models.IntegerField(default=SEARCH_RESULT, choices=HIT_TYPES)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     hit = GenericForeignKey('content_type', 'object_id')
+    extra = pgfields.JSONField(default=dict)
+
+    # utility functions to allow template checks
+    def is_comment_reply(self):
+        return self.hit_type == self.COMMENT_REPLY
+
+    def is_search_result(self):
+        return self.hit_type == self.SEARCH_RESULT
+
+    def format_subject(self):
+        "translated, formatted subject line"
+        if "subject_mapping" in self.extra:
+            return _(self.subject) % self.extra["subject_mapping"]
+        return self.subject
 
     def __unicode__(self):
         return self.subject

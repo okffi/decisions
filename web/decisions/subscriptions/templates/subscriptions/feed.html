@@ -13,14 +13,13 @@
     <ol class="list-group">
       {% for item in feed %}
       <li class="list-group-item">
-	<p><a href="{{ item.link }}">{{ item.subject }}</a></p>
-	<p>{% blocktrans with term=item.user_search_terms|join:"; " timestamp=item.created since=item.created|timesince count counter=item.user_search_terms|length %}from search <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% plural %}from searches <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% endblocktrans %}</p>
+	{% include "subscriptions/feed_item.html" %}
       </li>
       {% endfor %}
     </ol>
     {% else %}
     <div class="well text-center bc-base--lightest">
-      <p>{% blocktrans %}Every time your subscriptions find new decisions, they are listed on this page.{% endblocktrans %}</p>
+      <p>{% blocktrans %}Every time your subscriptions find new decisions or someone replies to comments you have made, they are listed on this page.{% endblocktrans %}</p>
       <p>{% blocktrans %}This is just the new stuff, old results from new subscriptions are never added to the feed.{% endblocktrans %}</p>
     </div>
     {% endif %}

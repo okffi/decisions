@@ -4,10 +4,14 @@ from django.shortcuts import render, get_object_or_404
 from django import http
 from django.db.transaction import atomic
 from django.utils.timezone import now
+from django.utils.translation import ugettext_noop
+from django.contrib.contenttypes.models import ContentType
+from django.template.defaultfilters import escape
 
 from decisions.comments import COMMENTABLE_MODELS
 from decisions.comments.models import Comment
 from decisions.comments.forms import CommentForm, EditCommentForm
+from decisions.subscriptions.models import SubscriptionHit
 
 
 def get_comments(request, model_slug, object_id):
@@ -59,6 +63,31 @@ def comment(request, model_slug, object_id):
         comment.content_object = obj
         comment.user = request.user
         comment.save()
+
+        # notify all other people who have commented on this same object/anchor
+        others = (
+            Comment.objects
+            .filter(content_type=ContentType.objects.get_for_model(obj),
+                    object_id=obj.pk,
+                    selector=comment.selector)
+            .exclude(user=request.user)
+            .values_list('user', flat=True)
+            .distinct()
+        )
+        hit = SubscriptionHit.objects.create(
+            subject=ugettext_noop("Comment reply by <strong>%(username)s</strong> on <em>%(subject)s</em>"),
+            link=comment.get_absolute_url(),
+            hit_type=SubscriptionHit.COMMENT_REPLY,
+            hit=comment,
+            extra={
+                "subject_mapping": {
+                    "subject": escape(unicode(obj)),
+                    "username": comment.user.username,
+                }
+            }
+        )
+        hit.notified_users = others
+
         return http.JsonResponse({"content": "success"})
     else:
         return JsonResponseBadRequest({"errors": form.errors})

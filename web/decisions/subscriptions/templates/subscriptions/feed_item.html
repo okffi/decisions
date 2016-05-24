@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if item.is_search_result %}
+<p><a href="{{ item.link }}">{{ item.format_subject }}</a></p>
+<p>{% blocktrans with term=item.user_search_terms|join:"; " timestamp=item.created since=item.created|timesince count counter=item.user_search_terms|length %}from search <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% plural %}from searches <tt>{{ term }}</tt> <abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% endblocktrans %}</p>
+{% elif item.is_comment_reply %}
+<p><a href="{{ item.link }}">{{ item.format_subject|safe }}</a></p>
+<p>{% blocktrans with timestamp=item.created since=item.created|timesince %}<abbr title="{{ timestamp }}">{{ since }}</abbr> ago{% endblocktrans %}</p>
+{% else %}
+<p>!!! Unknown feed item type.</p>
+{% endif %}

@@ -54,6 +54,9 @@ class Comment(models.Model):
         verbose_name_plural = _("comments")
         ordering = ("text",)
 
+    def get_absolute_url(self):
+        return "%s#c%s" % (self.content_object.get_absolute_url(), self.pk)
+
     def get_dict(self):
         return {
             "comment_id": self.pk,

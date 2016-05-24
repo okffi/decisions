@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Decisions 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-20 16:04+0300\n"
+"POT-Creation-Date: 2016-05-24 12:31+0300\n"
 "PO-Revision-Date: 2016-04-13 16:51+0300\n"
 "Last-Translator: Leo Honkanen <leo.o.honkanen@gmail.com>\n"
 "Language-Team: Finnish <LL@li.org>\n"
@@ -129,7 +129,8 @@ msgstr "esityksiä"
 #: decisions/geo/views.py:55 decisions/geo/views.py:69
 #: decisions/news/templates/news/entry.html:15
 #: decisions/news/templates/news/ticker.html:7
-#: decisions/subscriptions/templates/subscriptions/public_feed.html:21
+#: decisions/subscriptions/templates/subscriptions/public_feed.html:22
+#: decisions/subscriptions/templates/subscriptions/public_feed.html:25
 #: decisions/templates/search/search.html:36
 #, python-format
 msgid "%(since)s ago"
@@ -191,7 +192,7 @@ msgstr "Sitaatti"
 msgid "Quotes are required."
 msgstr "Sitaatti vaaditaan"
 
-#: decisions/comments/models.py:42 decisions/comments/models.py:75
+#: decisions/comments/models.py:42 decisions/comments/models.py:78
 msgid "Comment"
 msgstr "Kommentti"
 
@@ -203,7 +204,7 @@ msgstr "kommentti"
 msgid "comments"
 msgstr "kommentteja"
 
-#: decisions/comments/models.py:60
+#: decisions/comments/models.py:63
 msgid "guest"
 msgstr "vieras"
 
@@ -232,6 +233,11 @@ msgstr "viimeksi muokattu %(since)s sitten, yhteensä %(total)s muokkauskertaa"
 msgid "List of latest comments by %(username)s"
 msgstr "Viimeisimmät kommentit käyttäjältä %(username)s"
 
+#: decisions/comments/views.py:78
+#, python-format
+msgid "Comment reply by <strong>%(username)s</strong> on <em>%(subject)s</em>"
+msgstr "<strong>%(username)s</strong> vastasi kommenttiin asiassa <em>%(subject)s</em>"
+
 #: decisions/default_settings.py:131
 msgid "Finnish"
 msgstr "Suomeksi"
@@ -251,7 +257,6 @@ msgid "Places"
 msgstr "Paikka"
 
 #: decisions/geo/templates/geo/map_search.html:32
-#| msgid "Search term"
 msgid "Search the map"
 msgstr "Hae kartalta"
 
@@ -405,11 +410,19 @@ msgstr "tilaus"
 msgid "subscriptions"
 msgstr "tilauksia"
 
-#: decisions/subscriptions/models.py:112
+#: decisions/subscriptions/models.py:107
+msgid "Search result"
+msgstr "Hakutulos"
+
+#: decisions/subscriptions/models.py:108
+msgid "Comment reply"
+msgstr "Vastine"
+
+#: decisions/subscriptions/models.py:134
 msgid "subscription hit"
 msgstr "tilauksen osuma"
 
-#: decisions/subscriptions/models.py:113
+#: decisions/subscriptions/models.py:135
 msgid "subscription hits"
 msgstr "tilauksen osumia"
 
@@ -609,28 +622,14 @@ msgstr "Muokkaa ja näytä enemmän tilauksia"
 msgid "Feed"
 msgstr "Syöte"
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:38
-#: decisions/subscriptions/templates/subscriptions/feed.html:17
-#, python-format
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:43
 msgid ""
-"from search <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
-"ago"
-msgid_plural ""
-"from searches <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</"
-"abbr> ago"
-msgstr[0] ""
-"hausta <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
-"sitten"
-msgstr[1] ""
-"hauista <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
-"sitten"
+"Every time your subscriptions find new decisions or someone replies to "
+"comments you have made, they are listed here."
+msgstr "Aina kun tilauksesi löytävät uusia päätöksiä tai joku vastaa kommentteihisi, ne listataan tähän."
 
 #: decisions/subscriptions/templates/subscriptions/dashboard.html:44
-msgid "Every time your subscriptions find new decisions, they are listed here."
-msgstr "Aina kun tilauksesi löytävät uusia päätöksiä, ne listataan tähän."
-
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:45
-#: decisions/subscriptions/templates/subscriptions/feed.html:24
+#: decisions/subscriptions/templates/subscriptions/feed.html:23
 msgid ""
 "This is just the new stuff, old results from new subscriptions are never "
 "added to the feed."
@@ -638,7 +637,7 @@ msgstr ""
 "Tähän tulee vain uudet jutut, vanhat hakutulokset uusista tilauksista eivät "
 "ikinä ilmaannu syötteeseesi."
 
-#: decisions/subscriptions/templates/subscriptions/dashboard.html:49
+#: decisions/subscriptions/templates/subscriptions/dashboard.html:48
 msgid "Browse your feed"
 msgstr "Selaa syötettä"
 
@@ -717,12 +716,32 @@ msgstr "Pyydämme anteeksi häiriötä."
 msgid "Public Feed"
 msgstr "Yleinen syöte"
 
-#: decisions/subscriptions/templates/subscriptions/feed.html:23
+#: decisions/subscriptions/templates/subscriptions/feed.html:22
 msgid ""
-"Every time your subscriptions find new decisions, they are listed on this "
-"page."
+"Every time your subscriptions find new decisions or someone replies to "
+"comments you have made, they are listed on this page."
 msgstr ""
-"Aina kun tilauksesi löytävät uusia päätöksiä, ne listataan tällä sivulla."
+"Aina kun tilauksesi löytävät uusia päätöksiä tai joku vastaa kommentteihisi, ne listataan tällä sivulla."
+
+#: decisions/subscriptions/templates/subscriptions/feed_item.html:4
+#, python-format
+msgid ""
+"from search <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
+"ago"
+msgid_plural ""
+"from searches <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</"
+"abbr> ago"
+msgstr[0] ""
+"hausta <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
+"sitten"
+msgstr[1] ""
+"hauista <tt>%(term)s</tt> <abbr title=\"%(timestamp)s\">%(since)s</abbr> "
+"sitten"
+
+#: decisions/subscriptions/templates/subscriptions/feed_item.html:7
+msgid "<abbr title=\"%(timestamp)s\">%(since)s</abbr> ago"
+msgstr ""
+"<abbr title=\"%(timestamp)s\">%(since)s</abbr> sitten"
 
 #: decisions/subscriptions/templates/subscriptions/not_confirmed.html:8
 msgid "Not confirmed"
@@ -737,8 +756,9 @@ msgstr ""
 "vahvistussähköpostin kautta, ole hyvä ja ota yhteyttä sivuston ylläpitoon. "
 
 #: decisions/subscriptions/templates/subscriptions/public_feed.html:11
-msgid "Recent decisions people are subscribing to will show up here"
-msgstr "Tänne ilmestyy päätöksiä, joista ihmiset ovat kiinnostuneet"
+msgid ""
+"Recent decisions and comments people are subscribing to will show up here"
+msgstr "Tänne ilmestyy päätöksiä ja kommentteja, joista ihmiset ovat kiinnostuneet"
 
 #: decisions/subscriptions/templates/subscriptions/public_feed.html:13
 #, python-format
