@@ -11,6 +11,7 @@
 
     <form method="post" action="{% url 'add-subscription' %}">
       {% csrf_token %}
+      <input type="hidden" name="search_backend" value="0">
       <p><input name="search_term" placeholder="{% trans "Search term…" %}"></p>
       <p><button type="submit" class="btn">{% trans "Subscribe" %}</button></p>
     </form>
@@ -34,7 +35,11 @@
 	</span>
 	{% endif %}
 
-	<a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term }}">{{ s.subscription.search_term }}</a>
+	{% if s.subscription.is_text_search %}
+	<a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term|urlencode }}">{{ s.subscription.search_term }}</a>
+	{% else %}
+	<a href="{% url 'geoindex' %}#q={{ s.subscription.search_term|urlencode }}&d={{ s.subscription.extra.distance_meters }}">{{ s.subscription.search_term }}</a>
+	{% endif %}
 
 	<div class="pull-right">
 	  <small><a href="{% url "edit-subscription" s.pk %}">{% trans "Edit" %}</a></small>

@@ -133,7 +133,7 @@ class SubscriptionForm(forms.Form):
     search_backend = forms.ChoiceField(
         label=_("Search type"),
         choices=Subscription.BACKEND_CHOICES,
-        widget=BSRadioSelect
+        widget=BSRadioSelect,
     )
     search_term = forms.CharField(
         label=_('Search term or location'),

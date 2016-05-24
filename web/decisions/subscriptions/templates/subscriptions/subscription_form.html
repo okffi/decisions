@@ -1,0 +1,17 @@
+{% extends "form.html" %}
+
+{% block ready_script %}
+// hide perimeter field if not geosearch
+var $sb = $("#id_search_backend");
+var toggle_distance = function() {
+  var val = $sb.find(".active input").val();
+  if(val == 0) {
+    $("#id_distance_meters").parents(".form-group").hide();
+  } else if (val == 1) {
+    $("#id_distance_meters").parents(".form-group").show();
+  }
+};
+toggle_distance();
+$sb.on('change', toggle_distance);
+
+{% endblock %}

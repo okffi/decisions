@@ -99,6 +99,12 @@ class Subscription(models.Model):
 
     objects = SubscriptionQuerySet.as_manager()
 
+    def is_geo_search(self):
+        return self.search_backend == self.GEO
+
+    def is_text_search(self):
+        return self.search_backend == self.HAYSTACK
+
     def __unicode__(self):
         return self.search_term
 

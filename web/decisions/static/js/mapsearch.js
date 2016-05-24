@@ -7,6 +7,7 @@
   }).addTo(map);
 
   var searchLayer = L.layerGroup().addTo(map);
+  var circle;
 
   var geosearch = function(e) {
     // AJAX request things around the given q
@@ -27,9 +28,9 @@
         searchLayer = L.layerGroup().addTo(map);
 
         // drop the center circle
-        var circle = L
-              .circle(data.center.coordinates, data.radius)
-              .addTo(searchLayer);
+        circle = L
+          .circle(data.center.coordinates, data.radius)
+          .addTo(searchLayer);
 
         // draw pins around the center
         $.each(data.points, function(i, item) {
@@ -74,7 +75,7 @@
 
         // write the query into the text search link
         var cur_href = $("#text-search-link").attr("href");
-        var bare_href = cur_href.split("?", 1)[0]
+        var bare_href = cur_href.split("?", 1)[0];
         $("#text-search-link").attr("href", bare_href + "?q=" + q);
 
         // re-enable the search button
@@ -101,5 +102,15 @@
       });
       $("#search-form").trigger("submit");
     }
+
+    // update the size of the circle live
+    $("#search-distance").on("change", function() {
+      circle.setRadius($("#search-distance").val());
+
+    });
+    // after the range slider is let go, refresh the display
+    $("#search-distance").on("blur", function() {
+      $("#search-form").trigger("submit");
+    });
   });
 })(jQuery)

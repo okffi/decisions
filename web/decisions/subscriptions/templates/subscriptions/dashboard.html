@@ -15,7 +15,11 @@
 	<div class="tags">
 	  {% for s in subscriptions %}
 	  <div class="tag tag-size-{{ s.font_size }}">
-	    <a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term }}">{{ s.subscription.search_term }}</a>
+	    {% if s.subscription.is_text_search %}
+	    <a href="{% url 'haystack_search' %}?q={{ s.subscription.search_term|urlencode }}">{{ s.subscription.search_term }}</a>
+	    {% else %}
+	    <a href="{% url 'geoindex' %}#q={{ s.subscription.search_term|urlencode }}&d={{ s.subscription.extra.distance_meters }}">{{ s.subscription.search_term }}</a>
+	    {% endif %}
 	  </div>
 	  {% endfor %}
 	</div>

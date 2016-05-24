@@ -37,7 +37,7 @@ def geosearch(request):
     )
 
     try:
-        d_m = max(0, max(15, int(request.GET["d"])))
+        d_m = max(100, min(3000, int(request.GET["d"])))
     except (KeyError, ValueError):
         d_m = 1000
     d = D(m=d_m)

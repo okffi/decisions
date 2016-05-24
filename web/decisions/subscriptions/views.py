@@ -180,9 +180,12 @@ def add_subscription(request):
                 _("You have subscribed to the search term <tt>%(search_term)s</tt>") % form.cleaned_data)
             return redirect("subscriptions")
     else:
-        form = SubscriptionForm(initial={"search_term": request.GET.get("q")})
+        form = SubscriptionForm(initial={
+            "search_term": request.GET.get("q"),
+            "search_backend": request.GET.get("t")
+        })
 
-    return render(request, "form.html", {"form": form, "verb": _("Subscribe")})
+    return render(request, "subscriptions/subscription_form.html", {"form": form, "verb": _("Subscribe")})
 
 @login_required
 def edit_subscription(request, subscription_id):
@@ -197,15 +200,35 @@ def edit_subscription(request, subscription_id):
         if form.is_valid():
             with atomic():
                 # handle changed terms
-                if form.cleaned_data["search_term"] != usersub.subscription.search_term:
-                    subscription, created = (
-                        Subscription.objects.get_or_create(
-                            search_term=form.cleaned_data['search_term'],
-                            defaults={
-                                "previous_version": usersub.subscription
-                            }
+                if (form.cleaned_data["search_term"] != usersub.subscription.search_term
+                    or form.cleaned_data["search_backend"] != usersub.subscription.search_backend
+                    or ("distance_meters" in usersub.subscription.extra and form.cleaned_data["distance_meters"] != usersub.subscription.extra["distance_meters"])):
+                    defaults = {
+                        "previous_version": usersub.subscription
+                    }
+                    if form.cleaned_data["search_backend"] == Subscription.GEO:
+                        defaults.update(extra={
+                            "point": list(form.point),
+                            "distance_meters": form.cleaned_data["distance_meters"]
+                        })
+                        subscription, created = (
+                            Subscription.objects.get_or_create(
+                                search_term=form.cleaned_data['search_term'],
+                                search_backend=form.cleaned_data['search_backend'],
+                                extra__distance_meters=form.cleaned_data["distance_meters"],
+                                defaults=defaults
+                            )
                         )
-                    )
+                    elif form.cleaned_data["search_backend"] == Subscription.HAYSTACK:
+                        subscription, created = (
+                            Subscription.objects.get_or_create(
+                                search_term=form.cleaned_data['search_term'],
+                                search_backend=form.cleaned_data['search_backend'],
+                                defaults=defaults
+                            )
+                        )
+                    else:
+                        raise RuntimeError("Unknown subscription type %s" % form.cleaned_data["search_backend"])
                     usersub.subscription = subscription
 
                 usersub.send_mail = form.cleaned_data['send_mail']
@@ -221,10 +244,11 @@ def edit_subscription(request, subscription_id):
         form = SubscriptionEditForm(initial={
             "search_term": usersub.subscription.search_term,
             "send_mail": usersub.send_mail,
-            "active": usersub.active
+            "active": usersub.active,
+            "search_backend": usersub.subscription.search_backend
         })
 
-    return render(request, "form.html", {
+    return render(request, "subscriptions/subscription_form.html", {
         "form": form,
         "verb": _("Edit subscription")
     })

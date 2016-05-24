@@ -17,7 +17,7 @@
      {% if user.is_authenticated %}
     <p>{% trans "You can save this search and get notified when new results come up" %}</p>
     <p>
-      <a href="{% url "add-subscription" %}?q={{ request.GET.q }}">
+      <a href="{% url "add-subscription" %}?q={{ request.GET.q }}&t=0">
 	<button type="button" class="btn btn-default">{% trans "Subscribe to this search" %}</button>
       </a>
     </p>

@@ -26,11 +26,18 @@
 
     <form method="get" action="" id="search-form" class="search-form">
       <div class="input-group" id="search-group">
+	<input type="hidden" name="d" >
 	<input type="text" name="q" placeholder="{% trans "Places" %}" {% if request.GET.q %}value="{{ request.GET.q }}"{% endif %} id="search-input">
 
 	<span class="input-group-btn" id="search-go">
 	  <button class="btn btn-primary" type="submit" id="search-button">{% trans "Search the map" %}</button>
 	</span>
+      </div>
+      <div class="form-group">
+	<label for="search-distance">
+	  {% trans "Perimeter distance" %}
+	</label>
+	<input type="range" name="d" id="search-distance" min="100" max="3000" value="1000">
       </div>
     </form>
 
