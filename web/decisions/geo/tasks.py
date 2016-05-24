@@ -47,7 +47,7 @@ def create_points(new_points):
             point=point,
             title=unicode(obj),
             description=obj.get_summary(),
-            content_date=obj.get_content_date(),
+            content_date=obj.get_content_date()
         )
 
 def create_polygons(new_polygons):

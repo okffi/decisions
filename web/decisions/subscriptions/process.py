@@ -1,14 +1,23 @@
+import logging
+
 from django.conf import settings
 from django.utils.timezone import now
 from django.utils.translation import ungettext
 from django.template import loader
 from django.core.mail import send_mail
 from django.db.transaction import atomic
+from django.contrib.gis.geos import Point
+from django.contrib.gis.measure import D
+from django.contrib.gis.models.functions import Distance, Centroid
 
 from haystack.query import SearchQuerySet
 
 from decisions.subscriptions.models import Subscription, SubscriptionHit
 from decisions.subscriptions.voikko import VoikkoSearchQuerySet
+from decisions.geo.models import PointIndex, PolygonIndex
+
+logger = logging.getLogger(__file__)
+
 
 @atomic
 def process_subscriptions():
@@ -28,21 +37,77 @@ def process_subscriptions():
         except SubscriptionHit.DoesNotExist:
             last_hit_date = s.created
 
-        results = (
-            VoikkoSearchQuerySet()
-            .auto_query(s.search_term)
-            .filter(pub_date__gt=last_hit_date)
-            .load_all()
-        )
-
-        hits = [
-            SubscriptionHit.objects.get_or_create(
-                subject=r.subject,
-                link=r.object.get_absolute_url(),
-                defaults={"hit": r.object}
+        if s.search_backend == Subscription.HAYSTACK:
+            results = (
+                VoikkoSearchQuerySet()
+                .auto_query(s.search_term)
+                .filter(pub_date__gt=last_hit_date)
+                .load_all()
             )
-            for r in results
-        ]
+
+            hits = [
+                SubscriptionHit.objects.get_or_create(
+                    subject=r.subject,
+                    link=r.object.get_absolute_url(),
+                    defaults={"hit": r.object}
+                )
+                for r in results
+            ]
+        elif s.search_backend == Subscription.GEO:
+            hits = []
+            point = Point(*s.extra["point"])
+            distance = D(m=s.extra["distance_meters"])
+
+            points = PointIndex.objects.filter(
+                point__distance_lte=(point, distance),
+                content_date__gt=last_hit_date
+            ).annotate(distance=Distance('point', point))
+
+            for p in points:
+                hit, created = hit_tuple = (
+                    SubscriptionHit.objects.get_or_create(
+                        subject=p.subject,
+                        link=p.content_object.get_absolute_url(),
+                        defaults={
+                            "hit": p.content_object
+                            "extra": {
+                                "point": list(p.point),
+                            }
+                        }
+                    )
+                )
+                if not created:
+                    # ensure geographic metadata
+                    hit.extra.update(point=p.point)
+                    hit.save()
+                hits.append(hit_tuple)
+
+            polygons = PolygonIndex.objects.filter(
+                polygon__distance_lte=(point, distance),
+                content_date__gt=last_hit_date
+            ).annotate(centroid=Centroid('polygon'))
+
+            for p in polygons:
+                hit, created = hit_tuple = (
+                    SubscriptionHit.objects.get_or_create(
+                        subject=p.subject,
+                        link=p.content_object.get_absolute_url(),
+                        defaults={
+                            "hit": p.content_object
+                            "extra": {
+                                "point": list(p.centroid),
+                            }
+                        }
+                    )
+                )
+                if not created:
+                    # ensure geographic metadata
+                    hit.extra.update(point=p.centroid)
+                    hit.save()
+                hits.append(hit_tuple)
+        else:
+            logger.error("Unknown search backend %d" % s.search_backend)
+
         for hit, created in hits:
             hit.subscriptions.add(s)
 

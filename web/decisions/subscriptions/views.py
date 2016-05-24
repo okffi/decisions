@@ -141,11 +141,32 @@ def add_subscription(request):
         form = SubscriptionForm(request.POST)
         if form.is_valid():
             with atomic():
-                subscription, created = (
-                    Subscription.objects.get_or_create(
-                        search_term=form.cleaned_data['search_term']
+                backend = form.cleaned_data['search_backend']
+                if backend == Subscription.HAYSTACK:
+                    subscription, created = (
+                        Subscription.objects.get_or_create(
+                            search_term=form.cleaned_data['search_term'],
+                            search_backend=Subscription.HAYSTACK,
+                        )
                     )
-                )
+                elif backend == Subscription.GEO:
+                    distance_m = form.cleaned_data['distance_meters']
+                    point = form.point
+                    subscription, created = (
+                        Subscription.objects.get_or_create(
+                            search_term=form.cleaned_data['search_term'],
+                            search_backend=Subscription.GEO,
+                            defaults={
+                                "extra": {
+                                    "point": list(point),
+                                    "distance_meters": distance_m
+                                }
+                            }
+                        )
+                    )
+                else:
+                    raise RuntimeError("Unknown search backend %s provided" % backend)
+
                 SubscriptionUser.objects.get_or_create(
                     subscription=subscription,
                     user=request.user,

@@ -78,11 +78,24 @@ class Subscription(models.Model):
         blank=True,
         related_name="next_versions"
     )
+
+    HAYSTACK, GEO = range(2)
+    BACKEND_CHOICES = (
+        (HAYSTACK, _("Text Search")),
+        (GEO, _("Map Search")),
+    )
+
+    search_backend = models.IntegerField(
+        default=HAYSTACK,
+        choices=BACKEND_CHOICES,
+        verbose_name=_("Search type")
+    )
     search_term = models.CharField(
         max_length=300,
         verbose_name=_('Search term')
     )
     created = models.DateTimeField(default=now)
+    extra = pgfields.JSONField(default=dict)
 
     objects = SubscriptionQuerySet.as_manager()
 

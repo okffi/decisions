@@ -8,8 +8,10 @@ from django.contrib.auth.password_validation import (
     validate_password, password_validators_help_text_html
 )
 from django.contrib.auth.models import User
+from django.contrib.gis.geos import Point
 
 from decisions.subscriptions.models import Subscription
+from decisions.geo.views import geocode
 
 
 class RegisterForm(forms.Form):
@@ -114,7 +116,6 @@ class BSRadioChoiceInput(widgets.RadioChoiceInput):
         else:
             label_for = ''
         attrs = dict(self.attrs, **attrs) if attrs else self.attrs
-        print self.attrs
         active = "active" if self.is_checked() else ""
         return format_html(
             '<label{} class="btn {}">{} {}</label>', label_for, active, self.tag(attrs), self.choice_label
@@ -129,12 +130,32 @@ class BSRadioSelect(forms.RadioSelect):
     renderer = BSRadioFieldRenderer
 
 class SubscriptionForm(forms.Form):
+    search_backend = forms.ChoiceField(
+        label=_("Search type"),
+        choices=Subscription.BACKEND_CHOICES,
+        widget=BSRadioSelect
+    )
     search_term = forms.CharField(
-        label=_('Search term'),
+        label=_('Search term or location'),
         widget=forms.TextInput(
             attrs={
             })
     )
+
+    DISTANCE_CHOICES = (
+        (100, _("100 m")),
+        (500, _("500 m")),
+        (1000, _("1km")),
+        (3000, _("3km")),
+    )
+    distance_meters = forms.ChoiceField(
+        label=_("Perimeter distance"),
+        choices=DISTANCE_CHOICES,
+        initial=1000,
+        widget=BSRadioSelect,
+        required=False
+    )
+
     send_mail = forms.BooleanField(
         label=_('Sends email'),
         help_text=_('If checked, notifications about new search results are also sent by email. Otherwise they will just show up in your feed.'),
@@ -144,6 +165,30 @@ class SubscriptionForm(forms.Form):
             (False, _("No"))
         ])
     )
+
+    def clean_search_backend(self):
+        return int(self.cleaned_data["search_backend"])
+
+    def clean(self):
+        if "search_backend" in self.cleaned_data:
+            backend = self.cleaned_data["search_backend"]
+            if backend == Subscription.GEO:
+                # validate that search term geocodes to a point and
+                # that we have a valid distance
+                if "distance_meters" not in self.cleaned_data:
+                    self.add_error("distance_meters",
+                                   forms.ValidationError(_("Map searches must select a perimeter.")))
+                self.cleaned_data["distance_meters"] = int(self.cleaned_data["distance_meters"])
+
+                pointdict = geocode(self.cleaned_data["search_term"])
+                if not pointdict:
+                    self.add_error("search_term",
+                                   forms.ValidationError(_("We couldn't find this location. Please describe another location.")))
+
+                self.point = Point(pointdict["coordinates"][1],
+                                   pointdict["coordinates"][0])
+        return self.cleaned_data
+
 
 class SubscriptionEditForm(SubscriptionForm):
     active = forms.BooleanField(
