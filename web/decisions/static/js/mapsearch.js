@@ -61,15 +61,16 @@
         // zoom the map around the center circle
         map.fitBounds(circle.getBounds(), {
           paddingTopLeft: [5, 5],
-          paddingBottomRight: [5, 5],
+          paddingBottomRight: [5, 5]
         });
 
         // write the form parameters into the document url
         var params = [];
         var q = encodeURIComponent($("#search-input").val());
+        var d = encodeURIComponent($("#search-distance").val());
         params.push("q=" + q);
         if ($("#search-distance").val()) {
-          params.push("d=" + encodeURIComponent($("#search-distance").val()));
+          params.push("d=" + d);
         }
         location.hash = params.join("&");
 
@@ -78,11 +79,22 @@
         var bare_href = cur_href.split("?", 1)[0];
         $("#text-search-link").attr("href", bare_href + "?q=" + q);
 
+        if (can_subscribe) {
+          $(".map-subscribe").show();
+          // write the query into the subscribe link and show it
+          var cur_sub_href = $("#map-subscribe-link").attr("href");
+          var bare_sub_href = cur_sub_href.split("?", 1)[0];
+          $("#map-subscribe-link").attr(
+            "href",
+            bare_sub_href + "?q=" + q + "&d=" + d + "&t=1"
+          );
+        }
         // re-enable the search button
         $("#search-button").prop("disabled", false);
       });
   };
   $(document).ready(function() {
+    $(".map-subscribe").hide();
     $("#search-form").on("submit", geosearch);
     if (location.hash.length) {
       // comprehend the hash and write its values to the form and submit it
@@ -106,7 +118,6 @@
     // update the size of the circle live
     $("#search-distance").on("change", function() {
       circle.setRadius($("#search-distance").val());
-
     });
     // after the range slider is let go, refresh the display
     $("#search-distance").on("blur", function() {
