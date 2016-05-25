@@ -111,6 +111,7 @@ class Subscription(models.Model):
     class Meta:
         verbose_name = _("subscription")
         verbose_name_plural = _("subscriptions")
+        get_latest_by = 'created'
 
 
 

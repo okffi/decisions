@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.db.transaction import atomic
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
-from django.contrib.gis.models.functions import Distance, Centroid
+from django.contrib.gis.db.models.functions import Distance, Centroid
 
 from haystack.query import SearchQuerySet
 
@@ -47,7 +47,7 @@ def process_subscriptions():
 
             hits = [
                 SubscriptionHit.objects.get_or_create(
-                    subject=r.subject,
+                    subject=r.title,
                     link=r.object.get_absolute_url(),
                     defaults={"hit": r.object}
                 )
@@ -66,10 +66,10 @@ def process_subscriptions():
             for p in points:
                 hit, created = hit_tuple = (
                     SubscriptionHit.objects.get_or_create(
-                        subject=p.subject,
+                        subject=p.title,
                         link=p.content_object.get_absolute_url(),
                         defaults={
-                            "hit": p.content_object
+                            "hit": p.content_object,
                             "extra": {
                                 "point": list(p.point),
                             }
@@ -78,31 +78,31 @@ def process_subscriptions():
                 )
                 if not created:
                     # ensure geographic metadata
-                    hit.extra.update(point=p.point)
+                    hit.extra.update(point=list(p.point))
                     hit.save()
                 hits.append(hit_tuple)
 
             polygons = PolygonIndex.objects.filter(
                 polygon__distance_lte=(point, distance),
                 content_date__gt=last_hit_date
-            ).annotate(centroid=Centroid('polygon'))
+            )
 
             for p in polygons:
                 hit, created = hit_tuple = (
                     SubscriptionHit.objects.get_or_create(
-                        subject=p.subject,
+                        subject=p.title,
                         link=p.content_object.get_absolute_url(),
                         defaults={
-                            "hit": p.content_object
+                            "hit": p.content_object,
                             "extra": {
-                                "point": list(p.centroid),
+                                "point": list(p.polygon.centroid),
                             }
                         }
                     )
                 )
                 if not created:
                     # ensure geographic metadata
-                    hit.extra.update(point=p.centroid)
+                    hit.extra.update(point=list(p.polygon.centroid))
                     hit.save()
                 hits.append(hit_tuple)
         else:

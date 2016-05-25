@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from django.db.transaction import atomic
 from django.http import JsonResponse
+from django.contrib.gis.geos import Point
 
 from tagging.utils import calculate_cloud
 
@@ -31,25 +32,6 @@ def dashboard(request):
     all_subscriptions = SubscriptionUser.objects.filter(user=request.user)
     subscriptions = all_subscriptions.filter(active=True)
     inactive_subscriptions = all_subscriptions.filter(active=False)
-    hits = (
-        SubscriptionHit.objects
-        .filter(notified_users=request.user)
-        .order_by('-created')
-        [:30]
-    )
-
-    for hit in hits:
-        # intersect user's subscriptions and the hit's subscriptions
-        hit_terms = [
-            subscription.search_term
-            for subscription in hit.subscriptions.all()
-        ]
-        user_terms = [
-            subscription.search_term
-            for subscription in request.user.subscription_set.all()
-        ]
-        terms = set(hit_terms).intersection(user_terms)
-        hit.user_search_terms = terms
 
     for subscription in subscriptions:
         subscription.count = max(1, subscription.is_fresh(request.user))
@@ -61,7 +43,7 @@ def dashboard(request):
         {
             "subscriptions": subscriptions,
             "inactive_subscriptions": inactive_subscriptions,
-            "feed": hits,
+            "feed": get_hits(request.user),
         })
 
 @login_required
@@ -92,32 +74,52 @@ def feed(request):
 
     TODO: paginate and allow browsing all of the feed
     """
+
+    return render(
+        request,
+        "subscriptions/feed.html",
+        {
+            "feed": get_hits(request.user),
+        })
+
+def rough_distance(p1, p2):
+    "return a distance between the points within 100m"
+    dist = round(p1.distance(p2) * 110000, -2)
+    if dist < 1000:
+        return "%.0f m" % (dist)
+    if dist >= 1000:
+        return "%.1f km" % (dist / 1000)
+
+def get_hits(user):
     hits = (
         SubscriptionHit.objects
-        .filter(notified_users=request.user)
+        .filter(notified_users=user)
         .order_by('-created')
         [:30]
     )
 
     for hit in hits:
         # intersect user's subscriptions and the hit's subscriptions
-        hit_terms = [
-            subscription.search_term
-            for subscription in hit.subscriptions.all()
-        ]
-        user_terms = [
-            subscription.search_term
-            for subscription in request.user.subscription_set.all()
-        ]
-        terms = set(hit_terms).intersection(user_terms)
-        hit.user_search_terms = terms
+        hit_terms = hit.subscriptions.values_list('search_term', flat=True)
+        user_subs = user.subscription_set.values_list('search_term', 'extra')
+        extras = dict(user_subs)
+        terms = set(hit_terms).intersection(extras.keys())
+        annotated_terms = []
+        for term in terms:
+            if "point" in extras[term] and "point" in hit.extra:
+                annotated_terms.append(
+                    _("%(search_term)s (%(distance)s)") % {
+                        "search_term": term,
+                        "distance": rough_distance(
+                            Point(*extras[term]["point"]),
+                            Point(*hit.extra["point"])
+                        )}
+                )
+            else:
+                annotated_terms.append(term)
+        hit.user_search_terms = annotated_terms
 
-    return render(
-        request,
-        "subscriptions/feed.html",
-        {
-            "feed": hits,
-        })
+    return hits
 
 def public_feed(request):
     "Recent feed hits from everyone's saved searches"
