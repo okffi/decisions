@@ -166,6 +166,7 @@ class SubscriptionTest(TestCase):
         )
 
         resp = self.c.post("/subscriptions/add/", {
+            "search_backend": 0,
             "search_term": "omena",
             "send_mail": False
         }, follow=True)
@@ -188,6 +189,7 @@ class SubscriptionTest(TestCase):
         )
 
         resp = self.c.post("/subscriptions/add/", {
+            "search_backend": 0,
             "search_term": "omena",
             "send_mail": True
         }, follow=True)
